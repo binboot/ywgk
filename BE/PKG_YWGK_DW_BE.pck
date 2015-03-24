@@ -4,31 +4,31 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
 
   -- Author  : jkx 32078
   -- Created : 2014/2/28 14:07:35
-  -- Purpose : ҵ��
+  -- Purpose : 业扩
   -- Description
-  /**��ȡ�洢���̣�Ϊ��ȡӪ�����������ݵ�Ӫ��������OMAC�û������ݲֿ���Ĺ��̡�
-  ���ʹ洢���̣�Ϊ��Ӫ��������OMAC�û������ݲֿ��������ɾ���Ͳ��뵽�����OMAC�û��µĹ��̡�
-  ��ڴ洢���̣�Ϊ�����ݿ�JOB���õ���ڹ��̣�����������ó�ȡ�洢���̺�������ʹ洢����*/
+  /**抽取存储过程：为抽取营销管理库数据到营销管理库OMAC用户下数据仓库表的过程。
+  推送存储过程：为把营销管理库OMAC用户下数据仓库表中数据删除和插入到稽查库OMAC用户下的过程。
+  入口存储过程：为供数据库JOB调用的入口过程，本过程里调用抽取存储过程后调用推送存储过程*/
 
   /******************************
-  #function: �յ�λҵ����װͳ��  (��ڴ洢����)
+  #function: 日单位业扩报装统计  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-02-28
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ENT_DW_S_BUSI_CCCAP_DAY(IN_YMD   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: �յ�λҵ����װͳ��  (��ȡ�洢����)
+  #function: 日单位业扩报装统计  (抽取存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-02-28
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_BUSI_CCCAP_DAY(IN_YMD   VARCHAR2,
@@ -36,36 +36,36 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                                       OUT_MSG  OUT VARCHAR2);
 
   /******************************
-  #function: �յ�λҵ����װͳ�� (���ʹ洢����)
+  #function: 日单位业扩报装统计 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-02-28
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_BUSI_CCCAP_DAY(IN_YMD   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: �µ�λҵ����װͳ��  (��ڴ洢����)
+  #function: 月单位业扩报装统计  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-03
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ENT_DW_S_BUSI_CCCAP_MON(IN_YM    VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: �µ�λҵ����װͳ��  (��ȡ�洢����)
+  #function: 月单位业扩报装统计  (抽取存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-03
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_BUSI_CCCAP_MON(IN_YM    VARCHAR2,
@@ -73,12 +73,12 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                                       OUT_MSG  OUT VARCHAR2);
 
   /******************************
-  #function: �µ�λҵ����װͳ�� (���ʹ洢����)
+  #function: 月单位业扩报装统计 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-03
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_BUSI_CCCAP_MON(IN_YM    VARCHAR2,
@@ -86,12 +86,12 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                                       OUT_MSG  OUT VARCHAR2);
 
   /******************************
-  #function: �굥λҵ����װͳ��  (��ڴ洢����)
+  #function: 年单位业扩报装统计  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-03
-  #input:IN_YEAR  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:IN_YEAR  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ENT_DW_S_BUSI_CCCAP_YEAR(IN_YEAR  VARCHAR2,
@@ -104,24 +104,24 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                                        OUT_CODE OUT NUMBER,
                                        OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: ����;ҵ�����������嵥  (��ڴ洢����)
+  #function: 日在途业扩工单环节清单  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-06
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ENT_DW_S_BUSI_WKST_ING(IN_YMD   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: ����;ҵ�����������嵥 (��ȡ�洢����)
+  #function: 日在途业扩工单环节清单 (抽取存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-06
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_BUSI_WKST_ING(IN_YMD   VARCHAR2,
@@ -129,36 +129,36 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                                      OUT_MSG  OUT VARCHAR2);
 
   /******************************
-  #function: ����;ҵ�����������嵥 (���ʹ洢����)
+  #function: 日在途业扩工单环节清单 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-06
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_BUSI_WKST_ING(IN_YMD   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: �չ鵵ҵ�����������嵥  (��ڴ洢����)
+  #function: 日归档业扩工单环节清单  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-06
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ENT_DW_S_BUSI_WKST_ARC(IN_YMD   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: �չ鵵ҵ�����������嵥 (��ȡ�洢����)
+  #function: 日归档业扩工单环节清单 (抽取存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-06
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_BUSI_WKST_ARC(IN_YMD   VARCHAR2,
@@ -166,36 +166,36 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                                      OUT_MSG  OUT VARCHAR2);
 
   /******************************
-  #function: �չ鵵ҵ�����������嵥 (���ʹ洢����)
+  #function: 日归档业扩工单环节清单 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-06
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_BUSI_WKST_ARC(IN_YMD   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: �¹鵵ҵ�����������嵥  (��ڴ洢����)
+  #function: 月归档业扩工单环节清单  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-06
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ENT_DW_S_BUSI_WKST_MON(IN_YM    VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: �¹鵵ҵ�����������嵥 (��ȡ�洢����)
+  #function: 月归档业扩工单环节清单 (抽取存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-06
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_BUSI_WKST_MON(IN_YM    VARCHAR2,
@@ -203,36 +203,36 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                                      OUT_MSG  OUT VARCHAR2);
 
   /******************************
-  #function: �¹鵵ҵ�����������嵥 (���ʹ洢����)
+  #function: 月归档业扩工单环节清单 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-06
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_BUSI_WKST_MON(IN_YM    VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: �¶ȵ�λ��ͬ�������ͳ��  (��ڴ洢����)
+  #function: 月度单位合同档案情况统计  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-04
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ENT_DW_S_CTRT_ARC_SIGN(IN_YM    VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: �¶ȵ�λ��ͬ�������ͳ��  (��ȡ�洢����)
+  #function: 月度单位合同档案情况统计  (抽取存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-04
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_CTRT_ARC_SIGN(IN_YM    VARCHAR2,
@@ -240,48 +240,48 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                                      OUT_MSG  OUT VARCHAR2);
 
   /******************************
-  #function: �¶ȵ�λ��ͬ�������ͳ�� (���ʹ洢����)
+  #function: 月度单位合同档案情况统计 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-04
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_CTRT_ARC_SIGN(IN_YM    VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: �¶Ⱥ�ͬ��ϸ  (��ʱ��)
+  #function: 月度合同明细  (临时表)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-04
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   /*PROCEDURE P_INS_DW_S_CTRT_PRO_TMP(IN_YMD   VARCHAR2,
   OUT_CODE OUT NUMBER,
   OUT_MSG  OUT VARCHAR2);*/
   /******************************
-  #function: �¶ȵ�λ��ͬ����ǩ��ͳ��  (��ڴ洢����)
+  #function: 月度单位合同流程签订统计  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-04
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ENT_DW_S_CTRT_PRO_SIGN(IN_YM    VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: �¶ȵ�λ��ͬ����ǩ��ͳ��  (��ȡ�洢����)
+  #function: 月度单位合同流程签订统计  (抽取存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-04
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_CTRT_PRO_SIGN(IN_YM    VARCHAR2,
@@ -289,36 +289,36 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                                      OUT_MSG  OUT VARCHAR2);
 
   /******************************
-  #function: �¶ȵ�λ��ͬ����ǩ��ͳ�� (���ʹ洢����)
+  #function: 月度单位合同流程签订统计 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-04
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_CTRT_PRO_SIGN(IN_YM    VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: �¶���ʱ�õ糬���û���ϸ  (��ڴ洢����)
+  #function: 月度临时用电超期用户明细  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-05
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ENT_DW_S_TEMP_PQ_DET(IN_YM    VARCHAR2,
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: �¶���ʱ�õ糬���û���ϸ  (��ȡ�洢����)
+  #function: 月度临时用电超期用户明细  (抽取存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-05
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_TEMP_PQ_DET(IN_YM    VARCHAR2,
@@ -326,36 +326,36 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                                    OUT_MSG  OUT VARCHAR2);
 
   /******************************
-  #function: �¶���ʱ�õ糬���û���ϸ (���ʹ洢����)
+  #function: 月度临时用电超期用户明细 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-05
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_TEMP_PQ_DET(IN_YM    VARCHAR2,
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: �¶���ʱ�õ糬�����ͳ��  (��ڴ洢����)
+  #function: 月度临时用电超期情况统计  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-05
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ENT_DW_S_TEMP_PQ_STAT(IN_YM    VARCHAR2,
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: �¶���ʱ�õ糬�����ͳ��  (��ȡ�洢����)
+  #function: 月度临时用电超期情况统计  (抽取存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-05
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_TEMP_PQ_STAT(IN_YM    VARCHAR2,
@@ -363,42 +363,42 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                                     OUT_MSG  OUT VARCHAR2);
 
   /******************************
-  #function: �¶���ʱ�õ糬�����ͳ�� (���ʹ洢����)
+  #function: 月度临时用电超期情况统计 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-05
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_TEMP_PQ_STAT(IN_YM    VARCHAR2,
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: �¶���ʱ�������ͳ��  (��ڴ洢����)
+  #function: 月度临时减容情况统计  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-05
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
-    1������ͳ�Ƹ��㼶��λ��ʱ���ݹ鵵���������������
-  2��ÿ��1�����ͳ��
-  3�����һ����ʱ����ͬ������26���������25��24ʱ��ͳ��Ϊ��������
-  �磺��ǰΪ20141201��ʼ����ͳ�ƹ��̣�����Ĳ���Ϊ201411��Ҫͳ�Ƶ�����Ϊ20141026-20141126ֱ�ӵ�����
-  �����е�STAT_YM��д201411
-  4���ų��õ����Ϊ��000�����ˡ����Ĺ���
+    1）按月统计各层级单位临时减容归档工单及档案情况。
+  2）每月1日零点统计
+  3）与大一考核时间相同，上月26零点至本月25日24时，统计为本月数据
+  如：当前为20141201开始运行统计过程，则传入的参数为201411，要统计的数据为20141026-20141126直接的数据
+  过程中的STAT_YM填写201411
+  4）排除用电类别为‘000【考核】’的工单
   *********************/
   PROCEDURE P_ENT_DW_S_TEMP_REDUCE_CAP(IN_YM    VARCHAR2,
                                        OUT_CODE OUT NUMBER,
                                        OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: �¶���ʱ�������ͳ��  (��ȡ�洢����)
+  #function: 月度临时减容情况统计  (抽取存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-05
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_TEMP_REDUCE_CAP(IN_YM    VARCHAR2,
@@ -406,12 +406,12 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                                        OUT_MSG  OUT VARCHAR2);
 
   /******************************
-  #function: �¶���ʱ�������ͳ�� (���ʹ洢����)
+  #function: 月度临时减容情况统计 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-05
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_TEMP_REDUCE_CAP(IN_YM    VARCHAR2,
@@ -419,14 +419,14 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                                        OUT_MSG  OUT VARCHAR2);
 
   /**
-    �������ƣ�P_ENT_DW_S_SAFETY_CHG/�հ�ȫ��������ͳ����ڹ���
-    ���ߣ�jpl
-    ��д���ڣ�2014-03-07 01:37
-    ��������������ͳ�ư�ȫ�������������Ϣ,�����ݿ�JOB����
-    ͳ��Ƶ�ȣ����ճ�ȡ,�������
-    ��θ�ʽ��I_DATA ��YYYYMMDD
-    �޸���:
-    �޸�����:
+    过程名称：P_ENT_DW_S_SAFETY_CHG/日安全隐患整改统计入口过程
+    作者：jpl
+    编写日期：2014-03-07 01:37
+    过程描述：按日统计安全隐患整改情况信息,被数据库JOB调用
+    统计频度：按日抽取,次日零点
+    入参格式：I_DATA ：YYYYMMDD
+    修改人:
+    修改日期:
   **/
   PROCEDURE P_ENT_DW_S_SAFETY_CHG(I_DATA   VARCHAR2,
                                   OUT_CODE OUT NUMBER,
@@ -438,14 +438,14 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                                   OUT_CODE OUT NUMBER,
                                   OUT_MSG  OUT VARCHAR2);
   /**
-    �������ƣ�P_ENT_DW_S_CHECK_COMPL/�¶��õ���ͳ����ڹ���
-    ���ߣ�jpl
-    ��д���ڣ�2014-03-07 01:37
-    ��������������ͳ���õ���������,�����ݿ�JOB����
-    ͳ��Ƶ�ȣ����³�ȡ,����1�����
-    ��θ�ʽ��I_DATA ��YYYYMMDD
-    �޸���:
-    �޸�����:
+    过程名称：P_ENT_DW_S_CHECK_COMPL/月度用电检查统计入口过程
+    作者：jpl
+    编写日期：2014-03-07 01:37
+    过程描述：按月统计用电检查完成情况,被数据库JOB调用
+    统计频度：按月抽取,次月1日零点
+    入参格式：I_DATA ：YYYYMMDD
+    修改人:
+    修改日期:
   **/
   PROCEDURE P_ENT_DW_S_CHECK_COMPL(I_DATA   VARCHAR2,
                                    OUT_CODE OUT NUMBER,
@@ -457,14 +457,14 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2);
   /**
-    �������ƣ�P_ENT_DW_S_VIOLATE_DET/ΥԼ�õ��Ե���ϸ��ڹ���
-    ���ߣ�jpl
-    ��д���ڣ�2014-03-07 01:37
-    ��������������ͳ��ΥԼ�õ��Ե���ϸ��Ϣ,�����ݿ�JOB����
-    ͳ��Ƶ�ȣ����³�ȡ,����1�����
-    ��θ�ʽ��I_DATA ��YYYYMMDD
-    �޸���:
-    �޸�����:
+    过程名称：P_ENT_DW_S_VIOLATE_DET/违约用电窃电明细入口过程
+    作者：jpl
+    编写日期：2014-03-07 01:37
+    过程描述：按月统计违约用电窃电明细信息,被数据库JOB调用
+    统计频度：按月抽取,次月1日零点
+    入参格式：I_DATA ：YYYYMMDD
+    修改人:
+    修改日期:
   **/
   PROCEDURE P_ENT_DW_S_VIOLATE_DET(I_DATA   VARCHAR2,
                                    OUT_CODE OUT NUMBER,
@@ -476,14 +476,14 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2);
   /**
-    �������ƣ�P_ENT_DW_S_VIOLATE_INFO/�¶�ΥԼ�õ��Ե�ͳ����ڹ���
-    ���ߣ�jpl
-    ��д���ڣ�2014-03-07 01:37
-    ��������������ͳ��ΥԼ�õ��Ե����,�����ݿ�JOB����
-    ͳ��Ƶ�ȣ����³�ȡ,����1�����
-    ��θ�ʽ��I_DATA ��YYYYMMDD
-    �޸���:
-    �޸�����:
+    过程名称：P_ENT_DW_S_VIOLATE_INFO/月度违约用电窃电统计入口过程
+    作者：jpl
+    编写日期：2014-03-07 01:37
+    过程描述：按月统计违约用电窃电情况,被数据库JOB调用
+    统计频度：按月抽取,次月1日零点
+    入参格式：I_DATA ：YYYYMMDD
+    修改人:
+    修改日期:
   **/
   PROCEDURE P_ENT_DW_S_VIOLATE_INFO(I_DATA   VARCHAR2,
                                     OUT_CODE OUT NUMBER,
@@ -495,12 +495,12 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2);
   /**
-    �������ƣ�P_ENT_DW_S_HR_IMPORTANT_CUST/�¶Ȱ�ȫ��������ͳ����ڹ���
-    ���ߣ�ll
-    ��д���ڣ�2014-03-17 14:37
-    ������������Σ��Ҫ�ͻ�������Ϣ
-    ͳ��Ƶ�ȣ����³�ȡ,����1�����
-    ��θ�ʽ��IN_YM ��YYYYMM
+    过程名称：P_ENT_DW_S_HR_IMPORTANT_CUST/月度安全隐患整改统计入口过程
+    作者：ll
+    编写日期：2014-03-17 14:37
+    过程描述：高危重要客户档案信息
+    统计频度：按月抽取,次月1日零点
+    入参格式：IN_YM ：YYYYMM
   **/
   PROCEDURE P_ENT_DW_S_HR_IMPORTANT_CUST(IN_YM    VARCHAR2,
                                          OUT_CODE OUT NUMBER,
@@ -512,12 +512,12 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2);
   /**
-    �������ƣ�P_ENT_DW_S_VIP_SAFETY_DETAIL/�նȸ�Σ��Ҫ�ͻ�����������ϸͳ����ڹ���
-    ���ߣ�ll
-    ��д���ڣ�2014-03-18 14:37
-    �����������նȸ�Σ��Ҫ�ͻ�����������ϸ
-    ͳ��Ƶ�ȣ����ճ�ȡ,����1�����
-    ��θ�ʽ��IN_YM ��YYYYMMDD
+    过程名称：P_ENT_DW_S_VIP_SAFETY_DETAIL/日度高危重要客户隐患整改明细统计入口过程
+    作者：ll
+    编写日期：2014-03-18 14:37
+    过程描述：日度高危重要客户隐患整改明细
+    统计频度：按日抽取,次月1日零点
+    入参格式：IN_YM ：YYYYMMDD
   **/
   PROCEDURE P_ENT_DW_S_VIP_SAFETY_DETAIL(IN_YMD   VARCHAR2,
                                          OUT_CODE OUT NUMBER,
@@ -529,13 +529,13 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2);
   /**
-      �������ƣ�P_ENT_DW_S_NATIONAL_PRJ_STAT/�¶ȹ����ص�ҵ����Ŀ��װͳ��
-      ���ߣ�jyd
-      ��д���ڣ�2014-03-18 14:37
-      �����������¶ȹ����ص�ҵ����Ŀ��װͳ��:�¶ȹ����ص�ҵ����Ŀ��װͳ��
-  1������ͳ�Ƹ��㼶��λ�����ص�ҵ����Ŀ�������ص�ҵ����Ŀָ�û�����10��ǧ�������ϵ��û�
-      ͳ��Ƶ�ȣ����³�ȡ,����1�����
-      ��θ�ʽ��IN_YM ��YYYYMM
+      过程名称：P_ENT_DW_S_NATIONAL_PRJ_STAT/月度国家重点业扩项目报装统计
+      作者：jyd
+      编写日期：2014-03-18 14:37
+      过程描述：月度国家重点业扩项目报装统计:月度国家重点业扩项目报装统计
+  1）按月统计各层级单位国家重点业扩项目：国家重点业扩项目指用户容量10万千伏安以上的用户
+      统计频度：按月抽取,次月1日零点
+      入参格式：IN_YM ：YYYYMM
     **/
   PROCEDURE P_ENT_DW_S_NATIONAL_PRJ_STAT(IN_YM    VARCHAR2,
                                          OUT_CODE OUT NUMBER,
@@ -548,12 +548,12 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                                          OUT_MSG  OUT VARCHAR2);
 
   /**
-    �������ƣ�P_ENT_DW_C_G_TRAN/�¶ȵ�λ��ѹ����Ϣͳ����ϸͳ����ڹ���
-    ���ߣ�ll
-    ��д���ڣ�2014-03-18 14:37
-    �����������¶ȵ�λ��ѹ����Ϣͳ����ϸ
-    ͳ��Ƶ�ȣ����ճ�ȡ,�������
-    ��θ�ʽ��IN_YMD ��YYYYMMDD
+    过程名称：P_ENT_DW_C_G_TRAN/月度单位变压器信息统计明细统计入口过程
+    作者：ll
+    编写日期：2014-03-18 14:37
+    过程描述：月度单位变压器信息统计明细
+    统计频度：按日抽取,次日零点
+    入参格式：IN_YMD ：YYYYMMDD
   **/
   PROCEDURE P_ENT_DW_C_G_TRAN(IN_YM    VARCHAR2,
                               OUT_CODE OUT NUMBER,
@@ -565,72 +565,72 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                               OUT_CODE OUT NUMBER,
                               OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: �շֲ�ʽ��Դ���뻷���嵥  (��ȡ�洢����)
+  #function: 日分布式能源申请环节清单  (抽取存储过程)
   #version:1.01
   #author:liubin 32237
   #createdate:2014-09-22
-  #input:IN_YEAR  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:IN_YEAR  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   /*PROCEDURE P_ENT_DW_S_DISTR_ENERGY_WKST(IN_YMD   VARCHAR2,
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2);*/
   /******************************
-  #function: �շֲ�ʽ��Դ���뻷���嵥  (��ȡ�洢����)
+  #function: 日分布式能源申请环节清单  (抽取存储过程)
   #version:1.01
   #author:liubin 32237
   #createdate:2014-09-22
-  #input:IN_YEAR  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:IN_YEAR  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   /*PROCEDURE P_INS_DW_S_DISTR_ENERGY_WKST(IN_YMD   VARCHAR2,
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2);*/
   /******************************
-  #function: �շֲ�ʽ��Դ���뻷���嵥  (���ʹ洢����)
+  #function: 日分布式能源申请环节清单  (推送存储过程)
   #version:1.01
   #author:liubin 32237
   #createdate:2014-09-22
-  #input:IN_YEAR  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:IN_YEAR  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   /*PROCEDURE P_ETL_DW_S_DISTR_ENERGY_WKST(IN_YMD   VARCHAR2,
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2);*/
   /******************************
-  #function: �·ֲ�ʽ��Դ���뻷���嵥  (��ȡ�洢����)
+  #function: 月分布式能源申请环节清单  (抽取存储过程)
   #version:1.01
   #author:liubin 32237
   #createdate:2014-09-22
-  #input:IN_YEAR  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:IN_YEAR  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ENT_DW_S_DISTR_ENERGY_MON(IN_YM    VARCHAR2,
                                         OUT_CODE OUT NUMBER,
                                         OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: �·ֲ�ʽ��Դ���뻷���嵥  (��ȡ�洢����)
+  #function: 月分布式能源申请环节清单  (抽取存储过程)
   #version:1.01
   #author:liubin 32237
   #createdate:2014-09-22
-  #input:IN_YEAR  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:IN_YEAR  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_DISTR_ENERGY_MON(IN_YM    VARCHAR2,
                                         OUT_CODE OUT NUMBER,
                                         OUT_MSG  OUT VARCHAR2);
   /******************************
-  #function: �·ֲ�ʽ��Դ���뻷���嵥  (���ʹ洢����)
+  #function: 月分布式能源申请环节清单  (推送存储过程)
   #version:1.01
   #author:liubin 32237
   #createdate:2014-09-22
-  #input:IN_YEAR  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:IN_YEAR  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_DISTR_ENERGY_MON(IN_YM    VARCHAR2,
@@ -642,7 +642,7 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_BE IS
                      V_RETURNRESULT  VARCHAR2,
                      V_OTHERRSULT    VARCHAR2) RETURN VARCHAR2;
 
-  --���ճ��Ȳ���ַ���
+  --按照长度拆分字符串
   PROCEDURE SP_PARSESTRING_LENGTH(P_STRING   IN VARCHAR2,
                                   DELMLENGTH IN NUMBER,
                                   P_T_STRING OUT T_STRING);
@@ -652,36 +652,36 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
 
   -- Author  : jkx 32078
   -- Created : 2014/2/28 14:07:35
-  -- Purpose : ҵ��
+  -- Purpose : 业扩
 
   /******************************
-  #function: �յ�λҵ����װͳ��  (��ڴ洢����)
+  #function: 日单位业扩报装统计  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-02-28
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ENT_DW_S_BUSI_CCCAP_DAY(IN_YMD   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
   
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_S_BUSI_CCCAP_DAY', IN_YMD);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_S_BUSI_CCCAP_DAY(IN_YMD, OUT_CODE, OUT_MSG);
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+      --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
       P_ETL_DW_S_BUSI_CCCAP_DAY(IN_YMD, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_S_BUSI_CCCAP_DAY A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -691,49 +691,49 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  AND IN_YMD BETWEEN B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_YMD = IN_YMD;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_S_BUSI_CCCAP_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_S_BUSI_CCCAP_DAY  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_BUSI_CCCAP_DAY  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_BUSI_CCCAP_DAY  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: �յ�λҵ����װͳ��  (��ȡ�洢����)
+  #function: 日单位业扩报装统计  (抽取存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-02-28
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_BUSI_CCCAP_DAY(IN_YMD   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO   VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
     V_YM           VARCHAR2(6);
     V_YMD          VARCHAR2(8);
-    V_DATE_START_D DATE; --��ʼʱ��
-    V_DATE_END_D   DATE; --����ʱ��
+    V_DATE_START_D DATE; --开始时间
+    V_DATE_END_D   DATE; --结束时间
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID      := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_C_CONS_COMP', IN_YMD);
     V_YM           := SUBSTR(IN_YMD, 1, 6);
     V_YMD          := SUBSTR(IN_YMD, 1, 8);
@@ -742,18 +742,18 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
     V_DATE_END_D   := TO_DATE(SUBSTR(IN_YMD, 1, 8) || ' 23:59:59',
                               'yyyy-mm-dd hh24:mi:ss');
   
-    --ɾ��ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除原有的抽取的记录，维度为日
     DELETE FROM DW_S_BUSI_CCCAP_DAY X WHERE X.STAT_YMD = IN_YMD;
   
-    --��ʼ����ͳ��,���뵽���������OMAC��DW_C_CONS_COMP
-    --����ʵ�����ѡ���Ƿ���Ҫ��λѭ����һ���Ƿ���������Ҫ��
+    --开始数据统计,插入到稽查管理库OMAC的DW_C_CONS_COMP
+    --根据实际情况选择是否需要单位循环（一般是分区表才需要）
     FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
                                        1,
                                        DECODE(V_PRO_ORG_NO, '12101', 5, 7)) ORG_NO
                   FROM SY_SG_O_ORG
                  WHERE ORG_NO <> '00000'
                    AND LENGTH(ORG_NO) >= DECODE(V_PRO_ORG_NO, '12101', 5, 7)) LOOP
-      --�������
+      --主体程序
       INSERT INTO DW_S_BUSI_CCCAP_DAY
         (DATA_ID,
          PRO_ORG_NO,
@@ -770,7 +770,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                V_PRO_ORG_NO,
                ORG_NO,
                '',
-               --Ӫҵ������
+               --营业区性质
                V_YMD,
                BUSI_TYPE_CODE,
                SUM(APP_CC) APP_CC,
@@ -788,7 +788,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                   FROM (SELECT A.PS_ORG_NO ORG_NO,
                                A.CONS_NO,
                                B.PRO_NAME  BUSI_TYPE_CODE,
-                               --������ʡ��������������Ϊ��ͣ����ͣ�ָ������ݡ����ݻָ�ʱ,������ȡAPP_RUN_APP
+                               --根据网省反馈当工单类型为暂停、暂停恢复、减容、减容恢复时,容量获取APP_RUN_APP
                                DECODE(SIGN(INSTR('/203/204/201/202/201/202/',
                                                  '/' ||
                                                  PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
@@ -800,12 +800,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                          WHERE A.APP_NO = B.ITEM_KEY
                            AND B.BEGIN_DATE BETWEEN V_DATE_START_D AND
                                V_DATE_END_D
-                              ---����Ҫ���ų���������
+                              ---按照要求排除考核类型
                            AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                            AND B.DEPT_NAME LIKE TSS.ORG_NO || '%'
                            AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%'
                            AND B.ITEM_TYPE = '01'
-                              --�ų�С����װ���͹���,����ɽ������С����װ���ͱ��Ĭ����103,������ʡ����벻ͬ����GK_DW_CODE_TRANS�����á�
+                              --排除小区新装类型工单,按照山东定义小区新装类型编号默认是103,其它网省如代码不同可在GK_DW_CODE_TRANS内配置。
                            AND INSTR(PKG_GK_PUBLIC.F_TRANS_CODE('GDXQXZ',
                                                                 '103'),
                                      B.PRO_NAME) <= 0
@@ -813,7 +813,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                         SELECT A.PS_ORG_NO ORG_NO,
                                A.CONS_NO,
                                B.PRO_NAME  BUSI_TYPE_CODE,
-                               --������ʡ��������������Ϊ��ͣ����ͣ�ָ������ݡ����ݻָ�ʱ,������ȡAPP_RUN_APP
+                               --根据网省反馈当工单类型为暂停、暂停恢复、减容、减容恢复时,容量获取APP_RUN_APP
                                DECODE(SIGN(INSTR('/203/204/201/202/201/202/',
                                                  '/' ||
                                                  PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
@@ -826,12 +826,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                          WHERE A.APP_NO = B.ITEM_KEY
                            AND B.BEGIN_DATE BETWEEN V_DATE_START_D AND
                                V_DATE_END_D
-                              ---����Ҫ���ų���������
+                              ---按照要求排除考核类型
                            AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                            AND B.DEPT_NAME LIKE TSS.ORG_NO || '%'
                            AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%'
                            AND B.ITEM_TYPE = '01'
-                              --�ų�С����װ���͹���,����ɽ������С����װ���ͱ��Ĭ����103,������ʡ����벻ͬ����GK_DW_CODE_TRANS�����á�
+                              --排除小区新装类型工单,按照山东定义小区新装类型编号默认是103,其它网省如代码不同可在GK_DW_CODE_TRANS内配置。
                            AND INSTR(PKG_GK_PUBLIC.F_TRANS_CODE('GDXQXZ',
                                                                 '103'),
                                      B.PRO_NAME) <= 0
@@ -839,7 +839,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                         SELECT A.PS_ORG_NO ORG_NO,
                                B.CONS_NO,
                                C.PRO_NAME  BUSI_TYPE_CODE,
-                               --������ʡ��������������Ϊ��ͣ����ͣ�ָ������ݡ����ݻָ�ʱ,������ȡAPP_RUN_APP
+                               --根据网省反馈当工单类型为暂停、暂停恢复、减容、减容恢复时,容量获取APP_RUN_APP
                                DECODE(SIGN(INSTR('/203/204/201/202/201/202/',
                                                  '/' ||
                                                  PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
@@ -853,7 +853,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                          WHERE A.APP_NO = C.ITEM_KEY
                            AND C.BEGIN_DATE BETWEEN V_DATE_START_D AND
                                V_DATE_END_D
-                              ---����Ҫ���ų���������
+                              ---按照要求排除考核类型
                            AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                            AND A.APP_ID = B.APP_ID
                            AND PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
@@ -865,7 +865,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                         SELECT A.PS_ORG_NO ORG_NO,
                                B.CONS_NO,
                                C.PRO_NAME  BUSI_TYPE_CODE,
-                               --������ʡ��������������Ϊ��ͣ����ͣ�ָ������ݡ����ݻָ�ʱ,������ȡAPP_RUN_APP
+                               --根据网省反馈当工单类型为暂停、暂停恢复、减容、减容恢复时,容量获取APP_RUN_APP
                                B.CONTRACT_CAP CAP
                           FROM SY_SG_ARC_S_APP            A,
                                SY_SG_ARC_S_BATCH_CUST_APP B,
@@ -873,7 +873,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                          WHERE A.APP_NO = C.ITEM_KEY
                            AND C.BEGIN_DATE BETWEEN V_DATE_START_D AND
                                V_DATE_END_D
-                              ---����Ҫ���ų���������
+                              ---按照要求排除考核类型
                            AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                            AND PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
                                                           C.PRO_NAME) = '112'
@@ -896,7 +896,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                                A.CONS_NO,
                                PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
                                                           B.PRO_NAME) BUSI_TYPE_CODE,
-                               --������ʡ��������������Ϊ��ͣ����ͣ�ָ������ݡ����ݻָ�ʱ,������ȡAPP_RUN_APP
+                               --根据网省反馈当工单类型为暂停、暂停恢复、减容、减容恢复时,容量获取APP_RUN_APP
                                DECODE(SIGN(INSTR('/203/204/201/202/201/202/',
                                                  '/' ||
                                                  PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
@@ -911,11 +911,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                            AND B.STATE <> 'ABORT'
                            AND B.END_DATE BETWEEN V_DATE_START_D AND
                                V_DATE_END_D
-                              ---����Ҫ���ų���������
+                              ---按照要求排除考核类型
                            AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                            AND B.DEPT_NAME LIKE TSS.ORG_NO || '%'
                            AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%'
-                              --�ų�С����װ���͹���,����ɽ������С����װ���ͱ��Ĭ����103,������ʡ����벻ͬ����GK_DW_CODE_TRANS�����á�
+                              --排除小区新装类型工单,按照山东定义小区新装类型编号默认是103,其它网省如代码不同可在GK_DW_CODE_TRANS内配置。
                            AND INSTR(PKG_GK_PUBLIC.F_TRANS_CODE('GDXQXZ',
                                                                 '103'),
                                      B.PRO_NAME) <= 0
@@ -924,7 +924,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                                B.CONS_NO,
                                PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
                                                           C.PRO_NAME) BUSI_TYPE_CODE,
-                               --������ʡ��������������Ϊ��ͣ����ͣ�ָ������ݡ����ݻָ�ʱ,������ȡAPP_RUN_APP
+                               --根据网省反馈当工单类型为暂停、暂停恢复、减容、减容恢复时,容量获取APP_RUN_APP
                                B.CONTRACT_CAP CAP
                           FROM SY_SG_ARC_S_APP            A,
                                SY_SG_ARC_S_BATCH_CUST_APP B,
@@ -937,7 +937,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                            AND A.APP_ID = B.APP_ID
                            AND C.END_DATE BETWEEN V_DATE_START_D AND
                                V_DATE_END_D
-                              ---����Ҫ���ų���������
+                              ---按照要求排除考核类型
                            AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                            AND C.DEPT_NAME LIKE TSS.ORG_NO || '%'
                            AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%') T2
@@ -948,44 +948,44 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
       COMMIT;
     END LOOP;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_BUSI_CCCAP_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_BUSI_CCCAP_DAY  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_S_BUSI_CCCAP_DAY  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_S_BUSI_CCCAP_DAY  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: �յ�λҵ����װͳ�� (���ʹ洢����)
+  #function: 日单位业扩报装统计 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-02-28
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_BUSI_CCCAP_DAY(IN_YMD   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_BUSI_CCCAP_DAY', IN_YMD);
   
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_S_BUSI_CCCAP_DAY X WHERE X.STAT_YMD = IN_YMD;
   
     INSERT INTO SY_OM_DW_S_BUSI_CCCAP_DAY
@@ -1013,69 +1013,69 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
        A.CMPL_CAP,
        A.TIME_STAMP
         FROM DW_S_BUSI_CCCAP_DAY A, SY_OM_DW_O_ORG_CONTRAST B
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_YMD = IN_YMD
          AND IN_YMD BETWEEN B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_BUSI_CCCAP_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_BUSI_CCCAP_DAY  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    /* --��¼����������־
+    /* --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);*/
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_BUSI_CCCAP_DAY  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_BUSI_CCCAP_DAY  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: �µ�λҵ����װͳ��  (��ڴ洢����)
+  #function: 月单位业扩报装统计  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-03
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ENT_DW_S_BUSI_CCCAP_MON(IN_YM    VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR2(6) := SUBSTR(IN_YM, 1, 6);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_S_BUSI_CCCAP_MON', V_YM);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
   
     IF '31102' = V_PRO_ORG_NO THEN
-      --�Ϻ���ʡҵ����
+      --上海网省业务处理
       P_INS_DW_S_BUSI_CCCAP_MON_SH(V_YM, OUT_CODE, OUT_MSG);
     ELSE
       P_INS_DW_S_BUSI_CCCAP_MON(V_YM, OUT_CODE, OUT_MSG);
     END IF;
   
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+      --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
       P_ETL_DW_S_BUSI_CCCAP_MON(V_YM, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_S_BUSI_CCCAP_MON A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -1087,63 +1087,63 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
        WHERE A.STAT_YM = V_YM;
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_S_BUSI_CCCAP_MON  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_S_BUSI_CCCAP_MON  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_BUSI_CCCAP_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_BUSI_CCCAP_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   /******************************
-  #function: �µ�λҵ����װͳ��  (��ȡ�洢����)
+  #function: 月单位业扩报装统计  (抽取存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-03
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_BUSI_CCCAP_MON(IN_YM    VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
-    --����
+    --年月
     V_YM VARCHAR2(6);
-    --��εĵ����һ��һ��
-    V_DATE_START_D DATE; --��ʼʱ��
-    V_DATE_END_D   DATE; --����ʱ��
-    V_DATE_START_S VARCHAR2(8); --��ʼʱ��
-    V_DATE_END_S   VARCHAR2(8); --����ʱ��
+    --入参的当年的一月一号
+    V_DATE_START_D DATE; --开始时间
+    V_DATE_END_D   DATE; --结束时间
+    V_DATE_START_S VARCHAR2(8); --开始时间
+    V_DATE_END_S   VARCHAR2(8); --结束时间
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID      := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_C_CONS_COMP', IN_YM);
     V_YM           := SUBSTR(IN_YM, 1, 6);
     V_DATE_END_D   := TO_DATE(V_YM || '26' || ' 00:00:00',
                               'YYYY-MM-DD HH24:MI:SS');
     V_DATE_START_D := ADD_MONTHS(V_DATE_END_D, -1);
   
-    --ɾ��ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除原有的抽取的记录，维度为日
     DELETE FROM DW_S_BUSI_CCCAP_MON X WHERE X.STAT_YM = V_YM;
   
-    --��ʼ����ͳ��,���뵽���������OMAC��DW_C_CONS_COMP
-    --����ʵ�����ѡ���Ƿ���Ҫ��λѭ����һ���Ƿ���������Ҫ��
+    --开始数据统计,插入到稽查管理库OMAC的DW_C_CONS_COMP
+    --根据实际情况选择是否需要单位循环（一般是分区表才需要）
     FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
                                        1,
                                        DECODE(V_PRO_ORG_NO, '12101', 5, 7)) ORG_NO
@@ -1170,7 +1170,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          CMPL_BAL_CAP,
          CMPL_APP_SPQ,
          YEAR_EFFECT_SPQ)
-      --�����������������뻧��
+      --本月申请容量、申请户数
         SELECT AA.ORG_NO,
                PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE', AA.APP_TYPE_CODE) BUSI_TYPE_CODE,
                PKG_GK_PUBLIC.F_TRANS_CODE('TRADE_TYPE_CODE', AA.TRADE_CODE) TRADE_CODE,
@@ -1199,7 +1199,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  A.VOLT_CODE,
                  A.ELEC_TYPE_CODE,
                  A.HEC_INDUSTRY_CODE HEC_INDUSTRY_CODE,
-                 --������ʡ��������������Ϊ��ͣ����ͣ�ָ������ݡ����ݻָ�ʱ,������ȡAPP_RUN_APP
+                 --根据网省反馈当工单类型为暂停、暂停恢复、减容、减容恢复时,容量获取APP_RUN_APP
                  DECODE(SIGN(INSTR('/203/204/201/202/',
                                    '/' ||
                                    PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
@@ -1217,17 +1217,17 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                   FROM SY_SG_S_APP A, SY_SG_INDYWF_INSTANCES_CUR B
                  WHERE A.APP_NO = B.ITEM_KEY
                    AND B.BEGIN_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D
-                      ---����Ҫ���ų���������
+                      ---按照要求排除考核类型
                    AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%'
                    AND PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
                                                   B.PRO_NAME) NOT IN
                        ('112', '217')
                    AND B.ITEM_TYPE = '01'
-                      --�ų�С����װ���͹���,����ɽ������С����װ���ͱ��Ĭ����103,������ʡ����벻ͬ����GK_DW_CODE_TRANS�����á�
+                      --排除小区新装类型工单,按照山东定义小区新装类型编号默认是103,其它网省如代码不同可在GK_DW_CODE_TRANS内配置。
                    AND INSTR(PKG_GK_PUBLIC.F_TRANS_CODE('GDXQXZ', '103'),
                              B.PRO_NAME) <= 0
-                      --��ȡ����ʱ�Լ�������������
+                      --获取非临时性减容销户的数据
                    AND (A.PERMENANT_REDUCE_FLAG <> '02' OR
                        A.PERMENANT_REDUCE_FLAG IS NULL)
                 UNION ALL
@@ -1239,7 +1239,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  A.VOLT_CODE,
                  A.ELEC_TYPE_CODE,
                  A.HEC_INDUSTRY_CODE HEC_INDUSTRY_CODE,
-                 --������ʡ��������������Ϊ��ͣ����ͣ�ָ������ݡ����ݻָ�ʱ,������ȡAPP_RUN_APP
+                 --根据网省反馈当工单类型为暂停、暂停恢复、减容、减容恢复时,容量获取APP_RUN_APP
                  DECODE(SIGN(INSTR('/203/204/201/202/',
                                    '/' ||
                                    PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
@@ -1257,18 +1257,18 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                   FROM SY_SG_ARC_S_APP A, SY_SG_INDYWF_INSTANCES_CUR B
                  WHERE A.APP_NO = B.ITEM_KEY
                    AND B.BEGIN_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D
-                      ---����Ҫ���ų���������
+                      ---按照要求排除考核类型
                    AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%'
                    AND PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
                                                   B.PRO_NAME) NOT IN
                        ('112', '217')
                    AND B.ITEM_TYPE = '01'
-                      --�ų�С����װ���͹���,����ɽ������С����װ���ͱ��Ĭ����103,������ʡ����벻ͬ����GK_DW_CODE_TRANS�����á�
+                      --排除小区新装类型工单,按照山东定义小区新装类型编号默认是103,其它网省如代码不同可在GK_DW_CODE_TRANS内配置。
                    AND INSTR(PKG_GK_PUBLIC.F_TRANS_CODE('GDXQXZ', '103'),
                              B.PRO_NAME) <= 0
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%'
-                      --��ȡ����ʱ�Լ�������������
+                      --获取非临时性减容销户的数据
                    AND (A.PERMENANT_REDUCE_FLAG <> '02' OR
                        A.PERMENANT_REDUCE_FLAG IS NULL)
                 UNION ALL
@@ -1286,7 +1286,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                        SY_SG_INDYWF_INSTANCES_CUR C
                  WHERE A.APP_NO = C.ITEM_KEY
                    AND C.BEGIN_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D
-                      ---����Ҫ���ų���������
+                      ---按照要求排除考核类型
                    AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                    AND A.APP_ID = B.APP_ID
                    AND PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
@@ -1294,7 +1294,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                        ('112', '217')
                    AND C.ITEM_TYPE = '01'
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%'
-                      --��ȡ����ʱ�Լ�������������
+                      --获取非临时性减容销户的数据
                    AND (A.PERMENANT_REDUCE_FLAG <> '02' OR
                        A.PERMENANT_REDUCE_FLAG IS NULL)
                 UNION ALL
@@ -1312,14 +1312,14 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                        SY_SG_INDYWF_INSTANCES_CUR C
                  WHERE A.APP_NO = C.ITEM_KEY
                    AND C.BEGIN_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D
-                      ---����Ҫ���ų���������
+                      ---按照要求排除考核类型
                    AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                    AND A.APP_ID = B.APP_ID
                    AND PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
                                                   C.PRO_NAME) IN
                        ('112', '217')
                    AND C.ITEM_TYPE = '01'
-                      --��ȡ����ʱ�Լ�������������
+                      --获取非临时性减容销户的数据
                    AND (A.PERMENANT_REDUCE_FLAG <> '02' OR
                        A.PERMENANT_REDUCE_FLAG IS NULL)
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%') AA
@@ -1352,7 +1352,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          CMPL_BAL_CAP,
          CMPL_APP_SPQ,
          YEAR_EFFECT_SPQ)
-      -- ������ɻ���������,�����۵���,��� �����滧��������
+      -- 更新完成户数和容量,本月售电量,完成 往年结存户数和容量
         SELECT A2.ORG_NO,
                BUSI_TYPE_CODE,
                A2.TRADE_CODE,
@@ -1406,7 +1406,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  PKG_GK_PUBLIC.F_TRANS_CODE('HUE_TRADE_TYPE_CODE',
                                             A.HEC_INDUSTRY_CODE) HEC_INDUSTRY_CODE,
                  B.BEGIN_DATE BEGIN_DATE,
-                 --������ʡ��������������Ϊ��ͣ����ͣ�ָ������ݡ����ݻָ�ʱ,������ȡAPP_RUN_APP
+                 --根据网省反馈当工单类型为暂停、暂停恢复、减容、减容恢复时,容量获取APP_RUN_APP
                  DECODE(SIGN(INSTR('/203/204/201/202/',
                                    '/' ||
                                    PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
@@ -1426,16 +1426,16 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                    AND B.ITEM_TYPE = '01'
                    AND B.STATE <> 'ABORT'
                    AND B.END_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D
-                      ---����Ҫ���ų���������
+                      ---按照要求排除考核类型
                    AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%'
                    AND PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
                                                   B.PRO_NAME) NOT IN
                        ('112', '217')
-                      --�ų�С����װ���͹���,����ɽ������С����װ���ͱ��Ĭ����103,������ʡ����벻ͬ����GK_DW_CODE_TRANS�����á�
+                      --排除小区新装类型工单,按照山东定义小区新装类型编号默认是103,其它网省如代码不同可在GK_DW_CODE_TRANS内配置。
                    AND INSTR(PKG_GK_PUBLIC.F_TRANS_CODE('GDXQXZ', '103'),
                              B.PRO_NAME) <= 0
-                      --��ȡ����ʱ�Լ�������������
+                      --获取非临时性减容销户的数据
                    AND (A.PERMENANT_REDUCE_FLAG <> '02' OR
                        A.PERMENANT_REDUCE_FLAG IS NULL)
                 UNION ALL
@@ -1462,9 +1462,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                    AND C.STATE <> 'ABORT'
                    AND A.APP_ID = B.APP_ID
                    AND C.END_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D
-                      ---����Ҫ���ų���������
+                      ---按照要求排除考核类型
                    AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
-                      --��ȡ����ʱ�Լ�������������
+                      --获取非临时性减容销户的数据
                    AND (A.PERMENANT_REDUCE_FLAG <> '02' OR
                        A.PERMENANT_REDUCE_FLAG IS NULL)
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%') A2,
@@ -1505,7 +1505,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          CMPL_BAL_CAP,
          CMPL_APP_SPQ,
          YEAR_EFFECT_SPQ)
-      ----������ֹ�������뻧��/������ֹ������������/������ֹ�������뻧��/������ֹ������������
+      ----当月中止本年申请户数/当月中止本年申请容量/当月中止往年申请户数/当月中止往年申请容量
         SELECT AA.ORG_NO,
                BUSI_TYPE_CODE,
                TRADE_CODE,
@@ -1559,7 +1559,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  PKG_GK_PUBLIC.F_TRANS_CODE('HUE_TRADE_TYPE_CODE',
                                             A.HEC_INDUSTRY_CODE) HEC_INDUSTRY_CODE,
                  B.BEGIN_DATE,
-                 --������ʡ��������������Ϊ��ͣ����ͣ�ָ������ݡ����ݻָ�ʱ,������ȡAPP_RUN_APP
+                 --根据网省反馈当工单类型为暂停、暂停恢复、减容、减容恢复时,容量获取APP_RUN_APP
                  DECODE(SIGN(INSTR('/203/204/201/202/',
                                    '/' ||
                                    PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
@@ -1582,13 +1582,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                                                   B.PRO_NAME) NOT IN
                        ('112', '217')
                    AND B.END_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D
-                      ---����Ҫ���ų���������
+                      ---按照要求排除考核类型
                    AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%'
-                      --�ų�С����װ���͹���,����ɽ������С����װ���ͱ��Ĭ����103,������ʡ����벻ͬ����GK_DW_CODE_TRANS�����á�
+                      --排除小区新装类型工单,按照山东定义小区新装类型编号默认是103,其它网省如代码不同可在GK_DW_CODE_TRANS内配置。
                    AND INSTR(PKG_GK_PUBLIC.F_TRANS_CODE('GDXQXZ', '103'),
                              B.PRO_NAME) <= 0
-                      --��ȡ����ʱ�Լ�������������
+                      --获取非临时性减容销户的数据
                    AND (A.PERMENANT_REDUCE_FLAG <> '02' OR
                        A.PERMENANT_REDUCE_FLAG IS NULL)
                 UNION ALL
@@ -1603,7 +1603,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  PKG_GK_PUBLIC.F_TRANS_CODE('HUE_TRADE_TYPE_CODE',
                                             A.HEC_INDUSTRY_CODE) HEC_INDUSTRY_CODE,
                  C.BEGIN_DATE,
-                 --������ʡ��������������Ϊ��ͣ����ͣ�ָ������ݡ����ݻָ�ʱ,������ȡAPP_RUN_APP
+                 --根据网省反馈当工单类型为暂停、暂停恢复、减容、减容恢复时,容量获取APP_RUN_APP
                  B.CONTRACT_CAP CAP
                   FROM SY_SG_ARC_S_APP            A,
                        SY_SG_ARC_S_BATCH_CUST_APP B,
@@ -1616,10 +1616,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                    AND C.STATE = 'ABORT'
                    AND A.APP_ID = B.APP_ID
                    AND C.END_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D
-                      ---����Ҫ���ų���������
+                      ---按照要求排除考核类型
                    AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%'
-                      --��ȡ����ʱ�Լ�������������
+                      --获取非临时性减容销户的数据
                    AND (A.PERMENANT_REDUCE_FLAG <> '02' OR
                        A.PERMENANT_REDUCE_FLAG IS NULL)) AA
          GROUP BY AA.ORG_NO,
@@ -1648,7 +1648,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          CMPL_BAL_CAP,
          CMPL_APP_SPQ,
          YEAR_EFFECT_SPQ)
-      --������װ��������û����ڱ�����װ���ݺ��ڱ���������۵����ϼ�
+      --本年新装增容完成用户，在本年新装增容后在本年产生的售电量合计
         SELECT AA.ORG_NO,
                BUSI_TYPE_CODE,
                AA.TRADE_CODE,
@@ -1680,7 +1680,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                   FROM SY_SG_ARC_S_APP A, SY_SG_INDYWF_INSTANCES_CUR B
                  WHERE A.APP_NO = B.ITEM_KEY
                    AND B.ITEM_TYPE = '01'
-                      --��ȡ����ʱ�Լ�������������
+                      --获取非临时性减容销户的数据
                    AND (A.PERMENANT_REDUCE_FLAG <> '02' OR
                        A.PERMENANT_REDUCE_FLAG IS NULL)
                    AND PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
@@ -1697,11 +1697,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                    AND B.END_DATE >=
                        TO_DATE(SUBSTR(V_YM, 1, 4) || '0101', 'YYYYMMDD')
                    AND B.END_DATE <= V_DATE_END_D
-                      ---����Ҫ���ų���������
+                      ---按照要求排除考核类型
                    AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                    AND B.DEPT_NAME LIKE TSS.ORG_NO || '%'
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%'
-                      --�ų�С����װ���͹���,����ɽ������С����װ���ͱ��Ĭ����103,������ʡ����벻ͬ����GK_DW_CODE_TRANS�����á�
+                      --排除小区新装类型工单,按照山东定义小区新装类型编号默认是103,其它网省如代码不同可在GK_DW_CODE_TRANS内配置。
                    AND INSTR(PKG_GK_PUBLIC.F_TRANS_CODE('GDXQXZ', '103'),
                              
                              B.PRO_NAME) <= 0
@@ -1721,7 +1721,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                        SY_SG_INDYWF_INSTANCES_CUR C
                  WHERE A.APP_NO = C.ITEM_KEY
                    AND C.ITEM_TYPE = '01'
-                      --��ȡ����ʱ�Լ�������������
+                      --获取非临时性减容销户的数据
                    AND (A.PERMENANT_REDUCE_FLAG <> '02' OR
                        A.PERMENANT_REDUCE_FLAG IS NULL)
                    AND PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
@@ -1732,7 +1732,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                    AND C.END_DATE >=
                        TO_DATE(SUBSTR(V_YM, 1, 4) || '0101', 'YYYYMMDD')
                    AND C.END_DATE <= V_DATE_END_D
-                      ---����Ҫ���ų���������
+                      ---按照要求排除考核类型
                    AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                    AND C.DEPT_NAME LIKE TSS.ORG_NO || '%'
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%') AA,
@@ -1756,7 +1756,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                   AA.ELEC_TYPE_CODE,
                   AA.HEC_INDUSTRY_CODE;
     
-      --�������
+      --主体程序
       INSERT INTO DW_S_BUSI_CCCAP_MON
         (DATA_ID,
          PRO_ORG_NO,
@@ -1786,7 +1786,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          V_PRO_ORG_NO,
          ORG_NO,
          '',
-         --Ӫҵ������        
+         --营业区性质        
          V_YM,
          BUSI_TYPE_CODE,
          TRADE_CODE,
@@ -1795,26 +1795,26 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          SUM(APP_CC),
          SUM(APP_CAP) APP_CAP,
          SUM(CMPL_CC),
-         --��ɻ���         
+         --完成户数         
          SUM(CMPL_CAP),
-         --�������         
+         --完成容量         
          HEC_TRADE_CODE,
          SUM(STOP_LAST_APP_CC),
-         --��ֹ�������뻧��         
+         --中止往年申请户数         
          SUM(STOP_APP_CC),
-         --��ֹ�������뻧��         
+         --中止本年申请户数         
          SUM(STOP_LAST_APP_CAP),
-         --��ֹ������������         
+         --中止往年申请容量         
          SUM(STOP_APP_CAP),
-         --��ֹ������������
+         --中止本年申请容量
          SUM(CMPL_BAL_CC),
-         --��������滧��
+         --完成往年结存户数
          SUM(CMPL_BAL_CAP),
-         --�������������
+         --完成往年结存容量
          SUM(CMPL_APP_SPQ),
-         --���µ��
+         --本月电费
          SUM(YEAR_EFFECT_SPQ),
-         --�ۼƵ��
+         --累计电费
          SYSDATE
           FROM TMP_CCAP_MON A
          GROUP BY ORG_NO,
@@ -1826,22 +1826,22 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
       COMMIT;
     END LOOP;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_BUSI_CCCAP_MON  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_BUSI_CCCAP_MON  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_S_BUSI_CCCAP_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_S_BUSI_CCCAP_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -1849,20 +1849,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
-    --����
+    --年月
     V_YM VARCHAR2(6);
-    --��εĵ����һ��һ��
-    V_DATE_START_D DATE; --��ʼʱ��
-    V_DATE_END_D   DATE; --����ʱ��
-    V_DATE_START_S VARCHAR2(8); --��ʼʱ��
-    V_DATE_END_S   VARCHAR2(8); --����ʱ��
+    --入参的当年的一月一号
+    V_DATE_START_D DATE; --开始时间
+    V_DATE_END_D   DATE; --结束时间
+    V_DATE_START_S VARCHAR2(8); --开始时间
+    V_DATE_END_S   VARCHAR2(8); --结束时间
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID      := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_S_BUSI_CCCAP_MON_SH',
                                              IN_YM);
     V_YM           := SUBSTR(IN_YM, 1, 6);
@@ -1870,11 +1870,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                               'YYYY-MM-DD HH24:MI:SS');
     V_DATE_START_D := ADD_MONTHS(V_DATE_END_D, -1);
   
-    --ɾ��ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除原有的抽取的记录，维度为日
     DELETE FROM DW_S_BUSI_CCCAP_MON X WHERE X.STAT_YM = V_YM;
   
-    --��ʼ����ͳ��,���뵽���������OMAC��DW_C_CONS_COMP
-    --����ʵ�����ѡ���Ƿ���Ҫ��λѭ����һ���Ƿ���������Ҫ��
+    --开始数据统计,插入到稽查管理库OMAC的DW_C_CONS_COMP
+    --根据实际情况选择是否需要单位循环（一般是分区表才需要）
     FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
                                        1,
                                        DECODE(V_PRO_ORG_NO, '12101', 5, 7)) ORG_NO
@@ -1901,7 +1901,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          CMPL_BAL_CAP,
          CMPL_APP_SPQ,
          YEAR_EFFECT_SPQ)
-      --�����������������뻧��
+      --本月申请容量、申请户数
         SELECT AA.ORG_NO,
                PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE', AA.APP_TYPE_CODE) BUSI_TYPE_CODE,
                PKG_GK_PUBLIC.F_TRANS_CODE('TRADE_TYPE_CODE', AA.TRADE_CODE) TRADE_CODE,
@@ -1930,7 +1930,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  A.VOLT_CODE,
                  A.ELEC_TYPE_CODE,
                  A.HEC_INDUSTRY_CODE HEC_INDUSTRY_CODE,
-                 --������ʡ��������������Ϊ��ͣ����ͣ�ָ������ݡ����ݻָ�ʱ,������ȡAPP_RUN_APP
+                 --根据网省反馈当工单类型为暂停、暂停恢复、减容、减容恢复时,容量获取APP_RUN_APP
                  DECODE(SIGN(INSTR('/203/204/201/202/',
                                    '/' ||
                                    PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
@@ -1948,17 +1948,17 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                   FROM SY_SG_S_APP A, SY_SG_INDYWF_INSTANCES_CUR B
                  WHERE A.APP_NO = B.ITEM_KEY
                    AND B.BEGIN_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D
-                      ---����Ҫ���ų���������
+                      ---按照要求排除考核类型
                    AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%'
                    AND PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
                                                   B.PRO_NAME) NOT IN
                        ('112', '217', '103')
                    AND B.ITEM_TYPE = '01'
-                      --�ų�С����װ���͹���,����ɽ������С����װ���ͱ��Ĭ����103,������ʡ����벻ͬ����GK_DW_CODE_TRANS�����á�
+                      --排除小区新装类型工单,按照山东定义小区新装类型编号默认是103,其它网省如代码不同可在GK_DW_CODE_TRANS内配置。
                    AND INSTR(PKG_GK_PUBLIC.F_TRANS_CODE('GDXQXZ', '103'),
                              B.PRO_NAME) <= 0
-                      --��ȡ����ʱ�Լ�������������
+                      --获取非临时性减容销户的数据
                    AND (A.PERMENANT_REDUCE_FLAG <> '02' OR
                        A.PERMENANT_REDUCE_FLAG IS NULL)
                 UNION ALL
@@ -1970,7 +1970,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  A.VOLT_CODE,
                  A.ELEC_TYPE_CODE,
                  A.HEC_INDUSTRY_CODE HEC_INDUSTRY_CODE,
-                 --������ʡ��������������Ϊ��ͣ����ͣ�ָ������ݡ����ݻָ�ʱ,������ȡAPP_RUN_APP
+                 --根据网省反馈当工单类型为暂停、暂停恢复、减容、减容恢复时,容量获取APP_RUN_APP
                  DECODE(SIGN(INSTR('/203/204/201/202/',
                                    '/' ||
                                    PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
@@ -1988,18 +1988,18 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                   FROM SY_SG_ARC_S_APP A, SY_SG_INDYWF_INSTANCES_CUR B
                  WHERE A.APP_NO = B.ITEM_KEY
                    AND B.BEGIN_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D
-                      ---����Ҫ���ų���������
+                      ---按照要求排除考核类型
                    AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%'
                    AND PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
                                                   B.PRO_NAME) NOT IN
                        ('112', '217', '103')
                    AND B.ITEM_TYPE = '01'
-                      --�ų�С����װ���͹���,����ɽ������С����װ���ͱ��Ĭ����103,������ʡ����벻ͬ����GK_DW_CODE_TRANS�����á�
+                      --排除小区新装类型工单,按照山东定义小区新装类型编号默认是103,其它网省如代码不同可在GK_DW_CODE_TRANS内配置。
                    AND INSTR(PKG_GK_PUBLIC.F_TRANS_CODE('GDXQXZ', '103'),
                              B.PRO_NAME) <= 0
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%'
-                      --��ȡ����ʱ�Լ�������������
+                      --获取非临时性减容销户的数据
                    AND (A.PERMENANT_REDUCE_FLAG <> '02' OR
                        A.PERMENANT_REDUCE_FLAG IS NULL)
                 UNION ALL
@@ -2017,7 +2017,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                        SY_SG_INDYWF_INSTANCES_CUR C
                  WHERE A.APP_NO = C.ITEM_KEY
                    AND C.BEGIN_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D
-                      ---����Ҫ���ų���������
+                      ---按照要求排除考核类型
                    AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                    AND A.APP_ID = B.APP_ID
                    AND PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
@@ -2025,7 +2025,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                        ('112', '217', '103')
                    AND C.ITEM_TYPE = '01'
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%'
-                      --��ȡ����ʱ�Լ�������������
+                      --获取非临时性减容销户的数据
                    AND (A.PERMENANT_REDUCE_FLAG <> '02' OR
                        A.PERMENANT_REDUCE_FLAG IS NULL)
                 UNION ALL
@@ -2043,14 +2043,14 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                        SY_SG_INDYWF_INSTANCES_CUR C
                  WHERE A.APP_NO = C.ITEM_KEY
                    AND C.BEGIN_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D
-                      ---����Ҫ���ų���������
+                      ---按照要求排除考核类型
                    AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                    AND A.APP_ID = B.APP_ID
                    AND PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
                                                   C.PRO_NAME) IN
                        ('112', '217', '103')
                    AND C.ITEM_TYPE = '01'
-                      --��ȡ����ʱ�Լ�������������
+                      --获取非临时性减容销户的数据
                    AND (A.PERMENANT_REDUCE_FLAG <> '02' OR
                        A.PERMENANT_REDUCE_FLAG IS NULL)
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%') AA
@@ -2083,7 +2083,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          CMPL_BAL_CAP,
          CMPL_APP_SPQ,
          YEAR_EFFECT_SPQ)
-      -- ������ɻ���������,�����۵���,��� �����滧��������
+      -- 更新完成户数和容量,本月售电量,完成 往年结存户数和容量
         SELECT A2.ORG_NO,
                BUSI_TYPE_CODE,
                A2.TRADE_CODE,
@@ -2137,7 +2137,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  PKG_GK_PUBLIC.F_TRANS_CODE('HUE_TRADE_TYPE_CODE',
                                             A.HEC_INDUSTRY_CODE) HEC_INDUSTRY_CODE,
                  B.BEGIN_DATE BEGIN_DATE,
-                 --������ʡ��������������Ϊ��ͣ����ͣ�ָ������ݡ����ݻָ�ʱ,������ȡAPP_RUN_APP
+                 --根据网省反馈当工单类型为暂停、暂停恢复、减容、减容恢复时,容量获取APP_RUN_APP
                  DECODE(SIGN(INSTR('/203/204/201/202/',
                                    '/' ||
                                    PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
@@ -2157,16 +2157,16 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                    AND B.ITEM_TYPE = '01'
                    AND B.STATE <> 'ABORT'
                    AND B.END_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D
-                      ---����Ҫ���ų���������
+                      ---按照要求排除考核类型
                    AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%'
                    AND PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
                                                   B.PRO_NAME) NOT IN
                        ('112', '217', '103')
-                      --�ų�С����װ���͹���,����ɽ������С����װ���ͱ��Ĭ����103,������ʡ����벻ͬ����GK_DW_CODE_TRANS�����á�
+                      --排除小区新装类型工单,按照山东定义小区新装类型编号默认是103,其它网省如代码不同可在GK_DW_CODE_TRANS内配置。
                    AND INSTR(PKG_GK_PUBLIC.F_TRANS_CODE('GDXQXZ', '103'),
                              B.PRO_NAME) <= 0
-                      --��ȡ����ʱ�Լ�������������
+                      --获取非临时性减容销户的数据
                    AND (A.PERMENANT_REDUCE_FLAG <> '02' OR
                        A.PERMENANT_REDUCE_FLAG IS NULL)
                 UNION ALL
@@ -2193,9 +2193,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                    AND C.STATE <> 'ABORT'
                    AND A.APP_ID = B.APP_ID
                    AND C.END_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D
-                      ---����Ҫ���ų���������
+                      ---按照要求排除考核类型
                    AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
-                      --��ȡ����ʱ�Լ�������������
+                      --获取非临时性减容销户的数据
                    AND (A.PERMENANT_REDUCE_FLAG <> '02' OR
                        A.PERMENANT_REDUCE_FLAG IS NULL)
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%') A2,
@@ -2236,7 +2236,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          CMPL_BAL_CAP,
          CMPL_APP_SPQ,
          YEAR_EFFECT_SPQ)
-      ----������ֹ�������뻧��/������ֹ������������/������ֹ�������뻧��/������ֹ������������
+      ----当月中止本年申请户数/当月中止本年申请容量/当月中止往年申请户数/当月中止往年申请容量
         SELECT AA.ORG_NO,
                BUSI_TYPE_CODE,
                TRADE_CODE,
@@ -2290,7 +2290,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  PKG_GK_PUBLIC.F_TRANS_CODE('HUE_TRADE_TYPE_CODE',
                                             A.HEC_INDUSTRY_CODE) HEC_INDUSTRY_CODE,
                  B.BEGIN_DATE,
-                 --������ʡ��������������Ϊ��ͣ����ͣ�ָ������ݡ����ݻָ�ʱ,������ȡAPP_RUN_APP
+                 --根据网省反馈当工单类型为暂停、暂停恢复、减容、减容恢复时,容量获取APP_RUN_APP
                  DECODE(SIGN(INSTR('/203/204/201/202/',
                                    '/' ||
                                    PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
@@ -2313,13 +2313,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                                                   B.PRO_NAME) NOT IN
                        ('112', '217', '103')
                    AND B.END_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D
-                      ---����Ҫ���ų���������
+                      ---按照要求排除考核类型
                    AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%'
-                      --�ų�С����װ���͹���,����ɽ������С����װ���ͱ��Ĭ����103,������ʡ����벻ͬ����GK_DW_CODE_TRANS�����á�
+                      --排除小区新装类型工单,按照山东定义小区新装类型编号默认是103,其它网省如代码不同可在GK_DW_CODE_TRANS内配置。
                    AND INSTR(PKG_GK_PUBLIC.F_TRANS_CODE('GDXQXZ', '103'),
                              B.PRO_NAME) <= 0
-                      --��ȡ����ʱ�Լ�������������
+                      --获取非临时性减容销户的数据
                    AND (A.PERMENANT_REDUCE_FLAG <> '02' OR
                        A.PERMENANT_REDUCE_FLAG IS NULL)
                 UNION ALL
@@ -2334,7 +2334,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  PKG_GK_PUBLIC.F_TRANS_CODE('HUE_TRADE_TYPE_CODE',
                                             A.HEC_INDUSTRY_CODE) HEC_INDUSTRY_CODE,
                  C.BEGIN_DATE,
-                 --������ʡ��������������Ϊ��ͣ����ͣ�ָ������ݡ����ݻָ�ʱ,������ȡAPP_RUN_APP
+                 --根据网省反馈当工单类型为暂停、暂停恢复、减容、减容恢复时,容量获取APP_RUN_APP
                  B.CONTRACT_CAP CAP
                   FROM SY_SG_ARC_S_APP            A,
                        SY_SG_ARC_S_BATCH_CUST_APP B,
@@ -2347,10 +2347,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                    AND C.STATE = 'ABORT'
                    AND A.APP_ID = B.APP_ID
                    AND C.END_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D
-                      ---����Ҫ���ų���������
+                      ---按照要求排除考核类型
                    AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%'
-                      --��ȡ����ʱ�Լ�������������
+                      --获取非临时性减容销户的数据
                    AND (A.PERMENANT_REDUCE_FLAG <> '02' OR
                        A.PERMENANT_REDUCE_FLAG IS NULL)) AA
          GROUP BY AA.ORG_NO,
@@ -2379,7 +2379,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          CMPL_BAL_CAP,
          CMPL_APP_SPQ,
          YEAR_EFFECT_SPQ)
-      --������װ��������û����ڱ�����װ���ݺ��ڱ���������۵����ϼ�
+      --本年新装增容完成用户，在本年新装增容后在本年产生的售电量合计
         SELECT AA.ORG_NO,
                BUSI_TYPE_CODE,
                AA.TRADE_CODE,
@@ -2411,7 +2411,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                   FROM SY_SG_ARC_S_APP A, SY_SG_INDYWF_INSTANCES_CUR B
                  WHERE A.APP_NO = B.ITEM_KEY
                    AND B.ITEM_TYPE = '01'
-                      --��ȡ����ʱ�Լ�������������
+                      --获取非临时性减容销户的数据
                    AND (A.PERMENANT_REDUCE_FLAG <> '02' OR
                        A.PERMENANT_REDUCE_FLAG IS NULL)
                    AND PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
@@ -2428,11 +2428,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                    AND B.END_DATE >=
                        TO_DATE(SUBSTR(V_YM, 1, 4) || '0101', 'YYYYMMDD')
                    AND B.END_DATE <= V_DATE_END_D
-                      ---����Ҫ���ų���������
+                      ---按照要求排除考核类型
                    AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                    AND B.DEPT_NAME LIKE TSS.ORG_NO || '%'
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%'
-                      --�ų�С����װ���͹���,����ɽ������С����װ���ͱ��Ĭ����103,������ʡ����벻ͬ����GK_DW_CODE_TRANS�����á�
+                      --排除小区新装类型工单,按照山东定义小区新装类型编号默认是103,其它网省如代码不同可在GK_DW_CODE_TRANS内配置。
                    AND INSTR(PKG_GK_PUBLIC.F_TRANS_CODE('GDXQXZ', '103'),
                              
                              B.PRO_NAME) <= 0
@@ -2452,7 +2452,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                        SY_SG_INDYWF_INSTANCES_CUR C
                  WHERE A.APP_NO = C.ITEM_KEY
                    AND C.ITEM_TYPE = '01'
-                      --��ȡ����ʱ�Լ�������������
+                      --获取非临时性减容销户的数据
                    AND (A.PERMENANT_REDUCE_FLAG <> '02' OR
                        A.PERMENANT_REDUCE_FLAG IS NULL)
                    AND PKG_GK_PUBLIC.F_TRANS_CODE('APP_TYPE_CODE',
@@ -2463,7 +2463,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                    AND C.END_DATE >=
                        TO_DATE(SUBSTR(V_YM, 1, 4) || '0101', 'YYYYMMDD')
                    AND C.END_DATE <= V_DATE_END_D
-                      ---����Ҫ���ų���������
+                      ---按照要求排除考核类型
                    AND NVL(A.ELEC_TYPE_CODE, '1') <> '000'
                    AND C.DEPT_NAME LIKE TSS.ORG_NO || '%'
                    AND A.PS_ORG_NO LIKE TSS.ORG_NO || '%') AA,
@@ -2487,7 +2487,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                   AA.ELEC_TYPE_CODE,
                   AA.HEC_INDUSTRY_CODE;
     
-      --�������
+      --主体程序
       INSERT INTO DW_S_BUSI_CCCAP_MON
         (DATA_ID,
          PRO_ORG_NO,
@@ -2517,7 +2517,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          V_PRO_ORG_NO,
          ORG_NO,
          '',
-         --Ӫҵ������        
+         --营业区性质        
          V_YM,
          BUSI_TYPE_CODE,
          TRADE_CODE,
@@ -2526,26 +2526,26 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          SUM(APP_CC),
          SUM(APP_CAP) APP_CAP,
          SUM(CMPL_CC),
-         --��ɻ���         
+         --完成户数         
          SUM(CMPL_CAP),
-         --�������         
+         --完成容量         
          HEC_TRADE_CODE,
          SUM(STOP_LAST_APP_CC),
-         --��ֹ�������뻧��         
+         --中止往年申请户数         
          SUM(STOP_APP_CC),
-         --��ֹ�������뻧��         
+         --中止本年申请户数         
          SUM(STOP_LAST_APP_CAP),
-         --��ֹ������������         
+         --中止往年申请容量         
          SUM(STOP_APP_CAP),
-         --��ֹ������������
+         --中止本年申请容量
          SUM(CMPL_BAL_CC),
-         --��������滧��
+         --完成往年结存户数
          SUM(CMPL_BAL_CAP),
-         --�������������
+         --完成往年结存容量
          SUM(CMPL_APP_SPQ),
-         --���µ��
+         --本月电费
          SUM(YEAR_EFFECT_SPQ),
-         --�ۼƵ��
+         --累计电费
          SYSDATE
           FROM TMP_CCAP_MON A
          GROUP BY ORG_NO,
@@ -2557,45 +2557,45 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
       COMMIT;
     END LOOP;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_BUSI_CCCAP_MON  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_BUSI_CCCAP_MON  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_S_BUSI_CCCAP_MON_SH  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_S_BUSI_CCCAP_MON_SH  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   /******************************
-  #function: �µ�λҵ����װͳ�� (���ʹ洢����)
+  #function: 月单位业扩报装统计 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-03
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_BUSI_CCCAP_MON(IN_YM    VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_BUSI_CCCAP_MON', IN_YM);
     V_YM      := SUBSTR(IN_YM, 1, 6);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_S_BUSI_CCCAP_MON X WHERE X.STAT_YM = V_YM;
   
     INSERT INTO SY_OM_DW_S_BUSI_CCCAP_MON
@@ -2643,102 +2643,102 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
        CMPL_BAL_CAP,
        TIME_STAMP
         FROM DW_S_BUSI_CCCAP_MON A, SY_OM_DW_O_ORG_CONTRAST B
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_YM = V_YM
          AND TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD') BETWEEN
              B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_BUSI_CCCAP_MON  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_BUSI_CCCAP_MON  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    /* --��¼����������־
+    /* --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);*/
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_BUSI_CCCAP_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_BUSI_CCCAP_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: ����;ҵ�����������嵥  (��ڴ洢����)
+  #function: 日在途业扩工单环节清单  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-06
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ENT_DW_S_BUSI_WKST_ING(IN_YMD   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_S_BUSI_WKST_ING', IN_YMD);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_S_BUSI_WKST_ING(IN_YMD, OUT_CODE, OUT_MSG);
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+      --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
       P_ETL_DW_S_BUSI_WKST_ING(IN_YMD, OUT_CODE, OUT_MSG);
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_S_BUSI_WKST_ING  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_S_BUSI_WKST_ING  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_BUSI_WKST_ING  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_BUSI_WKST_ING  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: ����;ҵ�����������嵥 (��ȡ�洢����)
+  #function: 日在途业扩工单环节清单 (抽取存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-06
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_BUSI_WKST_ING(IN_YMD   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
     V_END        DATE := TO_DATE(IN_YMD, 'yyyymmddhh24miss') + 1;
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_S_BUSI_WKST_ING', IN_YMD);
-    --����ҵ�������Ա��־ǿ���н������������ݣ�Ҫ��ɾ��ԭ�еĳ�ȡ�ļ�¼
+    --按照业扩设计人员邹志强表中仅保留当天数据，要求删除原有的抽取的记录
     DELETE FROM DW_S_BUSI_WKST_ING X;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
     INSERT INTO DW_S_BUSI_WKST_ING
@@ -2773,8 +2773,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
        BGN_DATE,
        END_DATE,
        TIME_STAMP)
-      SELECT PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO), --����
-             V_PRO_ORG_NO, --��ʡ����
+      SELECT PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO), --序列
+             V_PRO_ORG_NO, --网省代码
              APP_ID,
              APP_NO,
              ORG_NO,
@@ -2864,10 +2864,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  AND A.ITEM_KEY = B.ITEM_KEY
                  AND A.DEPT_NAME = B.DEPT_NAME
                  AND B.DEPT_NAME = C.PS_ORG_NO
-                    ---����Ҫ���ų���������
+                    ---按照要求排除考核类型
                  AND C.ELEC_TYPE_CODE <> '000'
                  AND A.ITEM_KEY = C.APP_NO
-                    --�ų�С����װ���͹���,����ɽ������С����װ���ͱ��Ĭ����103,������ʡ����벻ͬ����gk_dw_code_trans�����á�
+                    --排除小区新装类型工单,按照山东定义小区新装类型编号默认是103,其它网省如代码不同可在gk_dw_code_trans内配置。
                  AND INSTR(PKG_GK_PUBLIC.F_TRANS_CODE('GDXQXZ', '103'),
                            B.PRO_NAME) <= 0
                  AND (B.END_DATE IS NULL OR B.END_DATE > V_END)
@@ -2933,9 +2933,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  AND A.ITEM_KEY = C.APP_NO
                  AND A.DEPT_NAME = B.DEPT_NAME
                  AND B.DEPT_NAME = C.PS_ORG_NO
-                    ---����Ҫ���ų���������
+                    ---按照要求排除考核类型
                  AND C.ELEC_TYPE_CODE <> '000'
-                    --�ų�С����װ���͹���,����ɽ������С����װ���ͱ��Ĭ����103,������ʡ����벻ͬ����gk_dw_code_trans�����á�
+                    --排除小区新装类型工单,按照山东定义小区新装类型编号默认是103,其它网省如代码不同可在gk_dw_code_trans内配置。
                  AND INSTR(PKG_GK_PUBLIC.F_TRANS_CODE('GDXQXZ', '103'),
                            B.PRO_NAME) <= 0
                  AND (B.END_DATE IS NULL OR B.END_DATE > V_END))
@@ -2954,45 +2954,45 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                 STEP_NO,
                 STEP_NAME;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_BUSI_WKST_ING  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_BUSI_WKST_ING  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_BUSI_WKST_ING  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_BUSI_WKST_ING  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: �չ鵵ҵ�����������嵥 (���ʹ洢����)
+  #function: 日归档业扩工单环节清单 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-06
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_BUSI_WKST_ING(IN_YMD   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_BUSI_WKST_ing', IN_YMD);
   
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_S_BUSI_WKST_ING X;
   
     INSERT INTO SY_OM_DW_S_BUSI_WKST_ING
@@ -3062,99 +3062,99 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
              TIME_STAMP
         FROM DW_S_BUSI_WKST_ING A;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_BUSI_WKST_ing  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_BUSI_WKST_ing  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_BUSI_WKST_ing  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_BUSI_WKST_ing  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: �չ鵵ҵ�����������嵥  (��ڴ洢����)
+  #function: 日归档业扩工单环节清单  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-06
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ENT_DW_S_BUSI_WKST_ARC(IN_YMD   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_S_BUSI_WKST_ARC', IN_YMD);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_S_BUSI_WKST_ARC(IN_YMD, OUT_CODE, OUT_MSG);
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+      --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
       P_ETL_DW_S_BUSI_WKST_ARC(IN_YMD, OUT_CODE, OUT_MSG);
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_S_BUSI_WKST_ARC  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_S_BUSI_WKST_ARC  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_BUSI_WKST_ARC  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_BUSI_WKST_ARC  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: �չ鵵ҵ�����������嵥 (��ȡ�洢����)
+  #function: 日归档业扩工单环节清单 (抽取存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-06
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_BUSI_WKST_ARC(IN_YMD   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
     V_BGN        DATE := TO_DATE(IN_YMD, 'yyyymmddhh24miss');
     V_END        DATE := TO_DATE(IN_YMD, 'yyyymmddhh24miss') + 1;
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_S_BUSI_WKST_ARC', IN_YMD);
   
-    --ɾ��ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除原有的抽取的记录，维度为日
     DELETE FROM DW_S_BUSI_WKST_ARC X
      WHERE X.ARC_DATE BETWEEN V_BGN AND V_END;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
     INSERT INTO DW_S_BUSI_WKST_ARC
@@ -3193,8 +3193,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
        WKST_STATUS_CODE,
        TIME_STAMP,
        HEC_TRADE_CODE)
-      SELECT PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO), --����
-             V_PRO_ORG_NO, --��ʡ����
+      SELECT PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO), --序列
+             V_PRO_ORG_NO, --网省代码
              APP_ID,
              APP_NO,
              ORG_NO,
@@ -3284,7 +3284,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                A.BEGIN_DATE BGN_DATE,
                A.END_DATE,
                ROUND((A.END_DATE - B.BEGIN_DATE) * 24, 2) WORKDAY_NUM,
-               --��ȡ����״̬
+               --获取流程状态
                B.STATE             WKST_STATUS_CODE,
                C.HEC_INDUSTRY_CODE HEC_TRADE_CODE
                 FROM SY_SG_INDYWF_WORKLIST_HIS  A,
@@ -3296,11 +3296,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  AND A.DEPT_NAME = B.DEPT_NAME
                  AND B.DEPT_NAME = C.PS_ORG_NO
                  AND A.ITEM_KEY = C.APP_NO
-                    ---����Ҫ���ų���������
+                    ---按照要求排除考核类型
                  AND C.ELEC_TYPE_CODE <> '000'
-                    --�ų���ֹ�Ĺ���
+                    --排除终止的工单
                  AND B.STATE <> 'ABORT'
-                    --�ų�С����װ���͹���,����ɽ������С����װ���ͱ��Ĭ����103,������ʡ����벻ͬ����gk_dw_code_trans�����á�
+                    --排除小区新装类型工单,按照山东定义小区新装类型编号默认是103,其它网省如代码不同可在gk_dw_code_trans内配置。
                  AND INSTR(PKG_GK_PUBLIC.F_TRANS_CODE('GDXQXZ', '103'),
                            B.PRO_NAME) <= 0
                  AND B.END_DATE BETWEEN V_BGN AND V_END)
@@ -3323,45 +3323,45 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                 PKG_GK_PUBLIC.F_TRANS_CODE('HUE_TRADE_TYPE_CODE',
                                            HEC_TRADE_CODE);
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_BUSI_WKST_ARC  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_BUSI_WKST_ARC  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_S_BUSI_WKST_ARC  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_S_BUSI_WKST_ARC  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: �չ鵵ҵ�����������嵥 (���ʹ洢����)
+  #function: 日归档业扩工单环节清单 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-06
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_BUSI_WKST_ARC(IN_YMD   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_BUSI_WKST_ARC', IN_YMD);
   
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_S_BUSI_WKST_ARC X
      WHERE SUBSTR(TO_CHAR(X.ARC_DATE, 'yyyymmdd'), 1, 8) = IN_YMD;
   
@@ -3441,97 +3441,97 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
              TIME_STAMP,
              HEC_TRADE_CODE
         FROM DW_S_BUSI_WKST_ARC A
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE SUBSTR(TO_CHAR(A.ARC_DATE, 'yyyymmdd'), 1, 8) = IN_YMD;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_BUSI_WKST_ARC  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_BUSI_WKST_ARC  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_BUSI_WKST_ARC  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_BUSI_WKST_ARC  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: �¹鵵ҵ�����������嵥  (��ڴ洢����)
+  #function: 月归档业扩工单环节清单  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-06
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
-  1��ÿ��1�����ͳ��
-  2���˱�ͳ������26���������25��24ʱ��ͳ��Ϊ�������ݣ����һͳ������һ��
-  �磺��ǰΪ20141201��ʼ����ͳ�ƹ��̣�����Ĳ���Ϊ201411����Ҫͳ�Ƶ�����Ϊ20141026-20141126ֱ�ӵ�����
-  �����е�STAT_YM��д201411
-  3���ų��õ����Ϊ��000�����ˡ����Ĺ����Լ���ֹ
-  4�����ʱ��������ʵ���������ʱ��Ϊ׼��
+  1）每月1日零点统计
+  2）此表统计上月26零点至本月25日24时，统计为本月数据，与大一统计周期一致
+  如：当前为20141201开始运行统计过程，传入的参数为201411，则要统计的数据为20141026-20141126直接的数据
+  过程中的STAT_YM填写201411
+  3）排除用电类别为‘000【考核】’的工单以及终止
+  4）完成时间以流程实例表的完成时间为准。
   *********************/
   PROCEDURE P_ENT_DW_S_BUSI_WKST_MON(IN_YM    VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR2(6) := SUBSTR(IN_YM, 1, 6);
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_S_BUSI_WKST_MON', V_YM);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_S_BUSI_WKST_MON(V_YM, OUT_CODE, OUT_MSG);
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+      --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
       P_ETL_DW_S_BUSI_WKST_MON(V_YM, OUT_CODE, OUT_MSG);
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_S_BUSI_WKST_MON  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_S_BUSI_WKST_MON  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_BUSI_WKST_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_BUSI_WKST_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: �¹鵵ҵ�����������嵥 (��ȡ�洢����)
+  #function: 月归档业扩工单环节清单 (抽取存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-06
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_BUSI_WKST_MON(IN_YM    VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
-    --����
+    --上月
     V_L_MONTH  VARCHAR2(6);
     V_BGN_DATE DATE;
     V_END_DATE DATE;
@@ -3539,40 +3539,40 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
     V_END      VARCHAR2(6);
     V_YM       VARCHAR2(6) := SUBSTR(IN_YM, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_BUSI_WKST_MON', IN_YM);
-    --��ȡ����ֵ
+    --获取上月值
     V_L_MONTH := SUBSTR(TO_CHAR(ADD_MONTHS(TO_DATE(IN_YM, 'yyyymm'), -1),
                                 'yyyymmdd'),
                         1,
                         6);
   
     BEGIN
-      --�����ñ���ȡ�¹鵵��ͳ����ֹʱ��
+      --从配置表获取月归档的统计起止时间
       SELECT CONT1, CONT2
         INTO V_BGN, V_END
         FROM GK_DW_CODE_TRANS
        WHERE CODE_TYPE = 'wkstMonPara';
-      --�쳣����
+      --异常处理
     EXCEPTION
       WHEN OTHERS THEN
         V_BGN := NULL;
         V_END := NULL;
     END;
-    --�����ʼʱ��Ϊ�գ���Ĭ�ϴ�26�ſ�ʼ
+    --如果开始时间为空，则默认从26号开始
     IF V_BGN IS NULL THEN
       V_BGN_DATE := TO_DATE(V_L_MONTH || '26', 'yyyymmdd');
     ELSE
       V_BGN_DATE := TO_DATE(V_L_MONTH || V_BGN, 'yyyymmdd');
     END IF;
-    --�������ʱ��Ϊ�գ���Ĭ�ϴ�25�Ž���
+    --如果结束时间为空，则默认从25号结束
     IF V_END IS NULL THEN
       V_END_DATE := TO_DATE(IN_YM || '25', 'yyyymmdd');
     ELSE
       V_END_DATE := TO_DATE(IN_YM || V_END, 'yyyymmdd');
     END IF;
   
-    --ɾ���ϴ�ͳ������
+    --删除上次统计数据
     DELETE DW_S_BUSI_WKST_MON X WHERE X.STAT_YM = V_YM;
   
     INSERT INTO DW_S_BUSI_WKST_MON
@@ -3655,40 +3655,40 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
         FROM DW_S_BUSI_WKST_ARC
        WHERE ARC_DATE BETWEEN V_BGN_DATE AND V_END_DATE;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_BUSI_WKST_MON  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_BUSI_WKST_MON  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_BUSI_WKST_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_BUSI_WKST_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: �¹鵵ҵ�����������嵥 (���ʹ洢����)
+  #function: 月归档业扩工单环节清单 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-06
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_BUSI_WKST_MON(IN_YM    VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
-    --����
+    --上月
     V_L_MONTH  VARCHAR2(6);
     V_BGN_DATE DATE;
     V_END_DATE DATE;
@@ -3696,40 +3696,40 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
     V_END      VARCHAR2(6);
     V_YM       VARCHAR2(6) := SUBSTR(IN_YM, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_BUSI_WKST_MON', IN_YM);
-    --��ȡ����ֵ
+    --获取上月值
     V_L_MONTH := SUBSTR(TO_CHAR(ADD_MONTHS(TO_DATE(IN_YM, 'yyyymm'), -1),
                                 'yyyymmdd'),
                         1,
                         6);
   
     BEGIN
-      --�����ñ���ȡ�¹鵵��ͳ����ֹʱ��
+      --从配置表获取月归档的统计起止时间
       SELECT CONT1, CONT2
         INTO V_BGN, V_END
         FROM GK_DW_CODE_TRANS
        WHERE CODE_TYPE = 'wkstMonPara';
-      --�쳣����
+      --异常处理
     EXCEPTION
       WHEN OTHERS THEN
         V_BGN := NULL;
         V_END := NULL;
     END;
-    --�����ʼʱ��Ϊ�գ���Ĭ�ϴ�26�ſ�ʼ
+    --如果开始时间为空，则默认从26号开始
     IF V_BGN IS NULL THEN
       V_BGN_DATE := TO_DATE(V_L_MONTH || '26', 'yyyymmdd');
     ELSE
       V_BGN_DATE := TO_DATE(V_L_MONTH || V_BGN, 'yyyymmdd');
     END IF;
-    --�������ʱ��Ϊ�գ���Ĭ�ϴ�25�Ž���
+    --如果结束时间为空，则默认从25号结束
     IF V_END IS NULL THEN
       V_END_DATE := TO_DATE(IN_YM || '25', 'yyyymmdd');
     ELSE
       V_END_DATE := TO_DATE(IN_YM || V_END, 'yyyymmdd');
     END IF;
   
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_S_BUSI_WKST_MON X WHERE X.STAT_YM = V_YM;
   
     INSERT INTO SY_OM_DW_S_BUSI_WKST_MON
@@ -3810,56 +3810,56 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
              STAT_YM,
              HEC_TRADE_CODE
         FROM DW_S_BUSI_WKST_MON A
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_YM = V_YM;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_BUSI_WKST_MON  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_BUSI_WKST_MON  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_BUSI_WKST_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_BUSI_WKST_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: �¶ȵ�λ��ͬ�������ͳ��  (��ڴ洢����)
+  #function: 月度单位合同档案情况统计  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-04
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ENT_DW_S_CTRT_ARC_SIGN(IN_YM    VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR2(6) := SUBSTR(IN_YM, 1, 6);
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_S_CTRT_ARC_SIGN', V_YM);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_S_CTRT_ARC_SIGN(V_YM, OUT_CODE, OUT_MSG);
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+      --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
       P_ETL_DW_S_CTRT_ARC_SIGN(V_YM, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_S_CTRT_ARC_SIGN A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -3870,52 +3870,52 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                      B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_YM = V_YM;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_S_CTRT_ARC_SIGN  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_S_CTRT_ARC_SIGN  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_CTRT_ARC_SIGN  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_CTRT_ARC_SIGN  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: �¶ȵ�λ��ͬ�������ͳ��  (��ȡ�洢����)
+  #function: 月度单位合同档案情况统计  (抽取存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-04
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_CTRT_ARC_SIGN(IN_YM    VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
     V_YM         VARCHAR2(6);
     V_BEGIN      DATE;
     V_END        DATE;
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_S_CTRT_ARC_SIGN', IN_YM);
     V_YM      := SUBSTR(IN_YM, 1, 6);
     V_END     := LAST_DAY(TO_DATE(V_YM, 'yyyymm')) + 1;
     V_BEGIN   := TO_DATE(V_YM || '01', 'yyyymmdd');
-    --ɾ��ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除原有的抽取的记录，维度为日
     DELETE FROM DW_S_CTRT_ARC_SIGN WHERE STAT_YM = V_YM;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
     INSERT INTO DW_S_CTRT_ARC_SIGN
@@ -4022,7 +4022,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                      WHEN B.STATUS_CODE = '2' AND B.END_DATE >= V_END THEN
                       A.CONTRACT_CAP
                    END) OVER_SIGN_CAP
-                FROM SY_SG_C_CONS A, SY_SG_C_CUST_AGREEMENT B /*,                                                                                                                                SY_SG_INDYWF_INSTANCES_CUR C*/ --��ͬ������������������ʵ����
+                FROM SY_SG_C_CONS A, SY_SG_C_CUST_AGREEMENT B /*,                                                                                                                                SY_SG_INDYWF_INSTANCES_CUR C*/ --合同档案情况无需关联流程实例表
                WHERE A.CONS_NO = B.CONS_NO
                  AND A.STATUS_CODE <> '9'
                  AND B.SIGN_DATE BETWEEN V_BEGIN AND V_END
@@ -4048,45 +4048,45 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                 PKG_GK_PUBLIC.F_TRANS_CODE('ELEC_TYPE_CODE', ELEC_TYPE_CODE),
                 PKG_GK_PUBLIC.F_TRANS_CODE('TRADE_TYPE_CODE', TRADE_CODE);
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_CTRT_ARC_SIGN  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_CTRT_ARC_SIGN  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_S_CTRT_ARC_SIGN  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_S_CTRT_ARC_SIGN  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   /******************************
-  #function: �¶ȵ�λ��ͬ�������ͳ�� (���ʹ洢����)
+  #function: 月度单位合同档案情况统计 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-04
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_CTRT_ARC_SIGN(IN_YM    VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_CTRT_ARC_SIGN', IN_YM);
     V_YM      := SUBSTR(IN_YM, 1, 6);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_S_CTRT_ARC_SIGN X WHERE X.STAT_YM = V_YM;
   
     INSERT INTO SY_OM_DW_S_CTRT_ARC_SIGN
@@ -4140,54 +4140,54 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
        OVER_SIGN_NUM,
        OVER_SIGN_CAP
         FROM DW_S_CTRT_ARC_SIGN A, SY_OM_DW_O_ORG_CONTRAST B
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_YM = V_YM
          AND TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD') BETWEEN
              B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_CTRT_ARC_SIGN  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_CTRT_ARC_SIGN  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_CTRT_ARC_SIGN  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_CTRT_ARC_SIGN  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: �¶Ⱥ�ͬ��ϸ  (��ʱ��)
+  #function: 月度合同明细  (临时表)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-04
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   /*PROCEDURE P_INS_DW_S_CTRT_PRO_TMP(IN_YMD   VARCHAR2,
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID   VARCHAR2(24);
     V_DUAL_FLAG NUMBER(1);
     I_COUNT     NUMBER(5);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_S_CTRT_PRO_TMP', IN_YMD);
   
     DELETE FROM DW_S_CTRT_PRO_TMP T
      WHERE SUBSTR(TO_CHAR(T.DRAFT_BGN_DATE, 'yyyymmdd'), 1, 8) = IN_YMD;
   
-    --���쿪ʼ�Ļ���
-    FOR T IN ( --��ǰ����
+    --当天开始的环节
+    FOR T IN ( --当前环节
               SELECT \*+parallel(a,4) parallel(b,4) parallel(c,4)*\
                A.ACTIVITY_NAME,
                 B.APP_ID,
@@ -4232,7 +4232,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  AND A.BEGIN_DATE < TO_DATE(IN_YMD, 'yyyymmdd') + 1
                  AND TRUNC(A.BEGIN_DATE) = TO_DATE(IN_YMD, 'yyyymmdd')
               UNION ALL
-              --��ɻ���
+              --完成环节
               SELECT \*+parallel(a,4) parallel(b,4) parallel(c,4)*\
                A.ACTIVITY_NAME,
                B.APP_ID,
@@ -4277,7 +4277,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  AND A.BEGIN_DATE < TO_DATE(IN_YMD, 'yyyymmdd') + 1
                  AND TRUNC(A.BEGIN_DATE) = TO_DATE(IN_YMD, 'yyyymmdd')
               UNION ALL
-              --�鵵����
+              --归档环节
               SELECT \*+parallel(a,4) parallel(b,4) parallel(c,4)*\
                A.ACTIVITY_NAME,
                B.APP_ID,
@@ -4321,7 +4321,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  AND A.BEGIN_DATE >= TO_DATE(IN_YMD, 'yyyymmdd')
                  AND A.BEGIN_DATE < TO_DATE(IN_YMD, 'yyyymmdd') + 1
                  AND TRUNC(A.BEGIN_DATE) = TO_DATE(IN_YMD, 'yyyymmdd')) LOOP
-      --��ͬ���
+      --合同起草
       SELECT COUNT(1)
         INTO I_COUNT
         FROM GK_DW_CODE_TRANS
@@ -4379,7 +4379,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
           WHEN DUP_VAL_ON_INDEX THEN
             V_DUAL_FLAG := 1;
         END;
-        --���̻��˻�����ԭ���ٴγ��ֺ�ͬ��ݻ��ڣ���������ʱ��
+        --流程回退或其他原因，再次出现合同起草环节，则更新起草时间
         IF V_DUAL_FLAG = 1 THEN
           UPDATE DW_S_CTRT_PRO_TMP A
              SET A.DRAFT_BGN_DATE = T.BEGIN_DATE,
@@ -4387,7 +4387,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
            WHERE A.APP_ID = T.APP_ID;
         END IF;
       END IF;
-      --��ͬǩ��
+      --合同签订
       SELECT COUNT(*)
         INTO I_COUNT
         FROM GK_DW_CODE_TRANS
@@ -4409,8 +4409,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
        WHERE APP_ID = T.APP_ID;
     END LOOP;
   
-    --������ɵĻ���
-    FOR T IN ( --��ɻ���
+    --当天完成的环节
+    FOR T IN ( --完成环节
               SELECT \*+parallel(a,4) parallel(b,4) parallel(c,4)*\
                A.ACTIVITY_NAME,
                 B.APP_ID,
@@ -4455,7 +4455,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  AND A.END_DATE < TO_DATE(IN_YMD, 'yyyymmdd') + 1
                  AND TRUNC(A.END_DATE) = TO_DATE(IN_YMD, 'yyyymmdd')
               UNION ALL
-              --�鵵����
+              --归档环节
               SELECT \*+parallel(a,4) parallel(b,4) parallel(c,4)*\
                A.ACTIVITY_NAME,
                B.APP_ID,
@@ -4499,7 +4499,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  AND A.END_DATE >= TO_DATE(IN_YMD, 'yyyymmdd')
                  AND A.END_DATE < TO_DATE(IN_YMD, 'yyyymmdd') + 1
                  AND TRUNC(A.END_DATE) = TO_DATE(IN_YMD, 'yyyymmdd')) LOOP
-      --��ͬ���
+      --合同起草
       SELECT COUNT(*)
         INTO I_COUNT
         FROM GK_DW_CODE_TRANS
@@ -4557,7 +4557,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
           WHEN DUP_VAL_ON_INDEX THEN
             V_DUAL_FLAG := 1;
         END;
-        --���̻��˻�����ԭ���ٴγ��ֺ�ͬ��ݻ��ڣ���������ʱ��
+        --流程回退或其他原因，再次出现合同起草环节，则更新起草时间
         IF V_DUAL_FLAG = 1 THEN
           UPDATE DW_S_CTRT_PRO_TMP A
              SET A.DRAFT_BGN_DATE = T.BEGIN_DATE,
@@ -4565,7 +4565,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
            WHERE A.APP_ID = T.APP_ID;
         END IF;
       END IF;
-      --��ͬǩ��
+      --合同签订
       SELECT COUNT(*)
         INTO I_COUNT
         FROM GK_DW_CODE_TRANS
@@ -4577,7 +4577,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                A.SIGN_END_DATE = T.DRAFT_END_DATE
          WHERE A.APP_ID = T.APP_ID;
       END IF;
-      --����״̬
+      --流程状态
       UPDATE DW_S_CTRT_PRO_TMP A
          SET A.PROC_STATE = CASE
                               WHEN T.DATA_TYPE = 'com' THEN
@@ -4587,7 +4587,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                             END
        WHERE APP_ID = T.APP_ID;
     END LOOP;
-    --������ֹ
+    --当天终止
     UPDATE DW_S_CTRT_PRO_TMP A
        SET A.PROC_STATE = '04', A.ABORT_DATE = TO_DATE(IN_YMD, 'yyyymmdd')
      WHERE EXISTS (SELECT 1
@@ -4599,48 +4599,48 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                AND TO_CHAR(B.ABORT_DATE, 'yyyymmdd') = IN_YMD);
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_CTRT_PRO_TMP  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_CTRT_PRO_TMP  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_S_CTRT_PRO_TMP  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_S_CTRT_PRO_TMP  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;*/
   /******************************
-  #function: �¶ȵ�λ��ͬ�������ͳ��  (��ڴ洢����)
+  #function: 月度单位合同档案情况统计  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-04
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ENT_DW_S_CTRT_PRO_SIGN(IN_YM    VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR2(6) := SUBSTR(IN_YM, 1, 6);
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_S_CTRT_PRO_SIGN', V_YM);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_S_CTRT_PRO_SIGN(V_YM, OUT_CODE, OUT_MSG);
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+      --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
       P_ETL_DW_S_CTRT_PRO_SIGN(V_YM, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_S_CTRT_PRO_SIGN A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -4651,66 +4651,66 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                      B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_YM = V_YM;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_S_CTRT_PRO_SIGN  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_S_CTRT_PRO_SIGN  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_CTRT_ARC_SIGN  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_CTRT_ARC_SIGN  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-    #function: �¶ȵ�λ��ͬ�������ͳ��  (��ȡ�洢����)
+    #function: 月度单位合同档案情况统计  (抽取存储过程)
     #version:1.01
     #author:jkx 32078
     #createdate:2014-03-04
-    #input:in_ymd  ͳ������
-    #input:in_org_no  ���絥λ���
+    #input:in_ymd  统计日期
+    #input:in_org_no  供电单位编号
     #modifyexplain:
-    1��ÿ��1�����ͳ��
-  2�����һ����ʱ����ͬ������26���������25��24ʱ
-  �磺��ǰΪ20141201��ʼ����ͳ�ƹ��̣�����Ĳ���Ϊ201411����Ҫͳ�Ƶ�����Ϊ20141026-20141126ֱ�ӵ�����
-    �����е�STAT_YM��д201411
-  3����������ʱ�䣬������ʵ�����еĿ�ʼʱ��Ϊ׼��
+    1）每月1日零点统计
+  2）与大一考核时间相同，上月26零点至本月25日24时
+  如：当前为20141201开始运行统计过程，传入的参数为201411，则要统计的数据为20141026-20141126直接的数据
+    过程中的STAT_YM填写201411
+  3）工单受理时间，与流程实例表中的开始时间为准。
     *********************/
   PROCEDURE P_INS_DW_S_CTRT_PRO_SIGN(IN_YM    VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(6) := SUBSTR(IN_YM, 1, 6);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
-    --����26��
+    --本月26日
     V_BEGIN_NEXT_MONTH DATE := TO_DATE(V_YM || '26', 'yyyymmdd');
   
-    --����26��
+    --上月26日
     V_BEGIN_MONTH DATE := ADD_MONTHS(V_BEGIN_NEXT_MONTH, -1);
   
-    --�¸���26��
+    --下个月26日
     V_BEGIN_NEXT_MONTH_NEXT DATE := ADD_MONTHS(V_BEGIN_NEXT_MONTH, 1);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_S_CTRT_ARC_SIGN', IN_YM);
-    --ɾ��ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除原有的抽取的记录，维度为日
     DELETE FROM DW_S_CTRT_PRO_SIGN WHERE STAT_YM = V_YM;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --��ʼ����ͳ��,���뵽���������OMAC��DW_C_CONS_COMP
-    --����ʵ�����ѡ���Ƿ���Ҫ��λѭ����һ���Ƿ���������Ҫ��
+    --开始数据统计,插入到稽查管理库OMAC的DW_C_CONS_COMP
+    --根据实际情况选择是否需要单位循环（一般是分区表才需要）
     FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
                                        1,
                                        DECODE(V_PRO_ORG_NO, '12101', 5, 7)) ORG_NO
@@ -4718,7 +4718,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  WHERE ORG_NO <> '00000'
                    AND LENGTH(ORG_NO) >= DECODE(V_PRO_ORG_NO, '12101', 5, 7)) LOOP
     
-      --���º�ͬ������Ϣ����
+      --本月合同数据信息到户
       INSERT INTO TMP_DW_S_CTRT_PRO_SIGN
         (ORG_NO,
          APP_NO,
@@ -4738,9 +4738,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          W.DEPT_NAME ORG_NO,
          W.ITEM_KEY APP_NO,
          NVL(B.CONS_NO, A.CONS_NO) CONS_NO,
-         --��ͬ���ͣ���ѹ���õ��ͬ����ѹ���õ��ͬ����ʱ���õ��ͬ��ί��ת����Э�顢���ۺ�ͬ
+         --合同类型：高压供用电合同、低压供用电合同、临时供用电合同、委托转供电协议、趸售合同
          B.TYPE_CODE TYPE_CODE,
-         --��ͬǩ������,��ǩ ��ǩ ��� ��ǩ ��ֹ
+         --合同签订类型,新签 续签 变更 补签 终止
          B.OPER_TYPE_CODE SIGN_TYPE,
          A.CONS_SORT_CODE CONS_SORT_CODE,
          A.VOLT_CODE      PS_VOLT_CODE,
@@ -4748,25 +4748,25 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          A.TRADE_CODE     TRADE_CODE,
          B.STATUS_CODE    STATUS_CODE,
          B.CONTRACT_ID    CONTRACT_ID,
-         --�ϼƺ�ͬ����
+         --合计合同容量
          NVL(A.T_CONTRACT_CAP, 0) CTRT_CAP,
-         --Ӧǩ��ͬ����
+         --应签合同容量
          NVL(A.CONTRACT_CAP, 0) SHOULD_SIGN_CTRT_CAP,
-         --��ǩ����ͬ����
+         --已签订合同容量
          DECODE(B.CONTRACT_ID, NULL, 0, A.CONTRACT_CAP) SIGN_CAP
           FROM WF_AMBER.INDYWF_INSTANCES_CUR W,
                SGPM.ARC_S_APP                A,
                SGPM.C_CUST_AGREEMENT         B
          WHERE W.ITEM_TYPE = '01'
            AND W.STATE = 'COMPLETE'
-              ----����ɽ��ҵ����Ա����Ҫ��:������ֺ�ͬ����Ϊ�յ����
+              ----按照山东业务人员李丽要求:避免出现合同类型为空的情况
            AND W.PRO_NAME <> '112'
            AND W.END_DATE >= V_BEGIN_MONTH
            AND W.END_DATE < V_BEGIN_NEXT_MONTH
            AND W.ITEM_KEY = A.APP_NO
            AND W.DEPT_NAME LIKE TSS.ORG_NO || '%'
            AND W.DEPT_NAME = A.PS_ORG_NO
-              --����ɽ����ѹ������û����Ͳ�ǩ����ͬ�ų�
+              --由于山东低压居民的用户类型不签订合同排除
            AND A.CONS_SORT_CODE IN ('01', '02')
            AND A.CONS_NO = B.CONS_NO(+)
            AND B.STATUS_CODE <> '4'
@@ -4775,9 +4775,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          W.DEPT_NAME ORG_NO,
          W.ITEM_KEY APP_NO,
          NVL(B.CONS_NO, A.CONS_NO) CONS_NO,
-         --��ͬ���ͣ���ѹ���õ��ͬ����ѹ���õ��ͬ����ʱ���õ��ͬ��ί��ת����Э�顢���ۺ�ͬ
+         --合同类型：高压供用电合同、低压供用电合同、临时供用电合同、委托转供电协议、趸售合同
          B.TYPE_CODE TYPE_CODE,
-         --��ͬǩ������,��ǩ ��ǩ ��� ��ǩ ��ֹ
+         --合同签订类型,新签 续签 变更 补签 终止
          B.OPER_TYPE_CODE SIGN_TYPE,
          NVL(C.CONS_SORT_CODE, A.CONS_SORT_CODE) CONS_SORT_CODE,
          NVL(C.VOLT_CODE, A.VOLT_CODE) PS_VOLT_CODE,
@@ -4785,11 +4785,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          NVL(C.TRADE_CODE, A.TRADE_CODE) TRADE_CODE,
          B.STATUS_CODE STATUS_CODE,
          B.CONTRACT_ID CONTRACT_ID,
-         --�ϼƺ�ͬ����
+         --合计合同容量
          NVL(A.T_CONTRACT_CAP, 0) CTRT_CAP,
-         --Ӧǩ��ͬ����
+         --应签合同容量
          NVL(A.CONTRACT_CAP, 0) SHOULD_SIGN_CTRT_CAP,
-         --��ǩ����ͬ����
+         --已签订合同容量
          DECODE(B.CONTRACT_ID, NULL, 0, A.CONTRACT_CAP) SIGN_CAP
           FROM WF_AMBER.INDYWF_INSTANCES_CUR W,
                SGPM.ARC_S_APP                A,
@@ -4797,21 +4797,21 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                SGPM.ARC_S_BATCH_CUST_APP     C
          WHERE W.ITEM_TYPE = '01'
            AND W.STATE = 'COMPLETE'
-              --����ɽ��ҵ����Ա����Ҫ��:������ֺ�ͬ����Ϊ�յ����
+              --按照山东业务人员李丽要求:避免出现合同类型为空的情况
            AND W.PRO_NAME = '112'
            AND W.END_DATE >= V_BEGIN_MONTH
            AND W.END_DATE < V_BEGIN_NEXT_MONTH
            AND W.ITEM_KEY = A.APP_NO
            AND W.DEPT_NAME LIKE TSS.ORG_NO || '%'
            AND W.DEPT_NAME = A.PS_ORG_NO
-              --����ɽ����ѹ������û����Ͳ�ǩ����ͬ
+              --由于山东低压居民的用户类型不签订合同
            AND C.CONS_SORT_CODE IN ('01', '02')
            AND A.APP_ID = C.APP_ID
            AND C.CONS_NO = B.CONS_NO(+)
            AND A.CONS_SORT_CODE IN ('01', '02')
            AND B.STATUS_CODE <> '4';
     
-      --���µ��ڵĺ�ͬ������
+      --下月到期的合同数到户
       INSERT INTO TMP_DW_S_CTRT_PRO_SIGN_NEXT
         (ORG_NO,
          CONS_NO,
@@ -4825,9 +4825,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
         SELECT /*+parallel(w 4) (a 4) (b 4) (d 4)*/
          A.ORG_NO  ORG_NO,
          A.CONS_NO CONS_NO,
-         --��ͬ���ͣ���ѹ���õ��ͬ����ѹ���õ��ͬ����ʱ���õ��ͬ��ί��ת����Э�顢���ۺ�ͬ
+         --合同类型：高压供用电合同、低压供用电合同、临时供用电合同、委托转供电协议、趸售合同
          B.TYPE_CODE TYPE_CODE,
-         --��ͬǩ������,��ǩ ��ǩ ��� ��ǩ ��ֹ
+         --合同签订类型,新签 续签 变更 补签 终止
          B.OPER_TYPE_CODE SIGN_TYPE,
          A.CONS_SORT_CODE CONS_SORT_CODE,
          A.VOLT_CODE      PS_VOLT_CODE,
@@ -4905,39 +4905,39 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  T.PS_VOLT_CODE,
                  T.ELEC_TYPE_CODE,
                  T.TRADE_CODE,
-                 --���µ��ں�ͬ��
+                 --下月到期合同数
                  COUNT(S.CONS_NO) NEXT_DUE_NUM,
-                 --�ϼƺ�ͬ����
+                 --合计合同容量
                  SUM(T.CTRT_CAP) CTRT_CAP,
-                 --Ӧǩ����ͬ��
+                 --应签订合同数
                  COUNT(T.CONS_NO) SHOULDSIGN_NUM,
-                 --��ǩ����ͬ�� 
+                 --已签订合同数 
                  SUM(DECODE(T.CONS_SORT_CODE,
                             '03',
                             1,
                             '00',
                             1,
                             DECODE(T.CONTRACT_ID, NULL, 0, 1))) SIGN_NUM,
-                 --��ʱǩ����ͬ�� 
+                 --及时签订合同数 
                  SUM(DECODE(T.CONS_SORT_CODE,
                             '03',
                             1,
                             '00',
                             1,
                             DECODE(T.CONTRACT_ID, NULL, 0, 1))) INTIME_SIGN_CTRT_NUM,
-                 --Ӧǩ��ͬ����
+                 --应签合同容量
                  SUM(T.SHOULD_SIGN_CTRT_CAP) SHOULD_SIGN_CTRT_CAP,
-                 --��ǩ����ͬ����
+                 --已签订合同容量
                  SUM(T.SIGN_CAP) SIGN_CAP,
-                 --����ɽ��ҵ����Ա���⣬����ǩ����ͬ���޴˸���ӦΪ0
+                 --按照山东业务人员理解，超期签订合同数无此概念应为0
                  0 SIGN_ODUE_NUM,
-                 --���ڼ춨��ͬ����
+                 --超期检定合同容量
                  0 SIGN_ODUE_CAP,
-                 --����δǩ����ͬ��
+                 --超期未签订合同数
                  0 NOTSIGN_ODUE_NUM,
-                 --����δǩ����ͬ����
+                 --超期未签订合同容量
                  0 NOTSIGN_ODUE_CAP,
-                 ---Ӧǩ�����õ��ͬ���õ继��,����ɽ��ҵ����Ա���⣺Ӧǩ�����õ��ͬ���õ继��Ӧ�ø�Ӧǩ����ͬ��һ��
+                 ---应签订供用电合同的用电户数,按照山东业务人员理解：应签订供用电合同的用电户数应该跟应签订合同数一样
                  COUNT(T.CONS_NO) SHOULD_SIGN_CC
                   FROM TMP_DW_S_CTRT_PRO_SIGN      T,
                        TMP_DW_S_CTRT_PRO_SIGN_NEXT S
@@ -4969,45 +4969,45 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
       COMMIT;
     END LOOP;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_CTRT_pro_SIGN  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_CTRT_pro_SIGN  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_S_CTRT_pro_SIGN  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_S_CTRT_pro_SIGN  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   /******************************
-  #function: �¶ȵ�λ��ͬ�������ͳ�� (���ʹ洢����)
+  #function: 月度单位合同档案情况统计 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-04
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_CTRT_PRO_SIGN(IN_YM    VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_CTRT_ARC_SIGN', IN_YM);
     V_YM      := SUBSTR(IN_YM, 1, 6);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_S_CTRT_PRO_SIGN X WHERE X.STAT_YM = V_YM;
   
     INSERT INTO SY_OM_DW_S_CTRT_PRO_SIGN
@@ -5065,63 +5065,63 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
        SHOULD_SIGN_CC,
        TIME_STAMP
         FROM DW_S_CTRT_PRO_SIGN A, SY_OM_DW_O_ORG_CONTRAST B
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_YM = V_YM
          AND TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD') BETWEEN
              B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_CTRT_ARC_SIGN  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_CTRT_ARC_SIGN  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_CTRT_ARC_SIGN  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_CTRT_ARC_SIGN  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-    #function: �¶���ʱ�õ糬���û���ϸ  (��ڴ洢����)
+    #function: 月度临时用电超期用户明细  (入口存储过程)
     #version:1.01
     #author:jkx 32078
     #createdate:2014-03-05
-    #input:in_ym  ͳ������
-    #input:in_org_no  ���絥λ���
+    #input:in_ym  统计日期
+    #input:in_org_no  供电单位编号
     #modifyexplain:
-    1������ͳ�Ƹ��㼶��λ��ʱ�õ��ѳ��ڵ��û�ͳ�������
-  2��ÿ��1�����ͳ��
-  3�����һ����ʱ����ͬ������26���������25��24ʱ��ͳ��Ϊ��������
-  �磺��ǰΪ20141201��ʼ����ͳ�ƹ��̣�����Ĳ���Ϊ201411��Ҫͳ�Ƶ�����Ϊ20141026-20141126ֱ�ӵ�����
-    �����е�STAT_YM��д201411
-  4���ų��õ����Ϊ��000�����ˡ����Ĺ����Լ���ֹ
+    1）按月统计各层级单位临时用电已超期的用户统计情况。
+  2）每月1日零点统计
+  3）与大一考核时间相同，上月26零点至本月25日24时，统计为本月数据
+  如：当前为20141201开始运行统计过程，则传入的参数为201411，要统计的数据为20141026-20141126直接的数据
+    过程中的STAT_YM填写201411
+  4）排除用电类别为‘000【考核】’的工单以及终止
     *********************/
   PROCEDURE P_ENT_DW_S_TEMP_PQ_DET(IN_YM    VARCHAR2,
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR2(6) := SUBSTR(IN_YM, 1, 6);
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_S_TEMP_PQ_DET', V_YM);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_S_TEMP_PQ_DET(V_YM, OUT_CODE, OUT_MSG);
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+      --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
       P_ETL_DW_S_TEMP_PQ_DET(V_YM, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_S_TEMP_PQ_DET A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -5132,53 +5132,53 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                      B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_YM = V_YM;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_S_TEMP_PQ_DET  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_S_TEMP_PQ_DET  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_TEMP_PQ_DET  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_TEMP_PQ_DET  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: �¶���ʱ�õ糬���û���ϸ  (��ȡ�洢����)
+  #function: 月度临时用电超期用户明细  (抽取存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-05
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_TEMP_PQ_DET(IN_YM    VARCHAR2,
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
     V_YM         VARCHAR2(6);
     V_BEG_DATE   DATE;
     V_END_DATE   DATE;
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID  := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_C_CONS_COMP', IN_YM);
     V_YM       := SUBSTR(IN_YM, 1, 6);
     V_END_DATE := TO_DATE(V_YM || '26', 'yyyymmdd');
     V_BEG_DATE := ADD_MONTHS(V_END_DATE, -1);
   
-    --ɾ��ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除原有的抽取的记录，维度为月
     DELETE FROM DW_S_TEMP_PQ_DET X WHERE X.STAT_YM = V_YM;
   
     INSERT INTO DW_S_TEMP_PQ_DET
@@ -5275,44 +5275,44 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                 PKG_GK_PUBLIC.F_TRANS_CODE('VOLT_CODE', PS_VOLT_CODE),
                 PKG_GK_PUBLIC.F_TRANS_CODE('HUE_TRADE_TYPE_CODE',
                                            HEC_TRADE_CODE);
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_TEMP_PQ_DET  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_TEMP_PQ_DET  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_TEMP_PQ_DET  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_TEMP_PQ_DET  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: �¶���ʱ�õ糬���û���ϸ (���ʹ洢����)
+  #function: 月度临时用电超期用户明细 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-05
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_TEMP_PQ_DET(IN_YM    VARCHAR2,
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(6) := SUBSTR(IN_YM, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_TEMP_PQ_DET', IN_YM);
   
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_S_TEMP_PQ_DET X WHERE X.STAT_YM = V_YM;
   
     INSERT INTO SY_OM_DW_S_TEMP_PQ_DET
@@ -5372,65 +5372,65 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
        TIME_STAMP,
        CONS_ID
         FROM DW_S_TEMP_PQ_DET A, SY_OM_DW_O_ORG_CONTRAST B
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_YM = V_YM
          AND TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD') BETWEEN
              B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_TEMP_PQ_DET  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_TEMP_PQ_DET  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_TEMP_PQ_DET  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_TEMP_PQ_DET  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-    #function: �¶���ʱ�õ糬�����ͳ��  (��ڴ洢����)
+    #function: 月度临时用电超期情况统计  (入口存储过程)
     #version:1.01
     #author:jkx 32078
     #createdate:2014-03-05
-    #input:in_ym  ͳ������
-    #input:in_org_no  ���絥λ���
+    #input:in_ym  统计日期
+    #input:in_org_no  供电单位编号
     #modifyexplain:
-    1������ͳ�Ƹ��㼶��λ��ʱ�õ��ѳ��ڵ��û����������
-  2��ÿ��1�����ͳ��
-  3�����һ����ʱ����ͬ������26���������25��24ʱ��ͳ��Ϊ��������
-  �磺��ǰΪ20141201��ʼ����ͳ�ƹ��̣�����Ĳ���Ϊ201411��Ҫͳ�Ƶ�����Ϊ20141026-20141126ֱ�ӵ�����
-    �����е�STAT_YM��д201411
-  4���ų��õ����Ϊ��000�����ˡ����Ĺ����Լ���ֹ
+    1）按月统计各层级单位临时用电已超期的用户档案情况。
+  2）每月1日零点统计
+  3）与大一考核时间相同，上月26零点至本月25日24时，统计为本月数据
+  如：当前为20141201开始运行统计过程，则传入的参数为201411，要统计的数据为20141026-20141126直接的数据
+    过程中的STAT_YM填写201411
+  4）排除用电类别为‘000【考核】’的工单以及终止
     *********************/
   PROCEDURE P_ENT_DW_S_TEMP_PQ_STAT(IN_YM    VARCHAR2,
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR2(6) := SUBSTR(IN_YM, 1, 6);
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_S_TEMP_PQ_STAT', IN_YM);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_S_TEMP_PQ_STAT(V_YM, OUT_CODE, OUT_MSG);
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+      --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
       P_ETL_DW_S_TEMP_PQ_STAT(V_YM, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_S_TEMP_PQ_STAT A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -5441,50 +5441,50 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                      B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_YM = V_YM;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_S_TEMP_PQ_STAT  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_S_TEMP_PQ_STAT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_TEMP_PQ_STAT  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_TEMP_PQ_STAT  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: �¶���ʱ�õ糬�����ͳ��  (��ȡ�洢����)
+  #function: 月度临时用电超期情况统计  (抽取存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-05
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_TEMP_PQ_STAT(IN_YM    VARCHAR2,
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
     V_YM         VARCHAR2(6);
     V_YMD        DATE;
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_S_TEMP_PQ_STAT', IN_YM);
     V_YM      := SUBSTR(IN_YM, 1, 6);
     V_YMD     := TO_DATE(V_YM || '26', 'YYYYMMDD');
-    --ɾ��ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除原有的抽取的记录，维度为月
     DELETE FROM DW_S_TEMP_PQ_STAT X WHERE X.STAT_YM = V_YM;
   
     INSERT INTO DW_S_TEMP_PQ_STAT
@@ -5576,46 +5576,46 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                 PKG_GK_PUBLIC.F_TRANS_CODE('TMP_FLAG', TMP_FLAG),
                 OVER_NPER;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_TEMP_PQ_STAT  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_TEMP_PQ_STAT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_TEMP_PQ_DET  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_TEMP_PQ_DET  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   /******************************
-  #function: �¶���ʱ�õ糬�����ͳ�� (���ʹ洢����)
+  #function: 月度临时用电超期情况统计 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-05
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_TEMP_PQ_STAT(IN_YM    VARCHAR2,
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(6) := SUBSTR(IN_YM, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_TEMP_PQ_STAT', IN_YM);
   
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_S_TEMP_PQ_STAT X WHERE X.STAT_YM = V_YM;
   
     INSERT INTO SY_OM_DW_S_TEMP_PQ_STAT
@@ -5649,65 +5649,65 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
        TMP_FLAG,
        TIME_STAMP
         FROM DW_S_TEMP_PQ_STAT A, SY_OM_DW_O_ORG_CONTRAST B
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_YM = V_YM
          AND TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD') BETWEEN
              B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_TEMP_PQ_STAT  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_TEMP_PQ_STAT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_TEMP_PQ_DET  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_TEMP_PQ_DET  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: �¶���ʱ�������ͳ��  (��ڴ洢����)
+  #function: 月度临时减容情况统计  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-05
-  #input:in_ymd  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ymd  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
-  1������ͳ�Ƹ��㼶��λ��ʱ���ݹ鵵���������������
-  2��ÿ��1�����ͳ��
-  3�����һ����ʱ����ͬ������26���������25��24ʱ��ͳ��Ϊ��������
-  �磺��ǰΪ20141201��ʼ����ͳ�ƹ��̣�����Ĳ���Ϊ201411����Ҫͳ�Ƶ�����Ϊ20141026-20141126ֱ�ӵ�����
-  �����е�STAT_YM��д201411
-  4���ų��õ����Ϊ��000�����ˡ����Ĺ���
+  1）按月统计各层级单位临时减容归档工单及档案情况。
+  2）每月1日零点统计
+  3）与大一考核时间相同，上月26零点至本月25日24时，统计为本月数据
+  如：当前为20141201开始运行统计过程，传入的参数为201411，则要统计的数据为20141026-20141126直接的数据
+  过程中的STAT_YM填写201411
+  4）排除用电类别为‘000【考核】’的工单
   *********************/
   PROCEDURE P_ENT_DW_S_TEMP_REDUCE_CAP(IN_YM    VARCHAR2,
                                        OUT_CODE OUT NUMBER,
                                        OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR2(6) := SUBSTR(IN_YM, 1, 6);
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_S_TEMP_REDUCE_CAP', IN_YM);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_S_TEMP_REDUCE_CAP(V_YM, OUT_CODE, OUT_MSG);
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+      --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
       P_ETL_DW_S_TEMP_REDUCE_CAP(V_YM, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_S_TEMP_REDUCE_CAP A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -5718,54 +5718,54 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                      B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_YM = V_YM;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_S_TEMP_REDUCE_CAP  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_S_TEMP_REDUCE_CAP  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_TEMP_REDUCE_CAP  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_TEMP_REDUCE_CAP  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: �¶���ʱ�������ͳ��  (��ȡ�洢����)
+  #function: 月度临时减容情况统计  (抽取存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-05
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
-  #����־ǿ��ͨ��Ŀǰֻͳ�Ƽ��ݹ鵵���
+  #跟邹志强沟通，目前只统计减容归档情况
   *********************/
   PROCEDURE P_INS_DW_S_TEMP_REDUCE_CAP(IN_YM    VARCHAR2,
                                        OUT_CODE OUT NUMBER,
                                        OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
     V_YM         VARCHAR2(6);
     V_BEG_DATE   DATE;
     V_END_DATE   DATE;
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID  := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_S_TEMP_REDUCE_CAP',
                                          IN_YM);
     V_YM       := SUBSTR(IN_YM, 1, 6);
     V_END_DATE := TO_DATE(V_YM || '26', 'yyyymmdd');
     V_BEG_DATE := ADD_MONTHS(V_END_DATE, -1);
-    --ɾ��ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除原有的抽取的记录，维度为月
     DELETE FROM DW_S_TEMP_REDUCE_CAP X WHERE X.STAT_YM = V_YM;
   
     INSERT INTO DW_S_TEMP_REDUCE_CAP
@@ -5830,46 +5830,46 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                 PKG_GK_PUBLIC.F_TRANS_CODE('ELEC_TYPE_CODE', ELEC_TYPE_CODE),
                 PKG_GK_PUBLIC.F_TRANS_CODE('TRADE_TYPE_CODE', TRADE_CODE);
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_TEMP_REDUCE_CAP  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_TEMP_REDUCE_CAP  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_S_TEMP_REDUCE_CAP  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_S_TEMP_REDUCE_CAP  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   /******************************
-  #function: �¶���ʱ�������ͳ�� (���ʹ洢����)
+  #function: 月度临时减容情况统计 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-05
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_TEMP_REDUCE_CAP(IN_YM    VARCHAR2,
                                        OUT_CODE OUT NUMBER,
                                        OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(6) := SUBSTR(IN_YM, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_TEMP_REDUCE_CAP', IN_YM);
   
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_S_TEMP_REDUCE_CAP X WHERE X.STAT_YM = V_YM;
   
     INSERT INTO SY_OM_DW_S_TEMP_REDUCE_CAP
@@ -5903,58 +5903,58 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
        CTRT_CAP,
        TIME_STAMP
         FROM DW_S_TEMP_REDUCE_CAP A, SY_OM_DW_O_ORG_CONTRAST B
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_YM = V_YM
          AND TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD') BETWEEN
              B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_TEMP_REDUCE_CAP  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_TEMP_REDUCE_CAP  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_TEMP_REDUCE_CAP  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_TEMP_REDUCE_CAP  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /**
-    �������ƣ�P_ENT_DW_S_SAFETY_CHG/�հ�ȫ��������ͳ����ڹ���
-    ���ߣ�jpl
-    ��д���ڣ�2014-03-07 01:37
-    ��������������ͳ�ư�ȫ�������������Ϣ,�����ݿ�JOB����
-    ͳ��Ƶ�ȣ����ճ�ȡ,�������
-    ��θ�ʽ��I_DATA ��YYYYMMDD
-    �޸���:
-    �޸�����:
+    过程名称：P_ENT_DW_S_SAFETY_CHG/日安全隐患整改统计入口过程
+    作者：jpl
+    编写日期：2014-03-07 01:37
+    过程描述：按日统计安全隐患整改情况信息,被数据库JOB调用
+    统计频度：按日抽取,次日零点
+    入参格式：I_DATA ：YYYYMMDD
+    修改人:
+    修改日期:
   **/
   PROCEDURE P_ENT_DW_S_SAFETY_CHG(I_DATA   VARCHAR2,
                                   OUT_CODE OUT NUMBER,
                                   OUT_MSG  OUT VARCHAR2) IS
   
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YMD      VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_S_SAFETY_CHG', V_YMD);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_S_SAFETY_CHG��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_S_SAFETY_CHG表
     P_INS_DW_S_SAFETY_CHG(V_YMD, OUT_CODE, OUT_MSG);
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_S_SAFETY_CHG��ȡ���ݲ��뵽�����OMAC�û��µ�DW_S_SAFETY_CHG��
+      --调用推送过程，从管理库OMAC用户下的DW_S_SAFETY_CHG表取数据插入到稽查库OMAC用户下的DW_S_SAFETY_CHG表
       P_ETL_DW_S_SAFETY_CHG(V_YMD, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_S_SAFETY_CHG A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -5964,22 +5964,22 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  AND V_YMD BETWEEN B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_YMD = V_YMD;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_S_SAFETY_CHG  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_S_SAFETY_CHG  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_SAFETY_CHG  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_SAFETY_CHG  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -5990,10 +5990,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
   
     V_DATA_ID VARCHAR2(24);
     V_YMD     VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   BEGIN
-    --��ʼ��¼��־
+    --开始记录日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_S_SAFETY_CHG', V_YMD);
   
     DELETE FROM DW_S_SAFETY_CHG WHERE STAT_YMD = V_YMD;
@@ -6038,7 +6038,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  AND B.ID = C.ID2(+)
                  AND C.ID = D.ID2(+)
                  AND A.CHK_DATE = V_YMD
-                 AND A.PLAN_STATUS_CODE <> '11' --��ȡ��
+                 AND A.PLAN_STATUS_CODE <> '11' --已取消
                GROUP BY A.CONS_ID);
   
     FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
@@ -6145,7 +6145,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                                    AND CC.CUST_ID = A.CUST_ID
                                    AND A.CONS_ID = B.CONS_ID(+)
                                    AND A.CONS_ID = C.CONS_ID(+)
-                                      --���Ա�����Դ���ָ�Σ�û�
+                                      --不以保安电源区分高危用户
                                       --AND B.PS_ATTR = '30'
                                    AND A.ORG_NO = B.ORG_NO(+)
                                    AND A.ORG_NO LIKE TSS.ORG_NO || '%'
@@ -6186,23 +6186,23 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
     
     END LOOP;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_SAFETY_CHG  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_SAFETY_CHG  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_S_SAFETY_CHG  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_INS_DW_S_SAFETY_CHG  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -6211,18 +6211,18 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                                   OUT_CODE OUT NUMBER,
                                   OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YMD     VARCHAR2(8);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_SAFETY_CHG', I_DATA);
     V_YMD     := SUBSTR(I_DATA, 1, 8);
   
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_S_SAFETY_CHG X WHERE X.STAT_YMD = V_YMD;
   
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
   
     INSERT INTO SY_OM_DW_S_SAFETY_CHG
       (DATA_ID,
@@ -6270,52 +6270,52 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
        WHERE A.STAT_YMD = V_YMD
          AND V_YMD BETWEEN B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_SAFETY_CHG  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_SAFETY_CHG  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_SAFETY_CHG  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_SAFETY_CHG  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /**
-    �������ƣ�P_ENT_DW_S_CHECK_COMPL/�¶��õ���ͳ����ڹ���
-    ���ߣ�jpl
-    ��д���ڣ�2014-03-07 01:37
-    ��������������ͳ���õ���������,�����ݿ�JOB����
-    ͳ��Ƶ�ȣ����³�ȡ,����1�����
-    ��θ�ʽ��I_DATA ��YYYYMMDD
-    �޸���:
-    �޸�����:
+    过程名称：P_ENT_DW_S_CHECK_COMPL/月度用电检查统计入口过程
+    作者：jpl
+    编写日期：2014-03-07 01:37
+    过程描述：按月统计用电检查完成情况,被数据库JOB调用
+    统计频度：按月抽取,次月1日零点
+    入参格式：I_DATA ：YYYYMMDD
+    修改人:
+    修改日期:
   **/
   PROCEDURE P_ENT_DW_S_CHECK_COMPL(I_DATA   VARCHAR2,
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2) IS
   
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_S_CHECK_COMPL', V_YM);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_S_CHECK_COMPL��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_S_CHECK_COMPL表
     P_INS_DW_S_CHECK_COMPL(V_YM, OUT_CODE, OUT_MSG);
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_S_CHECK_COMPL��ȡ���ݲ��뵽�����OMAC�û��µ�DW_S_CHECK_COMPL��
+      --调用推送过程，从管理库OMAC用户下的DW_S_CHECK_COMPL表取数据插入到稽查库OMAC用户下的DW_S_CHECK_COMPL表
       P_ETL_DW_S_CHECK_COMPL(V_YM, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_S_CHECK_COMPL A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -6326,22 +6326,22 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                      B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_YM = V_YM;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_S_CHECK_COMPL  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_S_CHECK_COMPL  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_CHECK_COMPL  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_CHECK_COMPL  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -6352,10 +6352,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
   
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   BEGIN
-    --��ʼ��¼��־
+    --开始记录日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_S_CHECK_COMPL', I_DATA);
   
     DELETE FROM DW_S_CHECK_COMPL WHERE STAT_YM = V_YM;
@@ -6415,8 +6415,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                      ELSE
                       0
                    END) CMPL_CC,
-               --SUM(DECODE(F.ATTR_CODE '01', 1, 0)),--ΥԼ�õ���
-               --SUM(DECODE(F.ATTR_CODE '02', 1, 0))--�Ե���
+               --SUM(DECODE(F.ATTR_CODE '01', 1, 0)),--违约用电数
+               --SUM(DECODE(F.ATTR_CODE '02', 1, 0))--窃电数
                PKG_GK_PUBLIC.F_TRANS_CODE('CHK_TYPE_CODE', A.TYPE_CODE) CHK_TYPE_CODE
                 FROM SY_SG_S_CHK_PLAN          A,
                      SY_SG_S_HR_IMPORTANT_CUST B,
@@ -6430,7 +6430,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                  AND D.DTL_ID = E.DTL_ID(+)
                     --AND E.ID = F.ID(+)
                  AND A.CHK_MONTH = V_YM
-                 AND D.PLAN_STATUS_CODE <> '11' --��ȡ��
+                 AND D.PLAN_STATUS_CODE <> '11' --已取消
                GROUP BY A.ORG_NO,
                         PKG_GK_PUBLIC.F_TRANS_CODE('ELEC_TYPE_CODE',
                                                    C.ELEC_TYPE_CODE),
@@ -6515,23 +6515,23 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                AND T.CHK_TYPE_CODE = F.CHK_TYPE_CODE)
      WHERE T.STAT_YM = V_YM;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_CHECK_COMPL  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_CHECK_COMPL  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_S_CHECK_COMPL  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_INS_DW_S_CHECK_COMPL  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -6540,19 +6540,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_CHECK_COMPL', I_DATA);
-    --����
+    --当月
     V_YM := SUBSTR(I_DATA, 1, 6);
   
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_S_CHECK_COMPL X WHERE X.STAT_YM = V_YM;
   
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
   
     INSERT INTO SY_OM_DW_S_CHECK_COMPL
       (DATA_ID,
@@ -6593,52 +6593,52 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          AND TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD') BETWEEN
              B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_CHECK_COMPL  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_CHECK_COMPL  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_CHECK_COMPL  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_CHECK_COMPL  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /**
-    �������ƣ�P_ENT_DW_S_VIOLATE_DET/ΥԼ�õ��Ե���ϸ��ڹ���
-    ���ߣ�jpl
-    ��д���ڣ�2014-03-07 01:37
-    ��������������ͳ��ΥԼ�õ��Ե���ϸ��Ϣ,�����ݿ�JOB����
-    ͳ��Ƶ�ȣ����³�ȡ,����1�����
-    ��θ�ʽ��I_DATA ��YYYYMMDD
-    �޸���:
-    �޸�����:
+    过程名称：P_ENT_DW_S_VIOLATE_DET/违约用电窃电明细入口过程
+    作者：jpl
+    编写日期：2014-03-07 01:37
+    过程描述：按月统计违约用电窃电明细信息,被数据库JOB调用
+    统计频度：按月抽取,次月1日零点
+    入参格式：I_DATA ：YYYYMMDD
+    修改人:
+    修改日期:
   **/
   PROCEDURE P_ENT_DW_S_VIOLATE_DET(I_DATA   VARCHAR2,
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2) IS
   
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_S_VIOLATE_DET', V_YM);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_S_VIOLATE_DET��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_S_VIOLATE_DET表
     P_INS_DW_S_VIOLATE_DET(V_YM, OUT_CODE, OUT_MSG);
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_S_VIOLATE_DET��ȡ���ݲ��뵽�����OMAC�û��µ�DW_S_VIOLATE_DET��
+      --调用推送过程，从管理库OMAC用户下的DW_S_VIOLATE_DET表取数据插入到稽查库OMAC用户下的DW_S_VIOLATE_DET表
       P_ETL_DW_S_VIOLATE_DET(V_YM, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_S_VIOLATE_DET A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -6649,22 +6649,22 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                      B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_YM = V_YM;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_S_VIOLATE_DET  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_S_VIOLATE_DET  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_VIOLATE_DET  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_VIOLATE_DET  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -6675,17 +6675,17 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
   
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
-    --�����³�
+    --本月月初
     V_BEGIN_MONTH DATE := TO_DATE(V_YM || '01', 'YYYYMMDD');
-    --�����³�
+    --下月月初
     V_BEGIN_NEXT_MONTH DATE := ADD_MONTHS(V_BEGIN_MONTH, 1);
   
-    --���µ����³�
+    --下月的下月初
     V_BEGIN_NEXT_MONTH_NEXT DATE := ADD_MONTHS(V_BEGIN_NEXT_MONTH, 1);
   BEGIN
-    --��ʼ��¼��־
+    --开始记录日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_S_VIOLATE_DET', I_DATA);
   
     DELETE FROM DW_S_VIOLATE_DET WHERE STAT_YM = V_YM;
@@ -6730,13 +6730,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
              A.AMT,
              SYSDATE
         FROM SY_SG_S_POWER_VIOLATE_STEAL A,
-             -- SY_SG_S_SITE_SURVEY         B,--����ȡ֤��Ϣ����APP_NO��S_POWER_VIOLATE_STEAL������
+             -- SY_SG_S_SITE_SURVEY         B,--调查取证信息表，APP_NO在S_POWER_VIOLATE_STEAL有冗余
              SY_SG_S_INSPECT_RSLT  C,
              SY_SG_C_CONS          D,
              SY_SG_P_PROC_INSTANCE E
        WHERE C.CONS_NO = D.CONS_NO
          AND C.ID = A.ID
-            --DW_S_VIOLATE_DETͳ��Ӧ����ֹ�ȹ���ȥ�����������ڷ������鵵�������µĸ�����Ϣȱʧ���ܲ�У��
+            --DW_S_VIOLATE_DET统计应将终止等工单去除，否则会存在非正常归档工单导致的各种信息缺失被总部校验
          AND E.STATUS_CODE <> '04'
          AND A.ATTR_CODE IS NOT NULL
          AND A.ATTR_CODE <> '-1'
@@ -6747,23 +6747,23 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          AND E.BGN_TIME >= V_BEGIN_MONTH
          AND E.BGN_TIME < V_BEGIN_NEXT_MONTH;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_VIOLATE_DET  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_VIOLATE_DET  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_S_VIOLATE_DET  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_INS_DW_S_VIOLATE_DET  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -6772,19 +6772,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_VIOLATE_DET', I_DATA);
-    --����
+    --当月
     V_YM := SUBSTR(I_DATA, 1, 6);
   
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_S_VIOLATE_DET X WHERE X.STAT_YM = V_YM;
   
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
   
     INSERT INTO SY_OM_DW_S_VIOLATE_DET
       (DATA_ID,
@@ -6831,52 +6831,52 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          AND TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD') BETWEEN
              B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_VIOLATE_DET  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_VIOLATE_DET  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_VIOLATE_DET  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_VIOLATE_DET  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /**
-    �������ƣ�P_ENT_DW_S_VIOLATE_INFO/�¶�ΥԼ�õ��Ե�ͳ����ڹ���
-    ���ߣ�jpl
-    ��д���ڣ�2014-03-07 01:37
-    ��������������ͳ��ΥԼ�õ��Ե����,�����ݿ�JOB����
-    ͳ��Ƶ�ȣ����³�ȡ,����1�����
-    ��θ�ʽ��I_DATA ��YYYYMMDD
-    �޸���:
-    �޸�����:
+    过程名称：P_ENT_DW_S_VIOLATE_INFO/月度违约用电窃电统计入口过程
+    作者：jpl
+    编写日期：2014-03-07 01:37
+    过程描述：按月统计违约用电窃电情况,被数据库JOB调用
+    统计频度：按月抽取,次月1日零点
+    入参格式：I_DATA ：YYYYMMDD
+    修改人:
+    修改日期:
   **/
   PROCEDURE P_ENT_DW_S_VIOLATE_INFO(I_DATA   VARCHAR2,
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2) IS
   
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_S_VIOLATE_INFO', V_YM);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_S_VIOLATE_INFO��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_S_VIOLATE_INFO表
     P_INS_DW_S_VIOLATE_INFO(V_YM, OUT_CODE, OUT_MSG);
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_S_VIOLATE_INFO��ȡ���ݲ��뵽�����OMAC�û��µ�DW_S_VIOLATE_INFO��
+      --调用推送过程，从管理库OMAC用户下的DW_S_VIOLATE_INFO表取数据插入到稽查库OMAC用户下的DW_S_VIOLATE_INFO表
       P_ETL_DW_S_VIOLATE_INFO(V_YM, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_S_VIOLATE_INFO A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -6887,22 +6887,22 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                      B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_YM = V_YM;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_S_VIOLATE_INFO  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_S_VIOLATE_INFO  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_VIOLATE_INFO  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_VIOLATE_INFO  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -6913,26 +6913,26 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
     
       V_DATA_ID VARCHAR2(24);
       V_YM      VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
-      --��ȡ��ʡ�ĵ�λ����
+      --获取网省的单位编码
       V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
     
-      --�����³�
+      --本月月初
       V_BEGIN_MONTH DATE := TO_DATE(V_YM || '01', 'YYYYMMDD');
-      --�����³�
+      --下月月初
       V_BEGIN_NEXT_MONTH DATE := ADD_MONTHS(V_BEGIN_MONTH, 1);
     
-      --���µ����³�
+      --下月的下月初
       V_BEGIN_NEXT_MONTH_NEXT DATE := ADD_MONTHS(V_BEGIN_NEXT_MONTH, 1);
-      --�ַ�������
+      --字符串数组
       P_T_STRING T_STRING;
       I          NUMBER;
     BEGIN
-      --��ʼ��¼��־
+      --开始记录日志
       V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_S_VIOLATE_INFO', I_DATA);
     
       DELETE FROM DW_S_VIOLATE_INFO WHERE STAT_YM = V_YM;
     
-      --��ʼ���ΥԼ�õ����
+      --开始拆分违约用电分类
       SP_PARSESTRING_LENGTH('010203040506070809101199', 2, P_T_STRING);
     
       I := P_T_STRING.FIRST;
@@ -6962,7 +6962,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
            (SELECT A.ATTR_CODE,
                    P_T_STRING(I) TYPE_CODE,
                    A.ID,
-                   --(length(A.TYPE_CODE)/2)���������Ϊ��ΥԼ�Ե����ͣ�A.TYPE_CODE����һ���ֶ��д洢��������ʱ���ն�����Ͳ��,����ֵƽ�������ֹ����ֵ����
+                   --(length(A.TYPE_CODE)/2)代码的意义为当违约窃电类型（A.TYPE_CODE）在一个字段中存储过的类型时按照多个类型拆分,数据值平均分配防止数据值扩大。
                    A.ADD_PQ / (LENGTH(A.TYPE_CODE) / 2) ADD_PQ,
                    A.ADD_AMT / (LENGTH(A.TYPE_CODE) / 2) ADD_AMT,
                    A.AMT / (LENGTH(A.TYPE_CODE) / 2) AMT,
@@ -6976,7 +6976,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                AND INSTR(A.TYPE_CODE, P_T_STRING(I)) > 0
                AND A.ATTR_CODE IS NOT NULL
                AND A.ATTR_CODE <> '-1'
-                  --DW_S_VIOLATE_INFOͳ��Ӧ����ֹ�ȹ���ȥ�����������ڷ������鵵�������µĸ�����Ϣȱʧ���ܲ�У��
+                  --DW_S_VIOLATE_INFO统计应将终止等工单去除，否则会存在非正常归档工单导致的各种信息缺失被总部校验
                AND E.STATUS_CODE <> '04')
           SELECT PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO),
                  V_PRO_ORG_NO,
@@ -7006,7 +7006,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                                                     D.ELEC_TYPE_CODE) ELEC_TYPE_CODE,
                          PKG_GK_PUBLIC.F_TRANS_CODE('ATTR_CODE', A.ATTR_CODE) ATTR_CODE,
                          P_T_STRING(I) TYPE_CODE,
-                         --(length(A.TYPE_CODE)/2)���������Ϊ��ΥԼ�Ե����ͣ�A.TYPE_CODE����һ���ֶ��д洢��������ʱ���ն�����Ͳ��,����ֵƽ�������ֹ����ֵ����
+                         --(length(A.TYPE_CODE)/2)代码的意义为当违约窃电类型（A.TYPE_CODE）在一个字段中存储过的类型时按照多个类型拆分,数据值平均分配防止数据值扩大。
                          COUNT(DISTINCT A.ID) ACCEPT_CC,
                          SUM(DECODE(A.STATUS_CODE, '01', 1, 0)) TRANSIT_CC,
                          SUM(CASE
@@ -7045,23 +7045,23 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
         I := P_T_STRING.NEXT(I);
       END LOOP;
     
-      --OUT_CODEΪ1�������гɹ�,�ύ����
+      --OUT_CODE为1代表运行成功,提交事务
       OUT_CODE := 1;
-      OUT_MSG  := 'ִ�� P_INS_DW_S_VIOLATE_INFO  �ɹ�';
+      OUT_MSG  := '执行 P_INS_DW_S_VIOLATE_INFO  成功';
       COMMIT;
     
-      --��¼����������־
+      --记录正常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
-      --�쳣����
+      --异常处理
     EXCEPTION
       WHEN OTHERS THEN
-        --OUT_CODEΪ0��������ʧ��,�ع�����
+        --OUT_CODE为0代表运行失败,回滚事务
         OUT_CODE := 0;
-        OUT_MSG  := 'ִ�� P_INS_DW_S_VIOLATE_INFO  �����쳣' || ',�쳣��ϢΪ��' ||
+        OUT_MSG  := '执行 P_INS_DW_S_VIOLATE_INFO  出现异常' || ',异常信息为：' ||
                     SQLCODE || ',' || SQLERRM;
         ROLLBACK;
-        --��¼�쳣������־
+        --记录异常结束日志
         PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
       
     END;
@@ -7073,21 +7073,21 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
   
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
-    --�����³�
+    --本月月初
     V_BEGIN_MONTH DATE := TO_DATE(V_YM || '01', 'YYYYMMDD');
-    --�����³�
+    --下月月初
     V_BEGIN_NEXT_MONTH DATE := ADD_MONTHS(V_BEGIN_MONTH, 1);
   
-    --���µ����³�
+    --下月的下月初
     V_BEGIN_NEXT_MONTH_NEXT DATE := ADD_MONTHS(V_BEGIN_NEXT_MONTH, 1);
-    --�ַ�������
+    --字符串数组
     P_T_STRING T_STRING;
     I          NUMBER;
   BEGIN
-    --��ʼ��¼��־
+    --开始记录日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_S_VIOLATE_INFO', I_DATA);
   
     DELETE FROM DW_S_VIOLATE_INFO WHERE STAT_YM = V_YM;
@@ -7145,7 +7145,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                        PKG_GK_PUBLIC.F_TRANS_CODE('ELEC_TYPE_CODE',
                                                   D.ELEC_TYPE_CODE) ELEC_TYPE_CODE,
                        PKG_GK_PUBLIC.F_TRANS_CODE('ATTR_CODE', A.ATTR_CODE) ATTR_CODE,
-                       --��Ӫ�����ݴ�Ų��淶,��Ӫ����type_code�д�Ŷ��ΥԼ�Ե�����ʱֻ��ȡ��һ��ΥԼ�Ե�����
+                       --当营销数据存放不规范,在营销的type_code中存放多个违约窃电类型时只获取第一个违约窃电类型
                        PKG_GK_PUBLIC.F_TRANS_CODE('S_VIOLATE_TYPE_CODE',
                                                   SUBSTR(A.TYPE_CODE, 1, 2)) TYPE_CODE,
                        COUNT(DISTINCT A.ID) ACCEPT_CC,
@@ -7195,23 +7195,23 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
     
     END LOOP;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_VIOLATE_INFO  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_VIOLATE_INFO  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_S_VIOLATE_INFO  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_S_VIOLATE_INFO  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -7220,19 +7220,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_VIOLATE_INFO', I_DATA);
-    --����
+    --当月
     V_YM := SUBSTR(I_DATA, 1, 6);
   
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_S_VIOLATE_INFO X WHERE X.STAT_YM = V_YM;
   
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
   
     INSERT INTO SY_OM_DW_S_VIOLATE_INFO
       (DATA_ID,
@@ -7277,67 +7277,67 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          AND TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD') BETWEEN
              B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_VIOLATE_INFO  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_VIOLATE_INFO  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_VIOLATE_INFO  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_VIOLATE_INFO  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   /**
-    �������ƣ�P_ENT_DW_S_HR_IMPORTANT_CUST/�¶ȸ�Σ��Ҫ�ͻ�������Ϣͳ����ڹ���
-    ���ߣ�ll
-    ��д���ڣ�2014-03-17 14:37
-    ������������Σ��Ҫ�ͻ�������Ϣ
-    ͳ��Ƶ�ȣ����³�ȡ,����1�����
-    ��θ�ʽ��IN_YM ��YYYYMM
+    过程名称：P_ENT_DW_S_HR_IMPORTANT_CUST/月度高危重要客户档案信息统计入口过程
+    作者：ll
+    编写日期：2014-03-17 14:37
+    过程描述：高危重要客户档案信息
+    统计频度：按月抽取,次月1日零点
+    入参格式：IN_YM ：YYYYMM
   **/
   PROCEDURE P_ENT_DW_S_HR_IMPORTANT_CUST(IN_YM    VARCHAR2,
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2) IS
   
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR2(6) := SUBSTR(IN_YM, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_S_HR_IMPORTANT_CUST',
                                         V_YM);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_S_HR_IMPORTANT_CUST��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_S_HR_IMPORTANT_CUST表
     P_INS_DW_S_HR_IMPORTANT_CUST(V_YM, OUT_CODE, OUT_MSG);
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_S_HR_IMPORTANT_CUST��ȡ���ݲ��뵽�����OMAC�û��µ�DW_S_HR_IMPORTANT_CUST��
+      --调用推送过程，从管理库OMAC用户下的DW_S_HR_IMPORTANT_CUST表取数据插入到稽查库OMAC用户下的DW_S_HR_IMPORTANT_CUST表
       P_ETL_DW_S_HR_IMPORTANT_CUST(V_YM, OUT_CODE, OUT_MSG);
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_S_HR_IMPORTANT_CUST  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_S_HR_IMPORTANT_CUST  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_HR_IMPORTANT_CUST  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_HR_IMPORTANT_CUST  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -7348,49 +7348,49 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
   
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(6) := SUBSTR(IN_YM, 1, 6);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
-    --�����³�
+    --本月月初
     V_BEGIN_MONTH DATE := TO_DATE(V_YM || '01', 'YYYYMMDD');
-    --�����³�
+    --下月月初
     V_BEGIN_NEXT_MONTH DATE := ADD_MONTHS(V_BEGIN_MONTH, 1);
   BEGIN
-    --��ʼ��¼��־
+    --开始记录日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_S_HR_IMPORTANT_CUST',
                                         IN_YM);
   
-    --ɾ����ÿ�β����������ݣ�֮ǰ��ȫ��ɾ����
+    --删除（每次插入最新数据，之前的全部删除）
     DELETE FROM DW_S_HR_IMPORTANT_CUST WHERE STAT_YM = V_YM;
   
-    --��������
+    --插入数据
     INSERT INTO DW_S_HR_IMPORTANT_CUST
       (DATA_ID,
        PRO_ORG_NO,
        CUST_NO,
-       VOLT_CODE, --��ѹ�ȼ�
-       ELEC_TYPE_CODE, --�õ����
-       TRADE_CODE, --��ҵ����
-       HEC_TRADE_CODE, --�ߺ�����ҵ���
-       HR_TYPE_CODE, --��Σ�ͻ����
-       IMPORTANT_TYOE_CODE, --��Ҫ�ͻ����
-       TRANSFER_FLAG, --�Ƿ���ת����ؿͻ�
-       CUST_PRIO_CODE, --�ͻ���Ҫ�Եȼ�
-       EMERGENCY_PS_FLAG, --���ޱ�����Դ
-       SPARE_POWER_FLAG, --�����Ա���Դ
-       SPARE_SWITCH_FLAG, --�����Ա���ԴͶ���л�װ��
-       EMERGENCY_MEAS, --Ӧ��Ԥ�������¹ʴ�ʩ
-       NE_SAFETY_MEAS, --�ǵ����ʱ�����ʩ
-       EQUIP_STATUS_CODE, --�ܵ��豸״��
-       SAFETY_MEAS, --��ȫ��ʩ
-       SAFETY_TOOL, --��ȫ������
-       MANAGE_PERFECT_FLAG, --�����ƶ����Ʊ�־
-       SAFETY_EQUIP_STATUS, --�̵籣������ȫ�Զ�װ�����
-       OPER_STATUS, --���й������
-       CHK_CYCLE, --�������
-       ELEC_ADDR, --��ַ
-       CONS_NAME, --����
-       CHECKER_NAME, --���С���鳤������
-       CHK_DATE, --ʵ���³���������
+       VOLT_CODE, --电压等级
+       ELEC_TYPE_CODE, --用电类别
+       TRADE_CODE, --行业分类
+       HEC_TRADE_CODE, --高耗能行业类别
+       HR_TYPE_CODE, --高危客户类别
+       IMPORTANT_TYOE_CODE, --重要客户类别
+       TRANSFER_FLAG, --是否是转供相关客户
+       CUST_PRIO_CODE, --客户重要性等级
+       EMERGENCY_PS_FLAG, --有无保安电源
+       SPARE_POWER_FLAG, --有无自备电源
+       SPARE_SWITCH_FLAG, --有无自备电源投入切换装置
+       EMERGENCY_MEAS, --应急预案及反事故措施
+       NE_SAFETY_MEAS, --非电性质保安措施
+       EQUIP_STATUS_CODE, --受电设备状况
+       SAFETY_MEAS, --安全措施
+       SAFETY_TOOL, --安全工器具
+       MANAGE_PERFECT_FLAG, --管理制度完善标志
+       SAFETY_EQUIP_STATUS, --继电保护及安全自动装置情况
+       OPER_STATUS, --运行管理情况
+       CHK_CYCLE, --检查周期
+       ELEC_ADDR, --地址
+       CONS_NAME, --户名
+       CHECKER_NAME, --检查小组组长的姓名
+       CHK_DATE, --实际下厂检查的日期
        TIME_STAMP,
        STAT_YM,
        ORG_NO,
@@ -7435,28 +7435,28 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
              A.CONTRACT_CAP
         FROM SY_SG_C_CONS A, SY_SG_S_HR_IMPORTANT_CUST B
        WHERE A.CONS_NO = B.CUST_NO
-            --���û�״̬�����ų�,���û�������״̬������״̬Ϊ�������û�״̬�ж�,���ٵ������û�status_code�����ж�
+            --对用户状态进行排除,已用户的立户状态和销户状态为主进行用户状态判断,不再单纯以用户status_code进行判断
          AND A.BUILD_DATE < V_BEGIN_NEXT_MONTH
          AND (A.CANCEL_DATE >= V_BEGIN_MONTH OR
              (A.CANCEL_DATE IS NULL AND A.STATUS_CODE <> '9'));
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_HR_IMPORTANT_CUST  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_HR_IMPORTANT_CUST  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_S_HR_IMPORTANT_CUST  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_S_HR_IMPORTANT_CUST  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -7465,48 +7465,48 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_HR_IMPORTANT_CUST',
                                         IN_YM);
-    --����
+    --当月
     V_YM := SUBSTR(IN_YM, 1, 6);
   
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录
     DELETE FROM SY_OM_DW_S_HR_IMPORTANT_CUST X WHERE X.STAT_YM = V_YM;
   
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_DW_S_HR_IMPORTANT_CUST
       (DATA_ID,
        PRO_ORG_NO,
        CUST_NO,
-       VOLT_CODE, --��ѹ�ȼ�
-       ELEC_TYPE_CODE, --�õ����
-       TRADE_CODE, --��ҵ����
-       HEC_TRADE_CODE, --�ߺ�����ҵ���
-       HR_TYPE_CODE, --��Σ�ͻ����
-       IMPORTANT_TYOE_CODE, --��Ҫ�ͻ����
-       TRANSFER_FLAG, --�Ƿ���ת����ؿͻ�
-       CUST_PRIO_CODE, --�ͻ���Ҫ�Եȼ�
-       EMERGENCY_PS_FLAG, --���ޱ�����Դ
-       SPARE_POWER_FLAG, --�����Ա���Դ
-       SPARE_SWITCH_FLAG, --�����Ա���ԴͶ���л�װ��
-       EMERGENCY_MEAS, --Ӧ��Ԥ�������¹ʴ�ʩ
-       NE_SAFETY_MEAS, --�ǵ����ʱ�����ʩ
-       EQUIP_STATUS_CODE, --�ܵ��豸״��
-       SAFETY_MEAS, --��ȫ��ʩ
-       SAFETY_TOOL, --��ȫ������
-       MANAGE_PERFECT_FLAG, --�����ƶ����Ʊ�־
-       SAFETY_EQUIP_STATUS, --�̵籣������ȫ�Զ�װ�����
-       OPER_STATUS, --���й������
-       CHK_CYCLE, --�������
-       ELEC_ADDR, --��ַ
-       CONS_NAME, --����
-       CHECKER_NAME, --���С���鳤������
-       CHK_DATE, --ʵ���³���������
+       VOLT_CODE, --电压等级
+       ELEC_TYPE_CODE, --用电类别
+       TRADE_CODE, --行业分类
+       HEC_TRADE_CODE, --高耗能行业类别
+       HR_TYPE_CODE, --高危客户类别
+       IMPORTANT_TYOE_CODE, --重要客户类别
+       TRANSFER_FLAG, --是否是转供相关客户
+       CUST_PRIO_CODE, --客户重要性等级
+       EMERGENCY_PS_FLAG, --有无保安电源
+       SPARE_POWER_FLAG, --有无自备电源
+       SPARE_SWITCH_FLAG, --有无自备电源投入切换装置
+       EMERGENCY_MEAS, --应急预案及反事故措施
+       NE_SAFETY_MEAS, --非电性质保安措施
+       EQUIP_STATUS_CODE, --受电设备状况
+       SAFETY_MEAS, --安全措施
+       SAFETY_TOOL, --安全工器具
+       MANAGE_PERFECT_FLAG, --管理制度完善标志
+       SAFETY_EQUIP_STATUS, --继电保护及安全自动装置情况
+       OPER_STATUS, --运行管理情况
+       CHK_CYCLE, --检查周期
+       ELEC_ADDR, --地址
+       CONS_NAME, --户名
+       CHECKER_NAME, --检查小组组长的姓名
+       CHK_DATE, --实际下厂检查的日期
        TIME_STAMP,
        STAT_YM,
        ORG_NO,
@@ -7514,30 +7514,30 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
       SELECT A.DATA_ID,
              A.PRO_ORG_NO,
              A.CUST_NO,
-             A.VOLT_CODE, --��ѹ�ȼ�
-             A.ELEC_TYPE_CODE, --�õ����
-             A.TRADE_CODE, --��ҵ����
-             A.HEC_TRADE_CODE, --�ߺ�����ҵ���
-             A.HR_TYPE_CODE, --��Σ�ͻ����
-             A.IMPORTANT_TYOE_CODE, --��Ҫ�ͻ����
-             A.TRANSFER_FLAG, --�Ƿ���ת����ؿͻ�
-             A.CUST_PRIO_CODE, --�ͻ���Ҫ�Եȼ�
-             A.EMERGENCY_PS_FLAG, --���ޱ�����Դ
-             A.SPARE_POWER_FLAG, --�����Ա���Դ
-             A.SPARE_SWITCH_FLAG, --�����Ա���ԴͶ���л�װ��
-             A.EMERGENCY_MEAS, --Ӧ��Ԥ�������¹ʴ�ʩ
-             A.NE_SAFETY_MEAS, --�ǵ����ʱ�����ʩ
-             A.EQUIP_STATUS_CODE, --�ܵ��豸״��
-             A.SAFETY_MEAS, --��ȫ��ʩ
-             A.SAFETY_TOOL, --��ȫ������
-             A.MANAGE_PERFECT_FLAG, --�����ƶ����Ʊ�־
-             A.SAFETY_EQUIP_STATUS, --�̵籣������ȫ�Զ�װ�����
-             A.OPER_STATUS, --���й������
-             A.CHK_CYCLE, --�������
-             A.ELEC_ADDR, --��ַ
-             A.CONS_NAME, --����
-             A.CHECKER_NAME, --���С���鳤������
-             A.CHK_DATE, --ʵ���³���������
+             A.VOLT_CODE, --电压等级
+             A.ELEC_TYPE_CODE, --用电类别
+             A.TRADE_CODE, --行业分类
+             A.HEC_TRADE_CODE, --高耗能行业类别
+             A.HR_TYPE_CODE, --高危客户类别
+             A.IMPORTANT_TYOE_CODE, --重要客户类别
+             A.TRANSFER_FLAG, --是否是转供相关客户
+             A.CUST_PRIO_CODE, --客户重要性等级
+             A.EMERGENCY_PS_FLAG, --有无保安电源
+             A.SPARE_POWER_FLAG, --有无自备电源
+             A.SPARE_SWITCH_FLAG, --有无自备电源投入切换装置
+             A.EMERGENCY_MEAS, --应急预案及反事故措施
+             A.NE_SAFETY_MEAS, --非电性质保安措施
+             A.EQUIP_STATUS_CODE, --受电设备状况
+             A.SAFETY_MEAS, --安全措施
+             A.SAFETY_TOOL, --安全工器具
+             A.MANAGE_PERFECT_FLAG, --管理制度完善标志
+             A.SAFETY_EQUIP_STATUS, --继电保护及安全自动装置情况
+             A.OPER_STATUS, --运行管理情况
+             A.CHK_CYCLE, --检查周期
+             A.ELEC_ADDR, --地址
+             A.CONS_NAME, --户名
+             A.CHECKER_NAME, --检查小组组长的姓名
+             A.CHK_DATE, --实际下厂检查的日期
              SYSDATE,
              A.STAT_YM,
              A.ORG_NO,
@@ -7545,67 +7545,67 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
         FROM DW_S_HR_IMPORTANT_CUST A
        WHERE A.STAT_YM = V_YM;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_HR_IMPORTANT_CUST  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_HR_IMPORTANT_CUST  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_HR_IMPORTANT_CUST  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_HR_IMPORTANT_CUST  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   /**
-    �������ƣ�P_ENT_DW_S_VIP_SAFETY_DETAIL/�նȸ�Σ��Ҫ�ͻ�����������ϸͳ����ڹ���
-    ���ߣ�ll
-    ��д���ڣ�2014-03-18 14:37
-    �����������նȸ�Σ��Ҫ�ͻ�����������ϸ
-    ͳ��Ƶ�ȣ����ճ�ȡ,�������
-    ��θ�ʽ��IN_YMD ��YYYYMMDD
+    过程名称：P_ENT_DW_S_VIP_SAFETY_DETAIL/日度高危重要客户隐患整改明细统计入口过程
+    作者：ll
+    编写日期：2014-03-18 14:37
+    过程描述：日度高危重要客户隐患整改明细
+    统计频度：按日抽取,次日零点
+    入参格式：IN_YMD ：YYYYMMDD
   **/
   PROCEDURE P_ENT_DW_S_VIP_SAFETY_DETAIL(IN_YMD   VARCHAR2,
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2) IS
   
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YMD      VARCHAR2(8) := SUBSTR(IN_YMD, 1, 8);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_S_VIP_SAFETY_DETAIL',
                                         V_YMD);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_S_VIP_SAFETY_DETAIL��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_S_VIP_SAFETY_DETAIL表
     P_INS_DW_S_VIP_SAFETY_DETAIL(V_YMD, OUT_CODE, OUT_MSG);
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_S_VIP_SAFETY_DETAIL��ȡ���ݲ��뵽�����OMAC�û��µ�DW_S_VIP_SAFETY_DETAIL��
+      --调用推送过程，从管理库OMAC用户下的DW_S_VIP_SAFETY_DETAIL表取数据插入到稽查库OMAC用户下的DW_S_VIP_SAFETY_DETAIL表
       P_ETL_DW_S_VIP_SAFETY_DETAIL(V_YMD, OUT_CODE, OUT_MSG);
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_S_VIP_SAFETY_DETAIL  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_S_VIP_SAFETY_DETAIL  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_VIP_SAFETY_DETAIL  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_VIP_SAFETY_DETAIL  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -7616,38 +7616,38 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
   
     V_DATA_ID VARCHAR2(24);
     V_YMD     VARCHAR2(8) := SUBSTR(IN_YMD, 1, 8);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   BEGIN
-    --��ʼ��¼��־
+    --开始记录日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_S_VIP_SAFETY_DETAIL',
                                         V_YMD);
   
-    --ɾ����ÿ�β����������ݣ�֮ǰ��ȫ��ɾ����
+    --删除（每次插入最新数据，之前的全部删除）
     --DELETE FROM DW_S_VIP_SAFETY_DETAIL WHERE STAT_YM = V_YMD;
     DELETE FROM DW_S_VIP_SAFETY_DETAIL WHERE STAT_YMD = V_YMD;
-    --��������
+    --插入数据
     INSERT INTO DW_S_VIP_SAFETY_DETAIL
       (DATA_ID,
        PRO_ORG_NO,
        ORG_NO,
-       CLINT_NO, --�ͻ����
-       CLINT_NAME, --�ͻ�����
-       CUST_PRIO_CODE, --�ͻ���Ҫ�Եȼ�
-       CHK_TYPE_CODE, --������
-       TYPE_CODE, --�������
-       TROUBLE_NAME, --��������
-       SAFETY_DESC, --��������
-       ELIMINATE_FLAG, --�Ƿ���ȱ
-       PLAN_ELIMINATE_DATE, --�ƻ���������
-       ACTUAL_ELIMINATE_DATE, --ʵ����������
-       BUG_LEVEL_CODE, --ȱ�ݵȼ�
-       CHK_DATE, --ʵ���³���������
-       CHECKER_NAME, --���С���鳤������
-       STATUS_CODE, --����״̬
-       NOTIFY_FLAG, --�Ƿ񷢷ż��֪ͨ��
-       FINISH_DATE, --��ɵ�����
-       CONTENT, --��ע
+       CLINT_NO, --客户编号
+       CLINT_NAME, --客户名称
+       CUST_PRIO_CODE, --客户重要性等级
+       CHK_TYPE_CODE, --检查类别
+       TYPE_CODE, --隐患类别
+       TROUBLE_NAME, --隐患名称
+       SAFETY_DESC, --隐患描述
+       ELIMINATE_FLAG, --是否消缺
+       PLAN_ELIMINATE_DATE, --计划消除日期
+       ACTUAL_ELIMINATE_DATE, --实际消除日期
+       BUG_LEVEL_CODE, --缺陷等级
+       CHK_DATE, --实际下厂检查的日期
+       CHECKER_NAME, --检查小组组长的姓名
+       STATUS_CODE, --整改状态
+       NOTIFY_FLAG, --是否发放检查通知书
+       FINISH_DATE, --完成的日期
+       CONTENT, --备注
        TIME_STAMP,
        STAT_YMD,
        TROUBLE_ID)
@@ -7659,7 +7659,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
              F.CUST_PRIO_CODE,
              PKG_GK_PUBLIC.F_TRANS_CODE('CHK_TYPE_CODE', C.CHK_TYPE_CODE),
              PKG_GK_PUBLIC.F_TRANS_CODE('SECURITY_TYPE_CODE', C.TYPE_CODE),
-             '', --��������
+             '', --隐患名称
              C.SAFETY_DESC,
              PKG_GK_PUBLIC.F_TRANS_CODE('YES_NO_FLAG',
                                         NVL(C.ELIMINATE_FLAG, '0')),
@@ -7672,7 +7672,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
              PKG_GK_PUBLIC.F_TRANS_CODE('YES_NO_FLAG',
                                         NVL(D.NOTIFY_FLAG, '0')),
              D.FINISH_DATE,
-             D.CONTENT, --��ע
+             D.CONTENT, --备注
              SYSDATE,
              V_YMD,
              C.ID
@@ -7690,26 +7690,26 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          AND B.ID = C.ID2
          AND C.ID = D.ID2
          AND D.CHK_DATE = V_YMD
-         AND A.PLAN_STATUS_CODE <> '11' --��ȡ��
+         AND A.PLAN_STATUS_CODE <> '11' --已取消
       ;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_VIP_SAFETY_DETAIL  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_VIP_SAFETY_DETAIL  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_S_VIP_SAFETY_DETAIL  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_S_VIP_SAFETY_DETAIL  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -7718,42 +7718,42 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YMD     VARCHAR2(8);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_VIP_SAFETY_DETAIL',
                                         V_YMD);
-    --����
+    --当月
     V_YMD := SUBSTR(IN_YMD, 1, 8);
   
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录
     --DELETE FROM SY_OM_DW_S_VIP_SAFETY_DETAIL X WHERE X.STAT_YMD = V_YMD;
     DELETE FROM SY_OM_DW_S_VIP_SAFETY_DETAIL X WHERE STAT_YMD = V_YMD;
   
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_DW_S_VIP_SAFETY_DETAIL
       (DATA_ID,
        PRO_ORG_NO,
        ORG_NO,
-       CLINT_NO, --�ͻ����
-       CLINT_NAME, --�ͻ�����
-       CUST_PRIO_CODE, --�ͻ���Ҫ�Եȼ�
-       CHK_TYPE_CODE, --������
-       TYPE_CODE, --�������
-       TROUBLE_NAME, --��������
-       SAFETY_DESC, --��������
-       ELIMINATE_FLAG, --�Ƿ���ȱ
-       PLAN_ELIMINATE_DATE, --�ƻ���������
-       ACTUAL_ELIMINATE_DATE, --ʵ����������
-       BUG_LEVEL_CODE, --ȱ�ݵȼ�
-       CHK_DATE, --ʵ���³���������
-       CHECKER_NAME, --���С���鳤������
-       STATUS_CODE, --����״̬
-       NOTIFY_FLAG, --�Ƿ񷢷ż��֪ͨ��
-       FINISH_DATE, --��ɵ�����
-       CONTENT, --��ע
+       CLINT_NO, --客户编号
+       CLINT_NAME, --客户名称
+       CUST_PRIO_CODE, --客户重要性等级
+       CHK_TYPE_CODE, --检查类别
+       TYPE_CODE, --隐患类别
+       TROUBLE_NAME, --隐患名称
+       SAFETY_DESC, --隐患描述
+       ELIMINATE_FLAG, --是否消缺
+       PLAN_ELIMINATE_DATE, --计划消除日期
+       ACTUAL_ELIMINATE_DATE, --实际消除日期
+       BUG_LEVEL_CODE, --缺陷等级
+       CHK_DATE, --实际下厂检查的日期
+       CHECKER_NAME, --检查小组组长的姓名
+       STATUS_CODE, --整改状态
+       NOTIFY_FLAG, --是否发放检查通知书
+       FINISH_DATE, --完成的日期
+       CONTENT, --备注
        TIME_STAMP,
        STAT_YMD,
        TROUBLE_ID)
@@ -7783,57 +7783,57 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
         FROM DW_S_VIP_SAFETY_DETAIL A
        WHERE A.STAT_YMD = V_YMD;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_VIP_SAFETY_DETAIL  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_VIP_SAFETY_DETAIL  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_VIP_SAFETY_DETAIL  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_VIP_SAFETY_DETAIL  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   /**
-    �������ƣ�P_ENT_DW_S_NATIONAL_PRJ_STAT/�¶ȹ����ص�ҵ����Ŀ��װͳ��
-    ���ߣ�jyd
-    ��д���ڣ�2014-03-18 14:37
-    �����������¶ȹ����ص�ҵ����Ŀ��װͳ��:�¶ȹ����ص�ҵ����Ŀ��װͳ��
-    1������ͳ�Ƹ��㼶��λ�����ص�ҵ����Ŀ�������ص�ҵ����Ŀָ�û���������10��ǧ�������ϵ��û�
-    2��ÿ��1�����ͳ��
-    3�����һ����ʱ����ͬ������26���������25��24ʱ
-    �磺��ǰΪ20141201��ʼ����ͳ�ƹ��̣�����Ĳ���Ϊ201411����Ҫͳ�Ƶ�����Ϊ20141026-20141126ֱ�ӵ�����
-    �����е�STAT_YM��д201411
-    4����������ʱ�䣬������ʵ�����еĿ�ʼʱ��Ϊ׼��
-                    ��θ�ʽ��IN_YM ��YYYYMM
+    过程名称：P_ENT_DW_S_NATIONAL_PRJ_STAT/月度国家重点业扩项目报装统计
+    作者：jyd
+    编写日期：2014-03-18 14:37
+    过程描述：月度国家重点业扩项目报装统计:月度国家重点业扩项目报装统计
+    1）按月统计各层级单位国家重点业扩项目：国家重点业扩项目指用户申请容量10万千伏安以上的用户
+    2）每月1日零点统计
+    3）与大一考核时间相同，上月26零点至本月25日24时
+    如：当前为20141201开始运行统计过程，传入的参数为201411，则要统计的数据为20141026-20141126直接的数据
+    过程中的STAT_YM填写201411
+    4）工单受理时间，与流程实例表中的开始时间为准。
+                    入参格式：IN_YM ：YYYYMM
   **/
   PROCEDURE P_ENT_DW_S_NATIONAL_PRJ_STAT(IN_YM    VARCHAR2,
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2) IS
   
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR2(6) := SUBSTR(IN_YM, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_S_NATIONAL_PRJ_STAT',
                                         V_YM);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_S_NATIONAL_PRJ_STAT��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_S_NATIONAL_PRJ_STAT表
     P_INS_DW_S_NATIONAL_PRJ_STAT(V_YM, OUT_CODE, OUT_MSG);
-    --�������͹���
+    --调用推送过程
     IF V_DATAMODE = '2' THEN
       P_ETL_DW_S_NATIONAL_PRJ_STAT(V_YM, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_S_NATIONAL_PRJ_STAT X
          SET X.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -7844,22 +7844,22 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                      B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE X.STAT_YM = V_YM;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_S_NATIONAL_PRJ_STAT  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_S_NATIONAL_PRJ_STAT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_NATIONAL_PRJ_STAT  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_NATIONAL_PRJ_STAT  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -7870,16 +7870,16 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
   
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(6) := SUBSTR(IN_YM, 1, 6);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO   VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
     V_DATE_END_D   DATE := TO_DATE(V_YM || '26', 'yyyymmdd');
     V_DATE_START_D DATE := ADD_MONTHS(V_DATE_END_D, -1);
   BEGIN
-    --��ʼ��¼��־
+    --开始记录日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_S_VIP_SAFETY_DETAIL',
                                         V_YM);
   
-    --ɾ����ÿ�β����������ݣ�֮ǰ��ȫ��ɾ����
+    --删除（每次插入最新数据，之前的全部删除）
     --DELETE FROM DW_S_VIP_SAFETY_DETAIL WHERE STAT_YM = V_YM;
     DELETE FROM DW_S_NATIONAL_PRJ_STAT WHERE STAT_YM = V_YM;
   
@@ -7889,7 +7889,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                   FROM SY_SG_O_ORG
                  WHERE ORG_NO <> '00000'
                    AND LENGTH(ORG_NO) >= DECODE(V_PRO_ORG_NO, '12101', 5, 7)) LOOP
-      --�������
+      --主体程序
       INSERT INTO DW_S_NATIONAL_PRJ_STAT
         (DATA_ID,
          PRO_ORG_NO,
@@ -7921,7 +7921,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
              AND T1.YM = T2.YM
              AND T1.CALC_ID = T2.CALC_ID
              AND T.CONS_NO = T2.CONS_NO(+)
-             AND T.RUN_CAP > 100000 --�����ص�ҵ����Ŀָ�û�����10��ǧ�������ϵ��û�
+             AND T.RUN_CAP > 100000 --国家重点业扩项目指用户容量10万千伏安以上的用户
              AND T.STATUS_CODE <> '9'
            GROUP BY T.ORG_NO),
         TMP_TABLE2 AS
@@ -7948,7 +7948,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
         SELECT PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO),
                V_PRO_ORG_NO,
                A.ORG_NO,
-               '' PS_BUSI_AREA_CODE, --Ӫҵ������
+               '' PS_BUSI_AREA_CODE, --营业区性质
                V_YM STAT_YM,
                SUM(A.HS),
                SUM(A.RL),
@@ -7960,23 +7960,23 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
          WHERE A.ORG_NO = B.ORG_NO
          GROUP BY A.ORG_NO;
     END LOOP;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_VIP_SAFETY_DETAIL  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_VIP_SAFETY_DETAIL  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_S_VIP_SAFETY_DETAIL  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_S_VIP_SAFETY_DETAIL  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -7985,21 +7985,21 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_NATIONAL_PRJ_STAT',
                                         IN_YM);
-    --����
+    --当月
     V_YM := SUBSTR(IN_YM, 1, 6);
   
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录
     --DELETE FROM SY_OM_DW_S_VIP_SAFETY_DETAIL X WHERE X.STAT_YM = V_YM;
     DELETE FROM SY_OM_DW_S_NATIONAL_PRJ_STAT X WHERE STAT_YM = V_YM;
   
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_DW_S_NATIONAL_PRJ_STAT
       (DATA_ID,
        PRO_ORG_NO,
@@ -8030,66 +8030,66 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
              B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND X.ORG_NO = B.SG_ORG_NO(+);
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_NATIONAL_PRJ_STAT  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_NATIONAL_PRJ_STAT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_NATIONAL_PRJ_STAT  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_NATIONAL_PRJ_STAT  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   /**
-    �������ƣ�P_ENT_DW_C_G_TRAN/�¶ȵ�λ��ѹ����Ϣͳ����ϸͳ����ڹ���
-    ���ߣ�ll
-    ��д���ڣ�2014-03-18 14:37
-    �����������¶ȵ�λ��ѹ����Ϣͳ����ϸ
-    ͳ��Ƶ�ȣ����³�ȡ,����1�����
-    ��θ�ʽ��IN_YM ��YYYYMM
+    过程名称：P_ENT_DW_C_G_TRAN/月度单位变压器信息统计明细统计入口过程
+    作者：ll
+    编写日期：2014-03-18 14:37
+    过程描述：月度单位变压器信息统计明细
+    统计频度：按月抽取,次月1日零点
+    入参格式：IN_YM ：YYYYMM
   **/
   PROCEDURE P_ENT_DW_C_G_TRAN(IN_YM    VARCHAR2,
                               OUT_CODE OUT NUMBER,
                               OUT_MSG  OUT VARCHAR2) IS
   
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR2(8) := SUBSTR(IN_YM, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_C_G_TRAN', V_YM);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_G_TRAN��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_G_TRAN表
     P_INS_DW_C_G_TRAN(V_YM, OUT_CODE, OUT_MSG);
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_G_TRAN��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_G_TRAN��
+      --调用推送过程，从管理库OMAC用户下的DW_C_G_TRAN表取数据插入到稽查库OMAC用户下的DW_C_G_TRAN表
       P_ETL_DW_C_G_TRAN(V_YM, OUT_CODE, OUT_MSG);
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_C_G_TRAN  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_C_G_TRAN  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_C_G_TRAN  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ENT_DW_C_G_TRAN  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -8098,27 +8098,27 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                               OUT_MSG  OUT VARCHAR2) IS
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(8) := SUBSTR(IN_YM, 1, 6);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
-    --�����³�
+    --本月月初
     V_YMD_START DATE := TO_DATE(V_YM || '01', 'YYYYMMDD');
-    --�����³�
+    --下月月初
     V_YMD_END DATE := ADD_MONTHS(V_YMD_START, 1);
   BEGIN
-    --��ʼ��¼��־
+    --开始记录日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_C_G_TRAN', V_YM);
-    --ɾ����ÿ�β����������ݣ�֮ǰ��ȫ��ɾ����
+    --删除（每次插入最新数据，之前的全部删除）
     --DELETE FROM DW_S_VIP_SAFETY_DETAIL WHERE STAT_YM = V_YMD;
     DELETE FROM DW_C_G_TRAN WHERE STAT_YM = V_YM;
   
-    --��ʼ������ѭ��
+    --开始供电所循环
     FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
                                        1,
                                        DECODE(V_PRO_ORG_NO, '12101', 5, 7)) ORG_NO
                   FROM SY_SG_O_ORG
                  WHERE ORG_NO <> '00000'
                    AND LENGTH(ORG_NO) >= DECODE(V_PRO_ORG_NO, '12101', 5, 7)) LOOP
-      --��������
+      --插入数据
       INSERT INTO DW_C_G_TRAN
         (DATA_ID,
          PRO_ORG_NO,
@@ -8248,11 +8248,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
       COMMIT;
     END LOOP;
   
-    --���м�ʡ��ͳ��
+    --地市及省级统计
     FOR TSS IN (SELECT ORG_NO
                   FROM SY_SG_O_ORG O
                  WHERE ORG_TYPE IN ('02', '03')) LOOP
-      --��������
+      --插入数据
       INSERT INTO DW_C_G_TRAN
         (DATA_ID,
          PRO_ORG_NO,
@@ -8383,38 +8383,38 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
     
     END LOOP;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_C_G_TRAN  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_C_G_TRAN  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_C_G_TRAN  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_INS_DW_C_G_TRAN  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ETL_DW_C_G_TRAN(IN_YM    VARCHAR2,
                               OUT_CODE OUT NUMBER,
                               OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_C_G_TRAN', IN_YM);
-    --����
+    --当月
     V_YM := SUBSTR(IN_YM, 1, 6);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录
     DELETE FROM SY_OM_DW_C_G_TRAN X WHERE X.STAT_YM = V_YM;
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_DW_C_G_TRAN
       (DATA_ID,
        PRO_ORG_NO,
@@ -8532,63 +8532,63 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
              A.TIME_STAMP
         FROM DW_C_G_TRAN A
        WHERE A.STAT_YM = V_YM;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_C_G_TRAN  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_C_G_TRAN  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_C_G_TRAN  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_C_G_TRAN  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   /******************************
-  #function: �µ�λҵ����װͳ��  (��ڴ洢����)
+  #function: 月单位业扩报装统计  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-03
-  #input:in_ym  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:in_ym  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
 
   /******************************
-  #function: �굥λҵ����װͳ��  (��ڴ洢����)
+  #function: 年单位业扩报装统计  (入口存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-03
-  #input:IN_YEAR  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:IN_YEAR  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ENT_DW_S_BUSI_CCCAP_YEAR(IN_YEAR  VARCHAR2,
                                        OUT_CODE OUT NUMBER,
                                        OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YEAR     VARCHAR2(6) := SUBSTR(IN_YEAR, 1, 4);
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_S_BUSI_CCCAP_YEAR',
                                         V_YEAR);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_S_BUSI_CCCAP_YEAR(V_YEAR, OUT_CODE, OUT_MSG);
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_S_BUSI_CCCAP_YEAR��ȡ���ݲ��뵽�����OMAC�û��µ�DW_S_BUSI_CCCAP_YEAR��
+      --调用推送过程，从管理库OMAC用户下的DW_S_BUSI_CCCAP_YEAR表取数据插入到稽查库OMAC用户下的DW_S_BUSI_CCCAP_YEAR表
       P_ETL_DW_S_BUSI_CCCAP_YEAR(V_YEAR, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_S_BUSI_CCCAP_YEAR A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -8601,47 +8601,47 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
        WHERE A.STAT_YEAR = V_YEAR;
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_S_BUSI_CCCAP_YEAR  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_S_BUSI_CCCAP_YEAR  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_BUSI_CCCAP_YEAR  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_BUSI_CCCAP_YEAR  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   /******************************
-  #function: �굥λҵ����װͳ��  (��ȡ�洢����)
+  #function: 年单位业扩报装统计  (抽取存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-03
-  #input:IN_YEAR  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:IN_YEAR  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_BUSI_CCCAP_YEAR(IN_YEAR  VARCHAR2,
                                        OUT_CODE OUT NUMBER,
                                        OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
   
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
   
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
-    --��
+    --年
   
     V_YEAR VARCHAR2(4) := SUBSTR(IN_YEAR, 1, 4);
   
@@ -8676,7 +8676,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
   
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
   
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_S_BUSI_CCCAP_YEAR',
                                         
@@ -8688,7 +8688,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                                  
                                  '02',
                                  
-                                 V_STATUS_CODE02); --����״̬���鵵
+                                 V_STATUS_CODE02); --流程状态：归档
   
     V_STATUS_CODE01 := DECODE_BE(V_STATUS_CODE01,
                                  
@@ -8696,7 +8696,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                                  
                                  '01',
                                  
-                                 V_STATUS_CODE01); --����״̬����;
+                                 V_STATUS_CODE01); --流程状态：在途
   
     V_APP_TYPE_CODE := DECODE_BE(V_APP_TYPE_CODE,
                                  
@@ -8728,13 +8728,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                                    
                                    '000',
                                    
-                                   V_ELECT_TYPE_CODE); --�õ����Ŀ���ų������û�
+                                   V_ELECT_TYPE_CODE); --用电类别：目的排除考核用户
   
-    --ɾ��ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除原有的抽取的记录，维度为年
   
     DELETE FROM DW_S_BUSI_CCCAP_YEAR X WHERE X.STAT_YEAR = V_YEAR;
   
-    ----������˾��Ӫҵվ
+    ----县区公司及营业站
   
     FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
                                        
@@ -8972,7 +8972,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
     
     END LOOP;
   
-    --���м�ʡ��ͳ��
+    --地市及省级统计
     FOR TSS IN (SELECT ORG_NO
                   FROM SY_SG_O_ORG O
                  WHERE ORG_TYPE IN ('02', '03')) LOOP
@@ -9200,46 +9200,46 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
     
     END LOOP;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_BUSI_CCCAP_YEAR  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_BUSI_CCCAP_YEAR  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_S_BUSI_CCCAP_YEAR  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_S_BUSI_CCCAP_YEAR  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   /******************************
-  #function: �굥λҵ����װͳ�� (���ʹ洢����)
+  #function: 年单位业扩报装统计 (推送存储过程)
   #version:1.01
   #author:jkx 32078
   #createdate:2014-03-03
-  #input:IN_YEAR  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:IN_YEAR  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_BUSI_CCCAP_YEAR(IN_YEAR  VARCHAR2,
                                        OUT_CODE OUT NUMBER,
                                        OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YEAR    VARCHAR2(4);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_BUSI_CCCAP_YEAR',
                                         IN_YEAR);
     V_YEAR    := SUBSTR(IN_YEAR, 1, 4);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为年
     DELETE FROM SY_OM_DW_S_BUSI_CCCAP_YEAR X WHERE X.STAT_YEAR = V_YEAR;
   
     INSERT INTO SY_OM_DW_S_BUSI_CCCAP_YEAR
@@ -9271,42 +9271,42 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
        A.BAL_CAP,
        A.TIME_STAMP
         FROM DW_S_BUSI_CCCAP_YEAR A, SY_OM_DW_O_ORG_CONTRAST B
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_YEAR = V_YEAR
          AND TO_CHAR(LAST_DAY(TO_DATE(V_YEAR || '12', 'YYYYMM')),
                      'YYYYMMDD') BETWEEN B.BGN_YMD AND
              NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_BUSI_CCCAP_YEAR  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_BUSI_CCCAP_YEAR  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    /* --��¼����������־
+    /* --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);*/
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_BUSI_CCCAP_YEAR  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_BUSI_CCCAP_YEAR  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   /******************************
-  #function: �շֲ�ʽ��Դ���뻷���嵥  (��ȡ�洢����)
+  #function: 日分布式能源申请环节清单  (抽取存储过程)
   #version:1.01
   #author:liubin 32237
   #createdate:2014-09-22
-  #input:IN_YEAR  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:IN_YEAR  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   /*PROCEDURE P_ENT_DW_S_DISTR_ENERGY_WKST(IN_YMD   VARCHAR2,
@@ -9314,51 +9314,51 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                                          OUT_MSG  OUT VARCHAR2) IS
   
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_S_DISTR_ENERGY_WKST',
                                         IN_YMD);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_S_DISTR_ENERGY_WKST��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_S_DISTR_ENERGY_WKST表
     P_INS_DW_S_DISTR_ENERGY_WKST(IN_YMD, OUT_CODE, OUT_MSG);
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_S_DISTR_ENERGY_WKST��ȡ���ݲ��뵽�����OMAC�û��µ�DW_S_DISTR_ENERGY_WKST��
+      --调用推送过程，从管理库OMAC用户下的DW_S_DISTR_ENERGY_WKST表取数据插入到稽查库OMAC用户下的DW_S_DISTR_ENERGY_WKST表
       P_ETL_DW_S_DISTR_ENERGY_WKST(IN_YMD, OUT_CODE, OUT_MSG);
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_S_DISTR_ENERGY_WKST  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_S_DISTR_ENERGY_WKST  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_DISTR_ENERGY_WKST  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_DISTR_ENERGY_WKST  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;*/
 
   /******************************
-  #function: �շֲ�ʽ��Դ���뻷���嵥  (��ȡ�洢����)
+  #function: 日分布式能源申请环节清单  (抽取存储过程)
   #version:1.01
   #author:liubin 32237
   #createdate:2014-09-22
-  #input:IN_YEAR  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:IN_YEAR  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   /*PROCEDURE P_INS_DW_S_DISTR_ENERGY_WKST(IN_YMD   VARCHAR2,
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO   VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
     V_BGN          DATE := TO_DATE(IN_YMD, 'yyyymmddhh24miss');
     V_END          DATE := TO_DATE(IN_YMD, 'yyyymmddhh24miss') + 1;
@@ -9367,14 +9367,14 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
     V_LAST_STEP_NO VARCHAR2(64);
     V_WORKDAY_NUM  NUMBER(5) := 0;
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_S_DISTR_ENERGY_WKST',
                                         IN_YMD);
-    --����ҵ�������Ա��־ǿ���н������������ݣ�Ҫ��ɾ��ԭ�еĳ�ȡ�ļ�¼
+    --按照业扩设计人员邹志强表中仅保留当天数据，要求删除原有的抽取的记录
     DELETE FROM DW_S_DISTR_ENERGY_WKST X
      WHERE (BGN_DATE BETWEEN V_BGN AND V_END)
         OR (END_DATE BETWEEN V_BGN AND V_END);
-    --��ʼ����ͳ��,���뵽���������OMAC��DW_S_DISTR_ENERGY_WKST
+    --开始数据统计,插入到稽查管理库OMAC的DW_S_DISTR_ENERGY_WKST
     FOR CUR IN (SELECT A.APP_ID,
                        A.APP_NO,
                        A.CUST_ID,
@@ -10078,48 +10078,48 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
         END IF;
       END IF;
     END LOOP;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_DISTR_ENERGY_WKST  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_DISTR_ENERGY_WKST  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_S_DISTR_ENERGY_WKST  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_S_DISTR_ENERGY_WKST  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;*/
   /******************************
-  #function: �շֲ�ʽ��Դ���뻷���嵥  (���ʹ洢����)
+  #function: 日分布式能源申请环节清单  (推送存储过程)
   #version:1.01
   #author:liubin 32237
   #createdate:2014-09-22
-  #input:IN_YEAR  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:IN_YEAR  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   /*PROCEDURE P_ETL_DW_S_DISTR_ENERGY_WKST(IN_YMD   VARCHAR2,
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_DISTR_ENERGY_WKST',
                                         IN_YMD);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录
     DELETE FROM SY_OM_DW_S_DISTR_ENERGY_WKST X
      WHERE (TO_CHAR(BGN_DATE, 'yyyymmdd') = IN_YMD)
         OR (TO_CHAR(END_DATE, 'yyyymmdd') = IN_YMD);
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_DW_S_DISTR_ENERGY_WKST
       (DATA_ID,
        PRO_ORG_NO,
@@ -10252,31 +10252,31 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
         FROM DW_S_DISTR_ENERGY_WKST A
        WHERE (TO_CHAR(BGN_DATE, 'yyyymmdd') = IN_YMD)
           OR (TO_CHAR(END_DATE, 'yyyymmdd') = IN_YMD);
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_DISTR_ENERGY_WKST  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_DISTR_ENERGY_WKST  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_DISTR_ENERGY_WKST  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_DISTR_ENERGY_WKST  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;*/
 
   /******************************
-  #function: �·ֲ�ʽ��Դ���뻷���嵥  (��ȡ�洢����)
+  #function: 月分布式能源申请环节清单  (抽取存储过程)
   #version:1.01
   #author:liubin 32237
   #createdate:2014-09-22
-  #input:IN_YEAR  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:IN_YEAR  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ENT_DW_S_DISTR_ENERGY_MON(IN_YM    VARCHAR2,
@@ -10284,58 +10284,58 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                                         OUT_MSG  OUT VARCHAR2) IS
   
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_S_DISTR_ENERGY_MON',
                                         IN_YM);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_S_DISTR_ENERGY_WKST��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_S_DISTR_ENERGY_WKST表
     P_INS_DW_S_DISTR_ENERGY_MON(IN_YM, OUT_CODE, OUT_MSG);
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_S_DISTR_ENERGY_WKST��ȡ���ݲ��뵽�����OMAC�û��µ�DW_S_DISTR_ENERGY_WKST��
+      --调用推送过程，从管理库OMAC用户下的DW_S_DISTR_ENERGY_WKST表取数据插入到稽查库OMAC用户下的DW_S_DISTR_ENERGY_WKST表
       P_ETL_DW_S_DISTR_ENERGY_MON(IN_YM, OUT_CODE, OUT_MSG);
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_S_DISTR_ENERGY_MON  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_S_DISTR_ENERGY_MON  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_S_DISTR_ENERGY_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_S_DISTR_ENERGY_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
 
   /******************************
-  #function: �·ֲ�ʽ��Դ���뻷���嵥  (��ȡ�洢����)
+  #function: 月分布式能源申请环节清单  (抽取存储过程)
   #version:1.01
   #author:liubin 32237
   #createdate:2014-09-22
-  #input:IN_YEAR  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:IN_YEAR  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_INS_DW_S_DISTR_ENERGY_MON(IN_YM    VARCHAR2,
                                         OUT_CODE OUT NUMBER,
                                         OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
-    --����
+    --年月
     V_YM           VARCHAR2(6);
-    V_DATE_START_D DATE; --��ʼʱ��
-    V_DATE_END_D   DATE; --����ʱ��
+    V_DATE_START_D DATE; --开始时间
+    V_DATE_END_D   DATE; --结束时间
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_S_DISTR_ENERGY_MON',
                                         IN_YM);
   
@@ -10344,10 +10344,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
                               'YYYY-MM-DD HH24:MI:SS');
     V_DATE_START_D := ADD_MONTHS(V_DATE_END_D, -1);
   
-    --����ҵ�������Ա��־ǿ���н������������ݣ�Ҫ��ɾ��ԭ�еĳ�ȡ�ļ�¼
+    --按照业扩设计人员邹志强表中仅保留当天数据，要求删除原有的抽取的记录
     DELETE FROM DW_S_DISTR_ENERGY_MON X;
   
-    --��ʼ����ͳ��,���뵽���������OMAC��DW_S_DISTR_ENERGY_WKST
+    --开始数据统计,插入到稽查管理库OMAC的DW_S_DISTR_ENERGY_WKST
     INSERT INTO DW_S_DISTR_ENERGY_MON
       (DATA_ID,
        PRO_ORG_NO,
@@ -10482,46 +10482,46 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
         FROM DW_S_DISTR_ENERGY_WKST A
        WHERE (BGN_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D)
           OR (END_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D);
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_S_DISTR_ENERGY_MON  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_S_DISTR_ENERGY_MON  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_S_DISTR_ENERGY_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_S_DISTR_ENERGY_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   /******************************
-  #function: �·ֲ�ʽ��Դ���뻷���嵥  (���ʹ洢����)
+  #function: 月分布式能源申请环节清单  (推送存储过程)
   #version:1.01
   #author:liubin 32237
   #createdate:2014-09-22
-  #input:IN_YEAR  ͳ������
-  #input:in_org_no  ���絥λ���
+  #input:IN_YEAR  统计日期
+  #input:in_org_no  供电单位编号
   #modifyexplain:
   *********************/
   PROCEDURE P_ETL_DW_S_DISTR_ENERGY_MON(IN_YM    VARCHAR2,
                                         OUT_CODE OUT NUMBER,
                                         OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_S_DISTR_ENERGY_MON',
                                         IN_YM);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录
     DELETE FROM SY_OM_DW_S_DISTR_ENERGY_MON X WHERE X.STAT_YM = IN_YM;
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_DW_S_DISTR_ENERGY_MON
       (DATA_ID,
        PRO_ORG_NO,
@@ -10655,21 +10655,21 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
              TIME_STAMP
         FROM DW_S_DISTR_ENERGY_MON A
        WHERE A.STAT_YM = IN_YM;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_S_DISTR_ENERGY_MON  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_S_DISTR_ENERGY_MON  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_S_DISTR_ENERGY_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_S_DISTR_ENERGY_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -10687,7 +10687,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
   
   END;
 
-  --���ճ��Ȳ���ַ���
+  --按照长度拆分字符串
   PROCEDURE SP_PARSESTRING_LENGTH(P_STRING   IN VARCHAR2,
                                   DELMLENGTH IN NUMBER,
                                   P_T_STRING OUT T_STRING) IS
@@ -10705,7 +10705,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_BE IS
   
     IF MOD(M_LENGTH, DELMLENGTH) <> 0 THEN
       RAISE_APPLICATION_ERROR(-20002,
-                              '��ֵ��ַ�������Ϊ�ָ�ȵ�������!');
+                              '拆分的字符串必须为分割长度的整数倍!');
       RETURN;
     END IF;
   

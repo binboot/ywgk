@@ -2,46 +2,46 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_SPE_AC IS
 
   -- AUTHOR  : BINBOOT
   -- CREATED : 2014-10-30 11:35:34
-  -- PURPOSE : --ÈÕÌØÊâµçÁ¿·ÑÅÅ³ýÃ÷Ï¸¹ý³Ì°ü
+  -- PURPOSE : --æ—¥ç‰¹æ®Šç”µé‡è´¹æŽ’é™¤æ˜Žç»†è¿‡ç¨‹åŒ…
 
-  --Êý¾Ý×¼±¸½×¶Î_´úÕ÷Ã÷Ï¸_°´ÔÂ´«´«²Î£¬¶ÔÓÚÀúÊ·Êý¾ÝÊµ¼ÊÉÏÖ»Éú³Éµ±ÔÂÒ»´Î¼´¿É
+  --æ•°æ®å‡†å¤‡é˜¶æ®µ_ä»£å¾æ˜Žç»†_æŒ‰æœˆä¼ ä¼ å‚ï¼Œå¯¹äºŽåŽ†å²æ•°æ®å®žé™…ä¸Šåªç”Ÿæˆå½“æœˆä¸€æ¬¡å³å¯
   PROCEDURE P_INS_TMP_E_PL_AMT(I_DATE   IN VARCHAR2,
                                OUT_CODE OUT NUMBER,
                                OUT_MSG  OUT VARCHAR2);
-  --Êý¾Ý×¼±¸½×¶Î_Á¦µ÷Ã÷Ï¸_°´ÔÂ´«²Î£¬¶ÔÓÚÀúÊ·Êý¾ÝÊµ¼ÊÉÏÖ»Éú³Éµ±ÔÂÒ»´Î¼´¿É
+  --æ•°æ®å‡†å¤‡é˜¶æ®µ_åŠ›è°ƒæ˜Žç»†_æŒ‰æœˆä¼ å‚ï¼Œå¯¹äºŽåŽ†å²æ•°æ®å®žé™…ä¸Šåªç”Ÿæˆå½“æœˆä¸€æ¬¡å³å¯
   PROCEDURE P_INS_TMP_E_PF_AMT(I_DATE   IN VARCHAR2,
                                OUT_CODE OUT NUMBER,
                                OUT_MSG  OUT VARCHAR2);
-  --Êý¾Ý×¼±¸½×¶Î_Ä¿Â¼Ã÷Ï¸_°´ÔÂ´«²Î£¬¶ÔÓÚÀúÊ·Êý¾ÝÊµ¼ÊÉÏÖ»Éú³Éµ±ÔÂÒ»´Î¼´¿É
+  --æ•°æ®å‡†å¤‡é˜¶æ®µ_ç›®å½•æ˜Žç»†_æŒ‰æœˆä¼ å‚ï¼Œå¯¹äºŽåŽ†å²æ•°æ®å®žé™…ä¸Šåªç”Ÿæˆå½“æœˆä¸€æ¬¡å³å¯
   PROCEDURE P_INS_TMP_E_KWH_AMT(I_DATE   IN VARCHAR2,
                                 OUT_CODE OUT NUMBER,
                                 OUT_MSG  OUT VARCHAR2);
-  --Êý¾Ý×¼±¸½×¶Î_µç¼Û²ßÂÔÃ÷Ï¸_°´ÔÂ´«²Î£¬¶ÔÓÚÀúÊ·Êý¾ÝÊµ¼ÊÉÏÖ»Éú³Éµ±ÔÂÒ»´Î¼´¿É
+  --æ•°æ®å‡†å¤‡é˜¶æ®µ_ç”µä»·ç­–ç•¥æ˜Žç»†_æŒ‰æœˆä¼ å‚ï¼Œå¯¹äºŽåŽ†å²æ•°æ®å®žé™…ä¸Šåªç”Ÿæˆå½“æœˆä¸€æ¬¡å³å¯
   PROCEDURE P_INS_TMP_E_CONSPRC_TACTIC_SGA(I_DATE   IN VARCHAR2,
                                            OUT_CODE OUT NUMBER,
                                            OUT_MSG  OUT VARCHAR2);
-  --Êý¾Ý×¼±¸½×¶Î_»ù±¾µç·ÑÃ÷Ï¸_°´ÔÂ´«²Î£¬¶ÔÓÚÀúÊ·Êý¾ÝÊµ¼ÊÉÏÖ»Éú³Éµ±ÔÂÒ»´Î¼´¿É                                         
+  --æ•°æ®å‡†å¤‡é˜¶æ®µ_åŸºæœ¬ç”µè´¹æ˜Žç»†_æŒ‰æœˆä¼ å‚ï¼Œå¯¹äºŽåŽ†å²æ•°æ®å®žé™…ä¸Šåªç”Ÿæˆå½“æœˆä¸€æ¬¡å³å¯                                         
   PROCEDURE P_INS_TMP_E_BASE_AMT(I_DATE   IN VARCHAR2,
                                  OUT_CODE OUT NUMBER,
                                  OUT_MSG  OUT VARCHAR2);
-  --Êý¾Ý×¼±¸½×¶Î_ÓÃ»§µç¼ÛÃ÷Ï¸±í_°´ÔÂ´«²Î£¬¶ÔÓÚÀúÊ·Êý¾ÝÊµ¼ÊÉÏÖ»Éú³Éµ±ÔÂÒ»´Î¼´¿É                                 
+  --æ•°æ®å‡†å¤‡é˜¶æ®µ_ç”¨æˆ·ç”µä»·æ˜Žç»†è¡¨_æŒ‰æœˆä¼ å‚ï¼Œå¯¹äºŽåŽ†å²æ•°æ®å®žé™…ä¸Šåªç”Ÿæˆå½“æœˆä¸€æ¬¡å³å¯                                 
   PROCEDURE P_INS_TMP_E_CONS_PRC_AMT(I_DATE   IN VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2);
 
-  --³éÈ¡°´ÕÕµç¼ÛÂëÅÅ³ýµÄÌØÊâÓÃ»§µçÁ¿µç·ÑÃ÷Ï¸
+  --æŠ½å–æŒ‰ç…§ç”µä»·ç æŽ’é™¤çš„ç‰¹æ®Šç”¨æˆ·ç”µé‡ç”µè´¹æ˜Žç»†
   PROCEDURE P_ENT_DW_O_SPE_USER_DET_RPRC(I_DATE   IN VARCHAR2,
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2);
-  --³éÈ¡°´ÕÕ´úÕ÷ÅÅ³ýµÄÌØÊâÓÃ»§µçÁ¿µç·ÑÃ÷Ï¸
+  --æŠ½å–æŒ‰ç…§ä»£å¾æŽ’é™¤çš„ç‰¹æ®Šç”¨æˆ·ç”µé‡ç”µè´¹æ˜Žç»†
   PROCEDURE P_ENT_DW_O_SPE_USER_DET_RPL(I_DATE   IN VARCHAR2,
                                         OUT_CODE OUT NUMBER,
                                         OUT_MSG  OUT VARCHAR2);
-  --³éÈ¡°´ÕÕÌØÊâÓÃ»§ÅÅ³ýµÄÌØÊâÓÃ»§µçÁ¿µç·ÑÃ÷Ï¸
+  --æŠ½å–æŒ‰ç…§ç‰¹æ®Šç”¨æˆ·æŽ’é™¤çš„ç‰¹æ®Šç”¨æˆ·ç”µé‡ç”µè´¹æ˜Žç»†
   PROCEDURE P_ENT_DW_O_SPE_USER_DET_RCONS(I_DATE   IN VARCHAR2,
                                           OUT_CODE OUT NUMBER,
                                           OUT_MSG  OUT VARCHAR2);
-  --³éÈ¡°´ÕÕ²¢±íÅÅ³ýõ»ÊÛµÄÌØÊâÓÃ»§µçÁ¿µç·ÑÃ÷Ï¸
+  --æŠ½å–æŒ‰ç…§å¹¶è¡¨æŽ’é™¤è¶¸å”®çš„ç‰¹æ®Šç”¨æˆ·ç”µé‡ç”µè´¹æ˜Žç»†
   PROCEDURE P_ENT_DW_O_SPE_USER_DET_BCONS(I_DATE   IN VARCHAR2,
                                           OUT_CODE OUT NUMBER,
                                           OUT_MSG  OUT VARCHAR2);
@@ -85,50 +85,50 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
   PROCEDURE P_INS_TMP_E_PL_AMT(I_DATE   IN VARCHAR2,
                                OUT_CODE OUT NUMBER,
                                OUT_MSG  OUT VARCHAR2) IS
-    --ÈÕÖ¾ID
+    --æ—¥å¿—ID
     V_DATA_ID VARCHAR2(24);
     V_NUM     NUMBER;
-    --»ñÈ¡ÍøÊ¡µÄµ¥Î»±àÂë
+    --èŽ·å–ç½‘çœçš„å•ä½ç¼–ç 
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
-    --µç·ÑÄêÔÂ
+    --ç”µè´¹å¹´æœˆ
     V_YM  VARCHAR2(6) := SUBSTR(I_DATE, 1, 6);
     V_YMD VARCHAR2(8) := SUBSTR(I_DATE, 1, 8);
     TYPE PL_ITEM_ARRAY IS TABLE OF VARCHAR2(32) INDEX BY PLS_INTEGER;
-    V_PL_CODE         PL_ITEM_ARRAY; --´úÕ÷Ïî
+    V_PL_CODE         PL_ITEM_ARRAY; --ä»£å¾é¡¹
     V_SP_PL_CODE      VARCHAR2(64) := 'XXX';
     V_SPECIAL_PL_CODE VARCHAR2(256);
-    V_TOPPK_YM_FLAG   VARCHAR2(8); --¼â·åµçÁ¿ÄêÔÂ±êÖ¾
-    --½×ÌÝµçÁ¿´æ·ÅÀàÐÍ:·Öµµ·¨(1),µÝÔö·¨(2).Ä¬ÈÏÎª·Öµµ·¨1,Èç¹ûÍøÊ¡ÎªµÝÔö·¨ÇëÔÚdw_gk_code_transÄÚÅäÖÃÎª2
+    V_TOPPK_YM_FLAG   VARCHAR2(8); --å°–å³°ç”µé‡å¹´æœˆæ ‡å¿—
+    --é˜¶æ¢¯ç”µé‡å­˜æ”¾ç±»åž‹:åˆ†æ¡£æ³•(1),é€’å¢žæ³•(2).é»˜è®¤ä¸ºåˆ†æ¡£æ³•1,å¦‚æžœç½‘çœä¸ºé€’å¢žæ³•è¯·åœ¨dw_gk_code_transå†…é…ç½®ä¸º2
     V_JTCFLX VARCHAR2(1) := PKG_GK_PUBLIC.F_TRANS_CODE('JTCFLX', '1');
   BEGIN
-    --¼ÇÂ¼¿ªÊ¼ÈÕÖ¾
+    --è®°å½•å¼€å§‹æ—¥å¿—
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_TMP_E_PL_AMT', I_DATE);
   
-    --±ê×¼´úÕ÷
+    --æ ‡å‡†ä»£å¾
     FOR I IN 1 .. 13 LOOP
-      SELECT NVL(MAX(CONT1), 'NODATA'), NVL(MAX(CONT2), '0') --content2='1'µÄÎªÌØÊâ´úÕ÷
+      SELECT NVL(MAX(CONT1), 'NODATA'), NVL(MAX(CONT2), '0') --content2='1'çš„ä¸ºç‰¹æ®Šä»£å¾
         INTO V_PL_CODE(I), V_NUM
         FROM GK_DW_CODE_TRANS
        WHERE CODE_TYPE = 'PrtPlItem'
-         AND LPAD(TRANS_VALUE, 2, '0') = LPAD(I, 2, '0'); --TRANS_VALUE´æ·ÅµÄ¾ÍÊÇSGPM_OUT.ARC_E_PL_AMTµÄPL_AMT__×Ö¶ÎµÄÐòºÅ
+         AND LPAD(TRANS_VALUE, 2, '0') = LPAD(I, 2, '0'); --TRANS_VALUEå­˜æ”¾çš„å°±æ˜¯SGPM_OUT.ARC_E_PL_AMTçš„PL_AMT__å­—æ®µçš„åºå·
       IF V_NUM = '1' THEN
         V_SP_PL_CODE := V_SP_PL_CODE || V_PL_CODE(I);
       END IF;
     END LOOP;
   
-    --ÌØÊâ´úÕ÷
+    --ç‰¹æ®Šä»£å¾
     SELECT ',' || WM_CONCAT(PL_CODE) || ','
       INTO V_SPECIAL_PL_CODE
       FROM DW_O_REMOVE_PL;
   
     SELECT SIGN(INSTR(CONT1, SUBSTR(V_YM, 5, 2)))
-      INTO V_TOPPK_YM_FLAG --¼â·åµçÁ¿ÄêÔÂ¼ÆËã±êÊ¶
+      INTO V_TOPPK_YM_FLAG --å°–å³°ç”µé‡å¹´æœˆè®¡ç®—æ ‡è¯†
       FROM GK_DW_CODE_TRANS
      WHERE CODE_TYPE = 'acmeYm';
   
     DELETE FROM TMP_E_PL_AMT H WHERE H.YM = V_YM;
   
-    --ÔÂ´úÕ÷µç·Ñ
+    --æœˆä»£å¾ç”µè´¹
     FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
                                        1,
                                        DECODE(V_PRO_ORG_NO, '12101', 5, 7)) ORG_NO
@@ -245,19 +245,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
     END LOOP;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'Ö´ÐÐ P_INS_TMP_E_PL_AMT  ³É¹¦';
+    OUT_MSG  := 'æ‰§è¡Œ P_INS_TMP_E_PL_AMT  æˆåŠŸ';
   
-    --¼ÇÂ¼Õý³£½áÊøÈÕÖ¾
+    --è®°å½•æ­£å¸¸ç»“æŸæ—¥å¿—
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --Òì³£´¦Àí
+    --å¼‚å¸¸å¤„ç†
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEÎª0´ú±íÔËÐÐÊ§°Ü,»Ø¹öÊÂÎñ
+      --OUT_CODEä¸º0ä»£è¡¨è¿è¡Œå¤±è´¥,å›žæ»šäº‹åŠ¡
       OUT_CODE := 0;
-      OUT_MSG  := 'Ö´ÐÐ P_INS_TMP_E_PL_AMT  ³öÏÖÒì³£' || ',Òì³£ÐÅÏ¢Îª£º' || SQLCODE || ',' ||
+      OUT_MSG  := 'æ‰§è¡Œ P_INS_TMP_E_PL_AMT  å‡ºçŽ°å¼‚å¸¸' || ',å¼‚å¸¸ä¿¡æ¯ä¸ºï¼š' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --¼ÇÂ¼Òì³£½áÊøÈÕÖ¾
+      --è®°å½•å¼‚å¸¸ç»“æŸæ—¥å¿—
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END P_INS_TMP_E_PL_AMT;
@@ -265,36 +265,36 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
   PROCEDURE P_INS_TMP_E_PF_AMT(I_DATE   IN VARCHAR2,
                                OUT_CODE OUT NUMBER,
                                OUT_MSG  OUT VARCHAR2) IS
-    --ÈÕÖ¾ID
+    --æ—¥å¿—ID
     V_DATA_ID VARCHAR2(24);
     V_NUM     NUMBER;
-    --»ñÈ¡ÍøÊ¡µÄµ¥Î»±àÂë
+    --èŽ·å–ç½‘çœçš„å•ä½ç¼–ç 
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
-    --µç·ÑÄêÔÂ
+    --ç”µè´¹å¹´æœˆ
     V_YM  VARCHAR2(6) := SUBSTR(I_DATE, 1, 6);
     V_YMD VARCHAR2(8) := SUBSTR(I_DATE, 1, 8);
     TYPE PL_ITEM_ARRAY IS TABLE OF VARCHAR2(32) INDEX BY PLS_INTEGER;
-    V_PL_CODE       PL_ITEM_ARRAY; --´úÕ÷Ïî
+    V_PL_CODE       PL_ITEM_ARRAY; --ä»£å¾é¡¹
     V_SP_PL_CODE    VARCHAR2(64) := 'XXX';
-    V_TOPPK_YM_FLAG VARCHAR2(8); --¼â·åµçÁ¿ÄêÔÂ±êÖ¾
-    --½×ÌÝµçÁ¿´æ·ÅÀàÐÍ:·Öµµ·¨(1),µÝÔö·¨(2).Ä¬ÈÏÎª·Öµµ·¨1,Èç¹ûÍøÊ¡ÎªµÝÔö·¨ÇëÔÚdw_gk_code_transÄÚÅäÖÃÎª2
+    V_TOPPK_YM_FLAG VARCHAR2(8); --å°–å³°ç”µé‡å¹´æœˆæ ‡å¿—
+    --é˜¶æ¢¯ç”µé‡å­˜æ”¾ç±»åž‹:åˆ†æ¡£æ³•(1),é€’å¢žæ³•(2).é»˜è®¤ä¸ºåˆ†æ¡£æ³•1,å¦‚æžœç½‘çœä¸ºé€’å¢žæ³•è¯·åœ¨dw_gk_code_transå†…é…ç½®ä¸º2
     V_JTCFLX VARCHAR2(1) := PKG_GK_PUBLIC.F_TRANS_CODE('JTCFLX', '1');
   BEGIN
-    --¼ÇÂ¼¿ªÊ¼ÈÕÖ¾
+    --è®°å½•å¼€å§‹æ—¥å¿—
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_TMP_E_PF_AMT', I_DATE);
     FOR I IN 1 .. 13 LOOP
-      SELECT NVL(MAX(CONT1), 'NODATA'), NVL(MAX(CONT2), '0') --content2='1'µÄÎªÌØÊâ´úÕ÷
+      SELECT NVL(MAX(CONT1), 'NODATA'), NVL(MAX(CONT2), '0') --content2='1'çš„ä¸ºç‰¹æ®Šä»£å¾
         INTO V_PL_CODE(I), V_NUM
         FROM GK_DW_CODE_TRANS
        WHERE CODE_TYPE = 'PrtPlItem'
-         AND LPAD(TRANS_VALUE, 2, '0') = LPAD(I, 2, '0'); --TRANS_VALUE´æ·ÅµÄ¾ÍÊÇSGPM_OUT.ARC_E_PL_AMTµÄPL_AMT__×Ö¶ÎµÄÐòºÅ
+         AND LPAD(TRANS_VALUE, 2, '0') = LPAD(I, 2, '0'); --TRANS_VALUEå­˜æ”¾çš„å°±æ˜¯SGPM_OUT.ARC_E_PL_AMTçš„PL_AMT__å­—æ®µçš„åºå·
       IF V_NUM = '1' THEN
         V_SP_PL_CODE := V_SP_PL_CODE || V_PL_CODE(I);
       END IF;
     END LOOP;
   
     SELECT SIGN(INSTR(CONT1, SUBSTR(V_YM, 5, 2)))
-      INTO V_TOPPK_YM_FLAG --¼â·åµçÁ¿ÄêÔÂ¼ÆËã±êÊ¶
+      INTO V_TOPPK_YM_FLAG --å°–å³°ç”µé‡å¹´æœˆè®¡ç®—æ ‡è¯†
       FROM GK_DW_CODE_TRANS
      WHERE CODE_TYPE = 'acmeYm';
   
@@ -305,7 +305,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                   FROM SY_SG_O_ORG
                  WHERE ORG_NO <> '00000'
                    AND LENGTH(ORG_NO) >= DECODE(V_PRO_ORG_NO, '12101', 5, 7)) LOOP
-      --¹¦ÂÊÒòÊýµ÷Õûµç·Ñ
+      --åŠŸçŽ‡å› æ•°è°ƒæ•´ç”µè´¹
       INSERT INTO TMP_E_PF_AMT
         SELECT /*+PARALLEL(G 8)*/
          PRC_AMT_ID,
@@ -322,19 +322,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
     END LOOP;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'Ö´ÐÐ P_INS_TMP_E_PF_AMT  ³É¹¦';
+    OUT_MSG  := 'æ‰§è¡Œ P_INS_TMP_E_PF_AMT  æˆåŠŸ';
   
-    --¼ÇÂ¼Õý³£½áÊøÈÕÖ¾
+    --è®°å½•æ­£å¸¸ç»“æŸæ—¥å¿—
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --Òì³£´¦Àí
+    --å¼‚å¸¸å¤„ç†
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEÎª0´ú±íÔËÐÐÊ§°Ü,»Ø¹öÊÂÎñ
+      --OUT_CODEä¸º0ä»£è¡¨è¿è¡Œå¤±è´¥,å›žæ»šäº‹åŠ¡
       OUT_CODE := 0;
-      OUT_MSG  := 'Ö´ÐÐ P_INS_TMP_E_PF_AMT  ³öÏÖÒì³£' || ',Òì³£ÐÅÏ¢Îª£º' || SQLCODE || ',' ||
+      OUT_MSG  := 'æ‰§è¡Œ P_INS_TMP_E_PF_AMT  å‡ºçŽ°å¼‚å¸¸' || ',å¼‚å¸¸ä¿¡æ¯ä¸ºï¼š' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --¼ÇÂ¼Òì³£½áÊøÈÕÖ¾
+      --è®°å½•å¼‚å¸¸ç»“æŸæ—¥å¿—
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END P_INS_TMP_E_PF_AMT;
@@ -342,42 +342,42 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
   PROCEDURE P_INS_TMP_E_KWH_AMT(I_DATE   IN VARCHAR2,
                                 OUT_CODE OUT NUMBER,
                                 OUT_MSG  OUT VARCHAR2) IS
-    --ÈÕÖ¾ID
+    --æ—¥å¿—ID
     V_DATA_ID VARCHAR2(24);
     V_NUM     NUMBER;
-    --»ñÈ¡ÍøÊ¡µÄµ¥Î»±àÂë
+    --èŽ·å–ç½‘çœçš„å•ä½ç¼–ç 
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
-    --µç·ÑÄêÔÂ
+    --ç”µè´¹å¹´æœˆ
     V_YM  VARCHAR2(6) := SUBSTR(I_DATE, 1, 6);
     V_YMD VARCHAR2(8) := SUBSTR(I_DATE, 1, 8);
     TYPE PL_ITEM_ARRAY IS TABLE OF VARCHAR2(32) INDEX BY PLS_INTEGER;
-    V_PL_CODE       PL_ITEM_ARRAY; --´úÕ÷Ïî
+    V_PL_CODE       PL_ITEM_ARRAY; --ä»£å¾é¡¹
     V_SP_PL_CODE    VARCHAR2(64) := 'XXX';
-    V_TOPPK_YM_FLAG VARCHAR2(8); --¼â·åµçÁ¿ÄêÔÂ±êÖ¾
-    --½×ÌÝµçÁ¿´æ·ÅÀàÐÍ:·Öµµ·¨(1),µÝÔö·¨(2).Ä¬ÈÏÎª·Öµµ·¨1,Èç¹ûÍøÊ¡ÎªµÝÔö·¨ÇëÔÚdw_gk_code_transÄÚÅäÖÃÎª2
+    V_TOPPK_YM_FLAG VARCHAR2(8); --å°–å³°ç”µé‡å¹´æœˆæ ‡å¿—
+    --é˜¶æ¢¯ç”µé‡å­˜æ”¾ç±»åž‹:åˆ†æ¡£æ³•(1),é€’å¢žæ³•(2).é»˜è®¤ä¸ºåˆ†æ¡£æ³•1,å¦‚æžœç½‘çœä¸ºé€’å¢žæ³•è¯·åœ¨dw_gk_code_transå†…é…ç½®ä¸º2
     V_JTCFLX VARCHAR2(1) := PKG_GK_PUBLIC.F_TRANS_CODE('JTCFLX', '1');
   BEGIN
-    --¼ÇÂ¼¿ªÊ¼ÈÕÖ¾
+    --è®°å½•å¼€å§‹æ—¥å¿—
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_TMP_E_KWH_AMT', I_DATE);
     FOR I IN 1 .. 13 LOOP
-      SELECT NVL(MAX(CONT1), 'NODATA'), NVL(MAX(CONT2), '0') --content2='1'µÄÎªÌØÊâ´úÕ÷
+      SELECT NVL(MAX(CONT1), 'NODATA'), NVL(MAX(CONT2), '0') --content2='1'çš„ä¸ºç‰¹æ®Šä»£å¾
         INTO V_PL_CODE(I), V_NUM
         FROM GK_DW_CODE_TRANS
        WHERE CODE_TYPE = 'PrtPlItem'
-         AND LPAD(TRANS_VALUE, 2, '0') = LPAD(I, 2, '0'); --TRANS_VALUE´æ·ÅµÄ¾ÍÊÇSGPM_OUT.ARC_E_PL_AMTµÄPL_AMT__×Ö¶ÎµÄÐòºÅ
+         AND LPAD(TRANS_VALUE, 2, '0') = LPAD(I, 2, '0'); --TRANS_VALUEå­˜æ”¾çš„å°±æ˜¯SGPM_OUT.ARC_E_PL_AMTçš„PL_AMT__å­—æ®µçš„åºå·
       IF V_NUM = '1' THEN
         V_SP_PL_CODE := V_SP_PL_CODE || V_PL_CODE(I);
       END IF;
     END LOOP;
   
     SELECT SIGN(INSTR(CONT1, SUBSTR(V_YM, 5, 2)))
-      INTO V_TOPPK_YM_FLAG --¼â·åµçÁ¿ÄêÔÂ¼ÆËã±êÊ¶
+      INTO V_TOPPK_YM_FLAG --å°–å³°ç”µé‡å¹´æœˆè®¡ç®—æ ‡è¯†
       FROM GK_DW_CODE_TRANS
      WHERE CODE_TYPE = 'acmeYm';
   
     DELETE FROM TMP_E_KWH_AMT E WHERE E.YM = V_YM;
   
-    --ÔÂµç¶Èµç·Ñ»ù´¡±í
+    --æœˆç”µåº¦ç”µè´¹åŸºç¡€è¡¨
     FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
                                        1,
                                        DECODE(V_PRO_ORG_NO, '12101', 5, 7)) ORG_NO
@@ -411,7 +411,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                         '01',
                         NVL(E.CAT_KWH_AMT, 0) + NVL(E.FLAT_BAL, 0),
                         0)),
-             0) ACME_CATKWH_AMT, ---20110808¼ÓÉÏµ÷Î²
+             0) ACME_CATKWH_AMT, ---20110808åŠ ä¸Šè°ƒå°¾
          NVL(SUM(DECODE(E.PRC_TS_CODE,
                         '02',
                         NVL(E.CAT_KWH_AMT, 0) + NVL(E.FLAT_BAL, 0),
@@ -457,19 +457,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
     END LOOP;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'Ö´ÐÐ P_INS_TMP_E_KWH_AMT  ³É¹¦';
+    OUT_MSG  := 'æ‰§è¡Œ P_INS_TMP_E_KWH_AMT  æˆåŠŸ';
   
-    --¼ÇÂ¼Õý³£½áÊøÈÕÖ¾
+    --è®°å½•æ­£å¸¸ç»“æŸæ—¥å¿—
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --Òì³£´¦Àí
+    --å¼‚å¸¸å¤„ç†
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEÎª0´ú±íÔËÐÐÊ§°Ü,»Ø¹öÊÂÎñ
+      --OUT_CODEä¸º0ä»£è¡¨è¿è¡Œå¤±è´¥,å›žæ»šäº‹åŠ¡
       OUT_CODE := 0;
-      OUT_MSG  := 'Ö´ÐÐ P_INS_TMP_E_KWH_AMT  ³öÏÖÒì³£' || ',Òì³£ÐÅÏ¢Îª£º' || SQLCODE || ',' ||
+      OUT_MSG  := 'æ‰§è¡Œ P_INS_TMP_E_KWH_AMT  å‡ºçŽ°å¼‚å¸¸' || ',å¼‚å¸¸ä¿¡æ¯ä¸ºï¼š' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --¼ÇÂ¼Òì³£½áÊøÈÕÖ¾
+      --è®°å½•å¼‚å¸¸ç»“æŸæ—¥å¿—
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END P_INS_TMP_E_KWH_AMT;
@@ -477,32 +477,32 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
   PROCEDURE P_INS_TMP_E_CONSPRC_TACTIC_SGA(I_DATE   IN VARCHAR2,
                                            OUT_CODE OUT NUMBER,
                                            OUT_MSG  OUT VARCHAR2) IS
-    --ÈÕÖ¾ID
+    --æ—¥å¿—ID
     V_DATA_ID VARCHAR2(24);
     V_NUM     NUMBER;
-    --»ñÈ¡ÍøÊ¡µÄµ¥Î»±àÂë
+    --èŽ·å–ç½‘çœçš„å•ä½ç¼–ç 
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
-    --µç·ÑÄêÔÂ
+    --ç”µè´¹å¹´æœˆ
     V_YM  VARCHAR2(6) := SUBSTR(I_DATE, 1, 6);
     V_YMD VARCHAR2(8) := SUBSTR(I_DATE, 1, 8);
     TYPE PL_ITEM_ARRAY IS TABLE OF VARCHAR2(32) INDEX BY PLS_INTEGER;
-    V_PL_CODE       PL_ITEM_ARRAY; --´úÕ÷Ïî
+    V_PL_CODE       PL_ITEM_ARRAY; --ä»£å¾é¡¹
     V_SP_PL_CODE    VARCHAR2(64) := 'XXX';
-    V_TOPPK_YM_FLAG VARCHAR2(8); --¼â·åµçÁ¿ÄêÔÂ±êÖ¾
-    --½×ÌÝµçÁ¿´æ·ÅÀàÐÍ:·Öµµ·¨(1),µÝÔö·¨(2).Ä¬ÈÏÎª·Öµµ·¨1,Èç¹ûÍøÊ¡ÎªµÝÔö·¨ÇëÔÚdw_gk_code_transÄÚÅäÖÃÎª2
+    V_TOPPK_YM_FLAG VARCHAR2(8); --å°–å³°ç”µé‡å¹´æœˆæ ‡å¿—
+    --é˜¶æ¢¯ç”µé‡å­˜æ”¾ç±»åž‹:åˆ†æ¡£æ³•(1),é€’å¢žæ³•(2).é»˜è®¤ä¸ºåˆ†æ¡£æ³•1,å¦‚æžœç½‘çœä¸ºé€’å¢žæ³•è¯·åœ¨dw_gk_code_transå†…é…ç½®ä¸º2
     V_JTCFLX VARCHAR2(1) := PKG_GK_PUBLIC.F_TRANS_CODE('JTCFLX', '1');
   BEGIN
-    --¼ÇÂ¼¿ªÊ¼ÈÕÖ¾
+    --è®°å½•å¼€å§‹æ—¥å¿—
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_TMP_E_CONSPRC_TACTIC_SGA',
                                         I_DATE);
   
     SELECT SIGN(INSTR(CONT1, SUBSTR(V_YM, 5, 2)))
-      INTO V_TOPPK_YM_FLAG --¼â·åµçÁ¿ÄêÔÂ¼ÆËã±êÊ¶
+      INTO V_TOPPK_YM_FLAG --å°–å³°ç”µé‡å¹´æœˆè®¡ç®—æ ‡è¯†
       FROM GK_DW_CODE_TRANS
      WHERE CODE_TYPE = 'acmeYm';
   
     DELETE FROM TMP_E_CONSPRC_TACTIC_SGA D WHERE D.YM = V_YM;
-    --ÓÃ»§¶¨¼Û²ßÂÔ
+    --ç”¨æˆ·å®šä»·ç­–ç•¥
     INSERT INTO TMP_E_CONSPRC_TACTIC_SGA
       SELECT /*+PARALLEL(D 8)*/
        PRC_TACTIC_SNAP_ID,
@@ -524,19 +524,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
     COMMIT;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'Ö´ÐÐ P_INS_TMP_E_CONSPRC_TACTIC_SGA  ³É¹¦';
+    OUT_MSG  := 'æ‰§è¡Œ P_INS_TMP_E_CONSPRC_TACTIC_SGA  æˆåŠŸ';
   
-    --¼ÇÂ¼Õý³£½áÊøÈÕÖ¾
+    --è®°å½•æ­£å¸¸ç»“æŸæ—¥å¿—
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --Òì³£´¦Àí
+    --å¼‚å¸¸å¤„ç†
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEÎª0´ú±íÔËÐÐÊ§°Ü,»Ø¹öÊÂÎñ
+      --OUT_CODEä¸º0ä»£è¡¨è¿è¡Œå¤±è´¥,å›žæ»šäº‹åŠ¡
       OUT_CODE := 0;
-      OUT_MSG  := 'Ö´ÐÐ P_INS_TMP_E_CONSPRC_TACTIC_SGA  ³öÏÖÒì³£' || ',Òì³£ÐÅÏ¢Îª£º' ||
+      OUT_MSG  := 'æ‰§è¡Œ P_INS_TMP_E_CONSPRC_TACTIC_SGA  å‡ºçŽ°å¼‚å¸¸' || ',å¼‚å¸¸ä¿¡æ¯ä¸ºï¼š' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --¼ÇÂ¼Òì³£½áÊøÈÕÖ¾
+      --è®°å½•å¼‚å¸¸ç»“æŸæ—¥å¿—
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END P_INS_TMP_E_CONSPRC_TACTIC_SGA;
@@ -544,31 +544,31 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
   PROCEDURE P_INS_TMP_E_BASE_AMT(I_DATE   IN VARCHAR2,
                                  OUT_CODE OUT NUMBER,
                                  OUT_MSG  OUT VARCHAR2) IS
-    --ÈÕÖ¾ID
+    --æ—¥å¿—ID
     V_DATA_ID VARCHAR2(24);
     V_NUM     NUMBER;
-    --»ñÈ¡ÍøÊ¡µÄµ¥Î»±àÂë
+    --èŽ·å–ç½‘çœçš„å•ä½ç¼–ç 
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
-    --µç·ÑÄêÔÂ
+    --ç”µè´¹å¹´æœˆ
     V_YM  VARCHAR2(6) := SUBSTR(I_DATE, 1, 6);
     V_YMD VARCHAR2(8) := SUBSTR(I_DATE, 1, 8);
     TYPE PL_ITEM_ARRAY IS TABLE OF VARCHAR2(32) INDEX BY PLS_INTEGER;
-    V_PL_CODE       PL_ITEM_ARRAY; --´úÕ÷Ïî
+    V_PL_CODE       PL_ITEM_ARRAY; --ä»£å¾é¡¹
     V_SP_PL_CODE    VARCHAR2(64) := 'XXX';
-    V_TOPPK_YM_FLAG VARCHAR2(8); --¼â·åµçÁ¿ÄêÔÂ±êÖ¾
-    --½×ÌÝµçÁ¿´æ·ÅÀàÐÍ:·Öµµ·¨(1),µÝÔö·¨(2).Ä¬ÈÏÎª·Öµµ·¨1,Èç¹ûÍøÊ¡ÎªµÝÔö·¨ÇëÔÚdw_gk_code_transÄÚÅäÖÃÎª2
+    V_TOPPK_YM_FLAG VARCHAR2(8); --å°–å³°ç”µé‡å¹´æœˆæ ‡å¿—
+    --é˜¶æ¢¯ç”µé‡å­˜æ”¾ç±»åž‹:åˆ†æ¡£æ³•(1),é€’å¢žæ³•(2).é»˜è®¤ä¸ºåˆ†æ¡£æ³•1,å¦‚æžœç½‘çœä¸ºé€’å¢žæ³•è¯·åœ¨dw_gk_code_transå†…é…ç½®ä¸º2
     V_JTCFLX VARCHAR2(1) := PKG_GK_PUBLIC.F_TRANS_CODE('JTCFLX', '1');
   BEGIN
-    --¼ÇÂ¼¿ªÊ¼ÈÕÖ¾
+    --è®°å½•å¼€å§‹æ—¥å¿—
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_TMP_E_BASE_AMT', I_DATE);
   
     SELECT SIGN(INSTR(CONT1, SUBSTR(V_YM, 5, 2)))
-      INTO V_TOPPK_YM_FLAG --¼â·åµçÁ¿ÄêÔÂ¼ÆËã±êÊ¶
+      INTO V_TOPPK_YM_FLAG --å°–å³°ç”µé‡å¹´æœˆè®¡ç®—æ ‡è¯†
       FROM GK_DW_CODE_TRANS
      WHERE CODE_TYPE = 'acmeYm';
   
     DELETE FROM TMP_E_BASE_AMT F WHERE F.YM = V_YM;
-    --ÔÂ»ù±¾µç·Ñ»ù´¡±í
+    --æœˆåŸºæœ¬ç”µè´¹åŸºç¡€è¡¨
     FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
                                        1,
                                        DECODE(V_PRO_ORG_NO, '12101', 5, 7)) ORG_NO
@@ -591,33 +591,33 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
     END LOOP;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'Ö´ÐÐ P_INS_TMP_E_BASE_AMT  ³É¹¦';
+    OUT_MSG  := 'æ‰§è¡Œ P_INS_TMP_E_BASE_AMT  æˆåŠŸ';
   
-    --¼ÇÂ¼Õý³£½áÊøÈÕÖ¾
+    --è®°å½•æ­£å¸¸ç»“æŸæ—¥å¿—
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --Òì³£´¦Àí
+    --å¼‚å¸¸å¤„ç†
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEÎª0´ú±íÔËÐÐÊ§°Ü,»Ø¹öÊÂÎñ
+      --OUT_CODEä¸º0ä»£è¡¨è¿è¡Œå¤±è´¥,å›žæ»šäº‹åŠ¡
       OUT_CODE := 0;
-      OUT_MSG  := 'Ö´ÐÐ P_INS_TMP_E_BASE_AMT  ³öÏÖÒì³£' || ',Òì³£ÐÅÏ¢Îª£º' || SQLCODE || ',' ||
+      OUT_MSG  := 'æ‰§è¡Œ P_INS_TMP_E_BASE_AMT  å‡ºçŽ°å¼‚å¸¸' || ',å¼‚å¸¸ä¿¡æ¯ä¸ºï¼š' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --¼ÇÂ¼Òì³£½áÊøÈÕÖ¾
+      --è®°å½•å¼‚å¸¸ç»“æŸæ—¥å¿—
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END P_INS_TMP_E_BASE_AMT;
 
-  --ÓÃ»§µç¼ÛÃ÷Ï¸±í
+  --ç”¨æˆ·ç”µä»·æ˜Žç»†è¡¨
   PROCEDURE P_INS_TMP_E_CONS_PRC_AMT(I_DATE   IN VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --ÈÕÖ¾ID
+    --æ—¥å¿—ID
     V_DATA_ID VARCHAR2(24);
     V_NUM     NUMBER;
-    --»ñÈ¡ÍøÊ¡µÄµ¥Î»±àÂë
+    --èŽ·å–ç½‘çœçš„å•ä½ç¼–ç 
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
-    --µç·ÑÄêÔÂ
+    --ç”µè´¹å¹´æœˆ
     V_YM  VARCHAR2(6) := SUBSTR(I_DATE, 1, 6);
     V_LYM VARCHAR2(6) := TO_CHAR(ADD_MONTHS(TO_DATE(V_YM, 'YYYYMM'), -1),
                                  'YYYYMM');
@@ -625,13 +625,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                                  'YYYYMM');
     V_YMD VARCHAR2(8) := SUBSTR(I_DATE, 1, 8);
     TYPE PL_ITEM_ARRAY IS TABLE OF VARCHAR2(32) INDEX BY PLS_INTEGER;
-    V_PL_CODE       PL_ITEM_ARRAY; --´úÕ÷Ïî
+    V_PL_CODE       PL_ITEM_ARRAY; --ä»£å¾é¡¹
     V_SP_PL_CODE    VARCHAR2(64) := 'XXX';
-    V_TOPPK_YM_FLAG VARCHAR2(8); --¼â·åµçÁ¿ÄêÔÂ±êÖ¾
-    --½×ÌÝµçÁ¿´æ·ÅÀàÐÍ:·Öµµ·¨(1),µÝÔö·¨(2).Ä¬ÈÏÎª·Öµµ·¨1,Èç¹ûÍøÊ¡ÎªµÝÔö·¨ÇëÔÚdw_gk_code_transÄÚÅäÖÃÎª2
+    V_TOPPK_YM_FLAG VARCHAR2(8); --å°–å³°ç”µé‡å¹´æœˆæ ‡å¿—
+    --é˜¶æ¢¯ç”µé‡å­˜æ”¾ç±»åž‹:åˆ†æ¡£æ³•(1),é€’å¢žæ³•(2).é»˜è®¤ä¸ºåˆ†æ¡£æ³•1,å¦‚æžœç½‘çœä¸ºé€’å¢žæ³•è¯·åœ¨dw_gk_code_transå†…é…ç½®ä¸º2
     V_JTCFLX VARCHAR2(1) := PKG_GK_PUBLIC.F_TRANS_CODE('JTCFLX', '1');
   BEGIN
-    --¼ÇÂ¼¿ªÊ¼ÈÕÖ¾
+    --è®°å½•å¼€å§‹æ—¥å¿—
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_TMP_E_CONS_PRC_AMT', I_DATE);
   
     DELETE FROM TMP_E_CONS_PRC_AMT C WHERE C.YM = V_YM;
@@ -674,19 +674,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
     COMMIT;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'Ö´ÐÐ P_INS_TMP_E_CONS_PRC_AMT  ³É¹¦';
+    OUT_MSG  := 'æ‰§è¡Œ P_INS_TMP_E_CONS_PRC_AMT  æˆåŠŸ';
   
-    --¼ÇÂ¼Õý³£½áÊøÈÕÖ¾
+    --è®°å½•æ­£å¸¸ç»“æŸæ—¥å¿—
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --Òì³£´¦Àí
+    --å¼‚å¸¸å¤„ç†
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEÎª0´ú±íÔËÐÐÊ§°Ü,»Ø¹öÊÂÎñ
+      --OUT_CODEä¸º0ä»£è¡¨è¿è¡Œå¤±è´¥,å›žæ»šäº‹åŠ¡
       OUT_CODE := 0;
-      OUT_MSG  := 'Ö´ÐÐ P_INS_TMP_E_CONS_PRC_AMT  ³öÏÖÒì³£' || ',Òì³£ÐÅÏ¢Îª£º' ||
+      OUT_MSG  := 'æ‰§è¡Œ P_INS_TMP_E_CONS_PRC_AMT  å‡ºçŽ°å¼‚å¸¸' || ',å¼‚å¸¸ä¿¡æ¯ä¸ºï¼š' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --¼ÇÂ¼Òì³£½áÊøÈÕÖ¾
+      --è®°å½•å¼‚å¸¸ç»“æŸæ—¥å¿—
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END P_INS_TMP_E_CONS_PRC_AMT;
@@ -694,24 +694,24 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
   PROCEDURE P_ENT_DW_O_SPE_USER_DET_RPRC(I_DATE   IN VARCHAR2,
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2) IS
-    --ÈÕÖ¾ID
+    --æ—¥å¿—ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --Êý¾ÝÄ£Ê½£º1:¸´ÖÆ; 2:ÍÆËÍ
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --æ•°æ®æ¨¡å¼ï¼š1:å¤åˆ¶; 2:æŽ¨é€
     V_TIME     VARCHAR(8) := SUBSTR(I_DATE, 1, 8);
   BEGIN
   
-    --¼ÇÂ¼¿ªÊ¼ÈÕÖ¾
+    --è®°å½•å¼€å§‹æ—¥å¿—
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_O_SPE_USER_DET_RPRC',
                                         V_TIME);
   
-    --µ÷ÓÃ³éÈ¡¹ý³Ì£¬½øÐÐÊý¾Ý³éÈ¡£¬³éÈ¡µ½¹ÜÀí¿âOMACÓÃ»§ÏÂµÄDW_O_SPE_USER_DET_RPRC±í
+    --è°ƒç”¨æŠ½å–è¿‡ç¨‹ï¼Œè¿›è¡Œæ•°æ®æŠ½å–ï¼ŒæŠ½å–åˆ°ç®¡ç†åº“OMACç”¨æˆ·ä¸‹çš„DW_O_SPE_USER_DET_RPRCè¡¨
     P_INS_DW_O_SPE_USER_DET_RPRC(V_TIME, OUT_CODE, OUT_MSG);
-    --µ÷ÓÃÍÆËÍ¹ý³Ì£¬´Ó¹ÜÀí¿âOMACÓÃ»§ÏÂµÄDW_C_CONS_COMP±íÈ¡Êý¾Ý²åÈëµ½»ü²é¿âOMACÓÃ»§ÏÂµÄDW_O_SPE_USER_DET_RPRC±í
+    --è°ƒç”¨æŽ¨é€è¿‡ç¨‹ï¼Œä»Žç®¡ç†åº“OMACç”¨æˆ·ä¸‹çš„DW_C_CONS_COMPè¡¨å–æ•°æ®æ’å…¥åˆ°ç¨½æŸ¥åº“OMACç”¨æˆ·ä¸‹çš„DW_O_SPE_USER_DET_RPRCè¡¨
     IF V_DATAMODE = '2' THEN
-      --ÍÆËÍÄ£Ê½Ö´ÐÐ
+      --æŽ¨é€æ¨¡å¼æ‰§è¡Œ
       P_ETL_DW_O_SPE_USER_DET_RPRC(V_TIME, OUT_CODE, OUT_MSG);
     ELSE
-      --¸´ÖÆÄ£Ê½²¹³ä¹©µçÇøÓòÐÔÖÊ
+      --å¤åˆ¶æ¨¡å¼è¡¥å……ä¾›ç”µåŒºåŸŸæ€§è´¨
       UPDATE DW_O_SPECIAL_USER_DET A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -737,46 +737,46 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                 FROM SY_OM_DW_O_REMOVE_PRC X);
     END IF;
   
-    --OUT_CODEÎª1´ú±íÔËÐÐ³É¹¦,Ìá½»ÊÂÎñ
+    --OUT_CODEä¸º1ä»£è¡¨è¿è¡ŒæˆåŠŸ,æäº¤äº‹åŠ¡
     OUT_CODE := 1;
-    OUT_MSG  := 'Ö´ÐÐ P_ENT_DW_O_SPE_USER_DET_RPRC  ³É¹¦';
+    OUT_MSG  := 'æ‰§è¡Œ P_ENT_DW_O_SPE_USER_DET_RPRC  æˆåŠŸ';
     COMMIT;
   
-    --¼ÇÂ¼Õý³£½áÊøÈÕÖ¾
+    --è®°å½•æ­£å¸¸ç»“æŸæ—¥å¿—
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --Òì³£´¦Àí
+    --å¼‚å¸¸å¤„ç†
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEÎª0´ú±íÔËÐÐÊ§°Ü,»Ø¹öÊÂÎñ
+      --OUT_CODEä¸º0ä»£è¡¨è¿è¡Œå¤±è´¥,å›žæ»šäº‹åŠ¡
       OUT_CODE := 0;
-      OUT_MSG  := 'Ö´ÐÐ P_ENT_DW_O_SPE_USER_DET_RPRC  ³öÏÖÒì³£' || ',Òì³£ÐÅÏ¢Îª£º' ||
+      OUT_MSG  := 'æ‰§è¡Œ P_ENT_DW_O_SPE_USER_DET_RPRC  å‡ºçŽ°å¼‚å¸¸' || ',å¼‚å¸¸ä¿¡æ¯ä¸ºï¼š' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --¼ÇÂ¼Òì³£½áÊøÈÕÖ¾
+      --è®°å½•å¼‚å¸¸ç»“æŸæ—¥å¿—
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_O_SPE_USER_DET_RPL(I_DATE   IN VARCHAR2,
                                         OUT_CODE OUT NUMBER,
                                         OUT_MSG  OUT VARCHAR2) IS
-    --ÈÕÖ¾ID
+    --æ—¥å¿—ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --Êý¾ÝÄ£Ê½£º1:¸´ÖÆ; 2:ÍÆËÍ
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --æ•°æ®æ¨¡å¼ï¼š1:å¤åˆ¶; 2:æŽ¨é€
     V_TIME     VARCHAR(8) := SUBSTR(I_DATE, 1, 8);
   BEGIN
   
-    --¼ÇÂ¼¿ªÊ¼ÈÕÖ¾
+    --è®°å½•å¼€å§‹æ—¥å¿—
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_O_SPE_USER_DET_RPL',
                                         V_TIME);
   
-    --µ÷ÓÃ³éÈ¡¹ý³Ì£¬½øÐÐÊý¾Ý³éÈ¡£¬³éÈ¡µ½¹ÜÀí¿âOMACÓÃ»§ÏÂµÄDW_O_SPE_USER_DET_RPL±í
+    --è°ƒç”¨æŠ½å–è¿‡ç¨‹ï¼Œè¿›è¡Œæ•°æ®æŠ½å–ï¼ŒæŠ½å–åˆ°ç®¡ç†åº“OMACç”¨æˆ·ä¸‹çš„DW_O_SPE_USER_DET_RPLè¡¨
     P_INS_DW_O_SPE_USER_DET_RPL(V_TIME, OUT_CODE, OUT_MSG);
-    --µ÷ÓÃÍÆËÍ¹ý³Ì£¬´Ó¹ÜÀí¿âOMACÓÃ»§ÏÂµÄDW_C_CONS_COMP±íÈ¡Êý¾Ý²åÈëµ½»ü²é¿âOMACÓÃ»§ÏÂµÄDW_O_SPE_USER_DET_RPL±í
+    --è°ƒç”¨æŽ¨é€è¿‡ç¨‹ï¼Œä»Žç®¡ç†åº“OMACç”¨æˆ·ä¸‹çš„DW_C_CONS_COMPè¡¨å–æ•°æ®æ’å…¥åˆ°ç¨½æŸ¥åº“OMACç”¨æˆ·ä¸‹çš„DW_O_SPE_USER_DET_RPLè¡¨
     IF V_DATAMODE = '2' THEN
-      --ÍÆËÍÄ£Ê½Ö´ÐÐ
+      --æŽ¨é€æ¨¡å¼æ‰§è¡Œ
       P_ETL_DW_O_SPE_USER_DET_RPL(V_TIME, OUT_CODE, OUT_MSG);
     ELSE
-      --¸´ÖÆÄ£Ê½²¹³ä¹©µçÇøÓòÐÔÖÊ
+      --å¤åˆ¶æ¨¡å¼è¡¥å……ä¾›ç”µåŒºåŸŸæ€§è´¨
       UPDATE DW_O_SPECIAL_USER_DET A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -798,46 +798,46 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
          AND A.SPECIAL_HANDL_TYPE = '04';
     END IF;
   
-    --OUT_CODEÎª1´ú±íÔËÐÐ³É¹¦,Ìá½»ÊÂÎñ
+    --OUT_CODEä¸º1ä»£è¡¨è¿è¡ŒæˆåŠŸ,æäº¤äº‹åŠ¡
     OUT_CODE := 1;
-    OUT_MSG  := 'Ö´ÐÐ P_ENT_DW_O_SPE_USER_DET_RPL  ³É¹¦';
+    OUT_MSG  := 'æ‰§è¡Œ P_ENT_DW_O_SPE_USER_DET_RPL  æˆåŠŸ';
     COMMIT;
   
-    --¼ÇÂ¼Õý³£½áÊøÈÕÖ¾
+    --è®°å½•æ­£å¸¸ç»“æŸæ—¥å¿—
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --Òì³£´¦Àí
+    --å¼‚å¸¸å¤„ç†
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEÎª0´ú±íÔËÐÐÊ§°Ü,»Ø¹öÊÂÎñ
+      --OUT_CODEä¸º0ä»£è¡¨è¿è¡Œå¤±è´¥,å›žæ»šäº‹åŠ¡
       OUT_CODE := 0;
-      OUT_MSG  := 'Ö´ÐÐ P_ENT_DW_O_SPE_USER_DET_RPL  ³öÏÖÒì³£' || ',Òì³£ÐÅÏ¢Îª£º' ||
+      OUT_MSG  := 'æ‰§è¡Œ P_ENT_DW_O_SPE_USER_DET_RPL  å‡ºçŽ°å¼‚å¸¸' || ',å¼‚å¸¸ä¿¡æ¯ä¸ºï¼š' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --¼ÇÂ¼Òì³£½áÊøÈÕÖ¾
+      --è®°å½•å¼‚å¸¸ç»“æŸæ—¥å¿—
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_O_SPE_USER_DET_RCONS(I_DATE   IN VARCHAR2,
                                           OUT_CODE OUT NUMBER,
                                           OUT_MSG  OUT VARCHAR2) IS
-    --ÈÕÖ¾ID
+    --æ—¥å¿—ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --Êý¾ÝÄ£Ê½£º1:¸´ÖÆ; 2:ÍÆËÍ
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --æ•°æ®æ¨¡å¼ï¼š1:å¤åˆ¶; 2:æŽ¨é€
     V_TIME     VARCHAR(8) := SUBSTR(I_DATE, 1, 8);
   BEGIN
   
-    --¼ÇÂ¼¿ªÊ¼ÈÕÖ¾
+    --è®°å½•å¼€å§‹æ—¥å¿—
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_O_SPE_USER_DET_RCONS',
                                         V_TIME);
   
-    --µ÷ÓÃ³éÈ¡¹ý³Ì£¬½øÐÐÊý¾Ý³éÈ¡£¬³éÈ¡µ½¹ÜÀí¿âOMACÓÃ»§ÏÂµÄDW_O_SPE_USER_DET_RCONS±í
+    --è°ƒç”¨æŠ½å–è¿‡ç¨‹ï¼Œè¿›è¡Œæ•°æ®æŠ½å–ï¼ŒæŠ½å–åˆ°ç®¡ç†åº“OMACç”¨æˆ·ä¸‹çš„DW_O_SPE_USER_DET_RCONSè¡¨
     P_INS_DW_O_SPE_USER_DET_RCONS(V_TIME, OUT_CODE, OUT_MSG);
-    --µ÷ÓÃÍÆËÍ¹ý³Ì£¬´Ó¹ÜÀí¿âOMACÓÃ»§ÏÂµÄDW_C_CONS_COMP±íÈ¡Êý¾Ý²åÈëµ½»ü²é¿âOMACÓÃ»§ÏÂµÄDW_O_SPE_USER_DET_RCONS±í
+    --è°ƒç”¨æŽ¨é€è¿‡ç¨‹ï¼Œä»Žç®¡ç†åº“OMACç”¨æˆ·ä¸‹çš„DW_C_CONS_COMPè¡¨å–æ•°æ®æ’å…¥åˆ°ç¨½æŸ¥åº“OMACç”¨æˆ·ä¸‹çš„DW_O_SPE_USER_DET_RCONSè¡¨
     IF V_DATAMODE = '2' THEN
-      --ÍÆËÍÄ£Ê½Ö´ÐÐ
+      --æŽ¨é€æ¨¡å¼æ‰§è¡Œ
       P_ETL_DW_O_SPE_USER_DET_RCONS(V_TIME, OUT_CODE, OUT_MSG);
     ELSE
-      --¸´ÖÆÄ£Ê½²¹³ä¹©µçÇøÓòÐÔÖÊ
+      --å¤åˆ¶æ¨¡å¼è¡¥å……ä¾›ç”µåŒºåŸŸæ€§è´¨
       UPDATE DW_O_SPECIAL_USER_DET A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -849,7 +849,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
          AND A.SPECIAL_HANDL_TYPE IN
              (SELECT DISTINCT SPECIAL_HANDL_TYPE FROM SY_OM_DW_O_REMOVE_CONS);
     
-      --¸´ÖÆÄ£Ê½²¹³ä¹©µçÇøÓòÐÔÖÊ
+      --å¤åˆ¶æ¨¡å¼è¡¥å……ä¾›ç”µåŒºåŸŸæ€§è´¨
       UPDATE DW_O_SPECIAL_USER_PL_DET A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -862,46 +862,46 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
              (SELECT DISTINCT SPECIAL_HANDL_TYPE FROM SY_OM_DW_O_REMOVE_CONS);
     END IF;
   
-    --OUT_CODEÎª1´ú±íÔËÐÐ³É¹¦,Ìá½»ÊÂÎñ
+    --OUT_CODEä¸º1ä»£è¡¨è¿è¡ŒæˆåŠŸ,æäº¤äº‹åŠ¡
     OUT_CODE := 1;
-    OUT_MSG  := 'Ö´ÐÐ P_ENT_DW_O_SPE_USER_DET_RCONS  ³É¹¦';
+    OUT_MSG  := 'æ‰§è¡Œ P_ENT_DW_O_SPE_USER_DET_RCONS  æˆåŠŸ';
     COMMIT;
   
-    --¼ÇÂ¼Õý³£½áÊøÈÕÖ¾
+    --è®°å½•æ­£å¸¸ç»“æŸæ—¥å¿—
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --Òì³£´¦Àí
+    --å¼‚å¸¸å¤„ç†
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEÎª0´ú±íÔËÐÐÊ§°Ü,»Ø¹öÊÂÎñ
+      --OUT_CODEä¸º0ä»£è¡¨è¿è¡Œå¤±è´¥,å›žæ»šäº‹åŠ¡
       OUT_CODE := 0;
-      OUT_MSG  := 'Ö´ÐÐ P_ENT_DW_O_SPE_USER_DET_RCONS  ³öÏÖÒì³£' || ',Òì³£ÐÅÏ¢Îª£º' ||
+      OUT_MSG  := 'æ‰§è¡Œ P_ENT_DW_O_SPE_USER_DET_RCONS  å‡ºçŽ°å¼‚å¸¸' || ',å¼‚å¸¸ä¿¡æ¯ä¸ºï¼š' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --¼ÇÂ¼Òì³£½áÊøÈÕÖ¾
+      --è®°å½•å¼‚å¸¸ç»“æŸæ—¥å¿—
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_O_SPE_USER_DET_BCONS(I_DATE   IN VARCHAR2,
                                           OUT_CODE OUT NUMBER,
                                           OUT_MSG  OUT VARCHAR2) IS
-    --ÈÕÖ¾ID
+    --æ—¥å¿—ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --Êý¾ÝÄ£Ê½£º1:¸´ÖÆ; 2:ÍÆËÍ
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --æ•°æ®æ¨¡å¼ï¼š1:å¤åˆ¶; 2:æŽ¨é€
     V_TIME     VARCHAR(8) := SUBSTR(I_DATE, 1, 8);
   BEGIN
   
-    --¼ÇÂ¼¿ªÊ¼ÈÕÖ¾
+    --è®°å½•å¼€å§‹æ—¥å¿—
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_O_SPE_USER_DET_BCONS',
                                         V_TIME);
   
-    --µ÷ÓÃ³éÈ¡¹ý³Ì£¬½øÐÐÊý¾Ý³éÈ¡£¬³éÈ¡µ½¹ÜÀí¿âOMACÓÃ»§ÏÂµÄDW_O_SPE_USER_DET_BCONS±í
+    --è°ƒç”¨æŠ½å–è¿‡ç¨‹ï¼Œè¿›è¡Œæ•°æ®æŠ½å–ï¼ŒæŠ½å–åˆ°ç®¡ç†åº“OMACç”¨æˆ·ä¸‹çš„DW_O_SPE_USER_DET_BCONSè¡¨
     P_INS_DW_O_SPE_USER_DET_BCONS(V_TIME, OUT_CODE, OUT_MSG);
-    --µ÷ÓÃÍÆËÍ¹ý³Ì£¬´Ó¹ÜÀí¿âOMACÓÃ»§ÏÂµÄDW_C_CONS_COMP±íÈ¡Êý¾Ý²åÈëµ½»ü²é¿âOMACÓÃ»§ÏÂµÄDW_O_SPE_USER_DET_BCONS±í
+    --è°ƒç”¨æŽ¨é€è¿‡ç¨‹ï¼Œä»Žç®¡ç†åº“OMACç”¨æˆ·ä¸‹çš„DW_C_CONS_COMPè¡¨å–æ•°æ®æ’å…¥åˆ°ç¨½æŸ¥åº“OMACç”¨æˆ·ä¸‹çš„DW_O_SPE_USER_DET_BCONSè¡¨
     IF V_DATAMODE = '2' THEN
-      --ÍÆËÍÄ£Ê½Ö´ÐÐ
+      --æŽ¨é€æ¨¡å¼æ‰§è¡Œ
       P_ETL_DW_O_SPE_USER_DET_BCONS(V_TIME, OUT_CODE, OUT_MSG);
     ELSE
-      --¸´ÖÆÄ£Ê½²¹³ä¹©µçÇøÓòÐÔÖÊ
+      --å¤åˆ¶æ¨¡å¼è¡¥å……ä¾›ç”µåŒºåŸŸæ€§è´¨
       UPDATE DW_O_SPECIAL_USER_DET A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -912,7 +912,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
        WHERE A.RELEASE_YMD = V_TIME
          AND A.SPECIAL_HANDL_TYPE = '03';
     
-      --¸´ÖÆÄ£Ê½²¹³ä¹©µçÇøÓòÐÔÖÊ
+      --å¤åˆ¶æ¨¡å¼è¡¥å……ä¾›ç”µåŒºåŸŸæ€§è´¨
       UPDATE DW_O_SPECIAL_USER_PL_DET A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -925,34 +925,34 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
     
     END IF;
   
-    --OUT_CODEÎª1´ú±íÔËÐÐ³É¹¦,Ìá½»ÊÂÎñ
+    --OUT_CODEä¸º1ä»£è¡¨è¿è¡ŒæˆåŠŸ,æäº¤äº‹åŠ¡
     OUT_CODE := 1;
-    OUT_MSG  := 'Ö´ÐÐ P_ENT_DW_O_SPE_USER_DET_BCONS  ³É¹¦';
+    OUT_MSG  := 'æ‰§è¡Œ P_ENT_DW_O_SPE_USER_DET_BCONS  æˆåŠŸ';
     COMMIT;
   
-    --¼ÇÂ¼Õý³£½áÊøÈÕÖ¾
+    --è®°å½•æ­£å¸¸ç»“æŸæ—¥å¿—
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --Òì³£´¦Àí
+    --å¼‚å¸¸å¤„ç†
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEÎª0´ú±íÔËÐÐÊ§°Ü,»Ø¹öÊÂÎñ
+      --OUT_CODEä¸º0ä»£è¡¨è¿è¡Œå¤±è´¥,å›žæ»šäº‹åŠ¡
       OUT_CODE := 0;
-      OUT_MSG  := 'Ö´ÐÐ P_ENT_DW_O_SPE_USER_DET_BCONS  ³öÏÖÒì³£' || ',Òì³£ÐÅÏ¢Îª£º' ||
+      OUT_MSG  := 'æ‰§è¡Œ P_ENT_DW_O_SPE_USER_DET_BCONS  å‡ºçŽ°å¼‚å¸¸' || ',å¼‚å¸¸ä¿¡æ¯ä¸ºï¼š' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --¼ÇÂ¼Òì³£½áÊøÈÕÖ¾
+      --è®°å½•å¼‚å¸¸ç»“æŸæ—¥å¿—
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_INS_DW_O_SPE_USER_DET_RPRC(I_DATE   IN VARCHAR2,
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2) IS
-    --ÈÕÖ¾ID
+    --æ—¥å¿—ID
     V_DATA_ID VARCHAR2(24);
     V_NUM     NUMBER;
-    --»ñÈ¡ÍøÊ¡µÄµ¥Î»±àÂë
+    --èŽ·å–ç½‘çœçš„å•ä½ç¼–ç 
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
-    --µç·ÑÄêÔÂ
+    --ç”µè´¹å¹´æœˆ
     V_YM  VARCHAR2(6) := SUBSTR(I_DATE, 1, 6);
     V_LYM VARCHAR2(6) := TO_CHAR(ADD_MONTHS(TO_DATE(V_YM, 'YYYYMM'), -1),
                                  'YYYYMM');
@@ -960,18 +960,18 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                                  'YYYYMM');
     V_YMD VARCHAR2(8) := SUBSTR(I_DATE, 1, 8);
     TYPE PL_ITEM_ARRAY IS TABLE OF VARCHAR2(32) INDEX BY PLS_INTEGER;
-    V_PL_CODE       PL_ITEM_ARRAY; --´úÕ÷Ïî
+    V_PL_CODE       PL_ITEM_ARRAY; --ä»£å¾é¡¹
     V_SP_PL_CODE    VARCHAR2(64) := 'XXX';
-    V_TOPPK_YM_FLAG VARCHAR2(8); --¼â·åµçÁ¿ÄêÔÂ±êÖ¾
-    --½×ÌÝµçÁ¿´æ·ÅÀàÐÍ:·Öµµ·¨(1),µÝÔö·¨(2).Ä¬ÈÏÎª·Öµµ·¨1,Èç¹ûÍøÊ¡ÎªµÝÔö·¨ÇëÔÚdw_gk_code_transÄÚÅäÖÃÎª2
+    V_TOPPK_YM_FLAG VARCHAR2(8); --å°–å³°ç”µé‡å¹´æœˆæ ‡å¿—
+    --é˜¶æ¢¯ç”µé‡å­˜æ”¾ç±»åž‹:åˆ†æ¡£æ³•(1),é€’å¢žæ³•(2).é»˜è®¤ä¸ºåˆ†æ¡£æ³•1,å¦‚æžœç½‘çœä¸ºé€’å¢žæ³•è¯·åœ¨dw_gk_code_transå†…é…ç½®ä¸º2
     V_JTCFLX VARCHAR2(1) := PKG_GK_PUBLIC.F_TRANS_CODE('JTCFLX', '1');
   BEGIN
-    --¼ÇÂ¼¿ªÊ¼ÈÕÖ¾
+    --è®°å½•å¼€å§‹æ—¥å¿—
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_O_SPE_USER_DET_RPRC',
                                         I_DATE);
   
     SELECT SIGN(INSTR(CONT1, SUBSTR(V_YM, 5, 2)))
-      INTO V_TOPPK_YM_FLAG --¼â·åµçÁ¿ÄêÔÂ¼ÆËã±êÊ¶
+      INTO V_TOPPK_YM_FLAG --å°–å³°ç”µé‡å¹´æœˆè®¡ç®—æ ‡è¯†
       FROM GK_DW_CODE_TRANS
      WHERE CODE_TYPE = 'acmeYm';
   
@@ -1034,67 +1034,67 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
        H_AND_L_PA,
        TIME_STAMP)
       SELECT /*+PARALLEL(A 2)(B 2)(C 2)(D 2)(E 2)(F 2)(G 2)(H 2)*/
-      --Êý¾Ý±êÊ¶                  
+      --æ•°æ®æ ‡è¯†                  
        PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO) DATA_ID,
-       --Ê¡ÊÐ±àºÅ                  
+       --çœå¸‚ç¼–å·                  
        V_PRO_ORG_NO PRO_ORG_NO,
-       --¹©µçµ¥Î»±àºÅ              
+       --ä¾›ç”µå•ä½ç¼–å·              
        A.ORG_NO ORG_NO,
-       --ÓªÒµÇøÐÔÖÊ                
+       --è¥ä¸šåŒºæ€§è´¨                
        NULL PS_BUSI_AREA_CODE,
-       --ÌØÊâ´¦ÀíÀà±ð              
+       --ç‰¹æ®Šå¤„ç†ç±»åˆ«              
        C.SPECIAL_HANDL_TYPE SPECIAL_HANDL_TYPE,
-       --ÓÃ»§±êÊ¶                  
+       --ç”¨æˆ·æ ‡è¯†                  
        A.CONS_ID CONS_ID,
-       --ÓÃ»§±àºÅ                 
+       --ç”¨æˆ·ç¼–å·                 
        A.CONS_NO CONS_NO,
-       --µç·Ñ¼ÆËã±êÊ¶             
+       --ç”µè´¹è®¡ç®—æ ‡è¯†             
        A.CALC_ID CALC_ID,
-       --µç·Ñ·¢ÐÐÈÕÆÚ              
+       --ç”µè´¹å‘è¡Œæ—¥æœŸ              
        TO_CHAR(A.SEND_DATE, 'YYYYMMDD') AMT_YMD,
-       --µç·ÑÄêÔÂ                  
+       --ç”µè´¹å¹´æœˆ                  
        A.YM AMT_YM,
-       --ÓÃµçÀà±ð                  
+       --ç”¨ç”µç±»åˆ«                  
        PKG_GK_PUBLIC.F_TRANS_CODE('ELEC_TYPE_CODE', C.ELEC_TYPE_CODE) ELEC_TYPE_CODE,
-       --µç¼ÛÂë                    
+       --ç”µä»·ç                     
        C.PRC_CODE PRC_CODE,
-       --µç¼Û°æ±¾                  
+       --ç”µä»·ç‰ˆæœ¬                  
        C.PARA_VN PRC_PARA_VN,
-       --³­±í¶Î±àºÅ                
+       --æŠ„è¡¨æ®µç¼–å·                
        A.MR_SECT_NO PRC_PARA_VN,
-       --ÓÃ»§·ÖÀà                  
+       --ç”¨æˆ·åˆ†ç±»                  
        PKG_GK_PUBLIC.F_TRANS_CODE('CUST_TYPE_CODE', A.CONS_SORT_CODE) CONS_SORT_CODE,
-       --ÐÐÒµ·ÖÀà                  
+       --è¡Œä¸šåˆ†ç±»                  
        PKG_GK_PUBLIC.F_TRANS_CODE('TRADE_TYPE_CODE', C.TRADE_TYPE_CODE) TRADE_CODE,
-       --µçÑ¹µÈ¼¶                  
+       --ç”µåŽ‹ç­‰çº§                  
        PKG_GK_PUBLIC.F_TRANS_CODE('VOLT_CODE', A.VOLT_CODE) VOLT_CODE,
-       --¸ßºÄÄÜÐÐÒµ·ÖÀà            
+       --é«˜è€—èƒ½è¡Œä¸šåˆ†ç±»            
        PKG_GK_PUBLIC.F_TRANS_CODE('HUE_TRADE_TYPE_CODE', A.HEC_TRADE_CODE) HEC_TRADE_CODE,
-       --ÊÇ·ñÖ´ÐÐ·å¹È              
+       --æ˜¯å¦æ‰§è¡Œå³°è°·              
        PKG_GK_PUBLIC.F_TRANS_CODE('YES_NO_FLAG', B.TS_FLAG) EXEC_PV_FLAG,
-       --ÊÇ·ñÖ´ÐÐÁ½²¿ÖÆµç¼Û        
+       --æ˜¯å¦æ‰§è¡Œä¸¤éƒ¨åˆ¶ç”µä»·        
        PKG_GK_PUBLIC.F_TRANS_CODE('PRC_TYPE_CODE', D.TYPE_CODE) TWO_PRC_FLAG,
-       --¹¦ÂÊÒòÊý¿¼ºË·½Ê½          
+       --åŠŸçŽ‡å› æ•°è€ƒæ ¸æ–¹å¼          
        PKG_GK_PUBLIC.F_TRANS_CODE('PF_EVAL_MODE', D.PF_EVAL_MODE) PF_EVAL_MODE,
-       --½×ÌÝ·ÖÀà                  
-       PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02'), --¸÷µ¥Î»×ÔÐÐÈ·¶¨¿ÉÔÚGK_DW_CODE_TANS±íÄÚÅäÖÃ,00ÎÞ  01Äê½×ÌÝ  02ÔÂ½×ÌÝ,
-       --ÊÛµçÁ¿                    
+       --é˜¶æ¢¯åˆ†ç±»                  
+       PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02'), --å„å•ä½è‡ªè¡Œç¡®å®šå¯åœ¨GK_DW_CODE_TANSè¡¨å†…é…ç½®,00æ—   01å¹´é˜¶æ¢¯  02æœˆé˜¶æ¢¯,
+       --å”®ç”µé‡                    
        SUM(C.T_SETTLE_PQ) SPQ,
-       --×Ü½áËãµç·Ñ                
+       --æ€»ç»“ç®—ç”µè´¹                
        SUM(C.T_AMT) SPA,
-       --¼â·åµçÁ¿                  
+       --å°–å³°ç”µé‡                  
        SUM(E.ACME_PQ) ACME_PQ,
-       --·åµçÁ¿                    
+       --å³°ç”µé‡                    
        SUM(E.PEAK_PQ) PEAK_PQ,
-       --Æ½µçÁ¿                    
+       --å¹³ç”µé‡                    
        SUM(E.FLAT_PQ) FLAT_PQ,
-       --¹ÈµçÁ¿                    
+       --è°·ç”µé‡                    
        SUM(E.VALLEY_PQ) VALLEY_PQ,
-       --¼¹¹ÈµçÁ¿                  
+       --è„Šè°·ç”µé‡                  
        SUM(E.NADIR_PQ) NADIR_PQ,
-       --µÚÒ»½×ÌÝµçÁ¿              
+       --ç¬¬ä¸€é˜¶æ¢¯ç”µé‡              
        SUM(NVL(C.T_SETTLE_PQ, 0)) FIRST_LADDER_PQ,
-       --µÚ¶þ½×ÌÝµçÁ¿              
+       --ç¬¬äºŒé˜¶æ¢¯ç”µé‡              
        SUM(DECODE(C.LEVEL_NUM,
                   '2',
                   DECODE(V_JTCFLX,
@@ -1102,7 +1102,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                          NVL(C.T_SETTLE_PQ, 0),
                          NVL(C.LEVEL_INC_PQ, 0)),
                   0)) SECOND_LADDER_PQ,
-       --µÚÈý½×ÌÝµçÁ¿              
+       --ç¬¬ä¸‰é˜¶æ¢¯ç”µé‡              
        SUM(DECODE(C.LEVEL_NUM,
                   '3',
                   DECODE(V_JTCFLX,
@@ -1110,25 +1110,25 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                          NVL(C.T_SETTLE_PQ, 0),
                          NVL(C.LEVEL_INC_PQ, 0)),
                   0)) THIRD_LADDER_PQ,
-       --¼â·åµç¶Èµç·Ñ              
+       --å°–å³°ç”µåº¦ç”µè´¹              
        SUM(E.ACME_KWH_AMT) ACME_KWH_PA,
-       --·åµç¶Èµç·Ñ                
+       --å³°ç”µåº¦ç”µè´¹                
        SUM(E.PEAK_KWH_AMT) PEAK_KWH_PA,
-       --Æ½µç¶Èµç·Ñ                
+       --å¹³ç”µåº¦ç”µè´¹                
        SUM(E.FLAT_KWH_AMT) FLAT_KWH_PA,
-       --¹Èµç¶Èµç·Ñ                
+       --è°·ç”µåº¦ç”µè´¹                
        SUM(E.VALLEY_KWH_AMT) VALLEY_KWH_PA,
-       --¼¹¹Èµç¶Èµç·Ñ              
+       --è„Šè°·ç”µåº¦ç”µè´¹              
        SUM(E.NADIR_KWH_AMT) NADIR_KWH_PA,
-       --¼Æ·ÑÈÝÁ¿                  
+       --è®¡è´¹å®¹é‡                  
        SUM(F.BILL_CAP) BILL_CAP,
-       --¼Æ·ÑÐèÁ¿                  
+       --è®¡è´¹éœ€é‡                  
        SUM(F.BILL_DMD) BILL_DMD,
-       --ÈÝÁ¿µç·Ñ                  
+       --å®¹é‡ç”µè´¹                  
        SUM(F.CAP_PA) CAP_PA,
-       --ÐèÁ¿µç·Ñ                  
+       --éœ€é‡ç”µè´¹                  
        SUM(F.DMD_PA) DMD_PA,
-       --·åÓ¯µç·Ñ                  
+       --å³°ç›ˆç”µè´¹                  
        SUM(ROUND((NVL(ACME_CATKWH_PRC, 0) -
                  DECODE(NVL(FLAT_CATKWH_PRC, 0),
                          0,
@@ -1151,7 +1151,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                              AND BB.PRC_TI_CODE = '03'),
                          FLAT_CATKWH_PRC)) * NVL(PEAK_PQ, 0),
                  2)) PEAKADD_PA,
-       --¹È¿÷µç·Ñ                  
+       --è°·äºç”µè´¹                  
        SUM(ROUND((DECODE(NVL(FLAT_CATKWH_PRC, 0),
                          0,
                          (SELECT NVL(MAX(CAT_KWH_PRC), 0)
@@ -1174,12 +1174,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                          FLAT_CATKWH_PRC) - NVL(NADIR_CATKWH_PRC, 0)) *
                  NVL(NADIR_PQ, 0),
                  2)) VALLEYSUB_PA,
-       --Á¦µ÷Ôöµç·Ñ                
+       --åŠ›è°ƒå¢žç”µè´¹                
        SUM(G.PF_AMT_ADD),
-       --Á¦µ÷¼õµç·Ñ                
+       --åŠ›è°ƒå‡ç”µè´¹                
        SUM(G.PF_AMT_SUB),
-       --µÚÒ»½×ÌÝµç·Ñ              
-       --µç·Ñ»ñÈ¡°´ÕÕÍøÊ¡Êý¾ÝÎª·Öµµ·¨´æ·Å,µÚ¶þµµ,µÚÈýµµµç¼ÛÖØÐÂ¼ÆËãºóÓë¶ÔÓ¦µµÎ»µÄµçÁ¿Ïà³Ë,µÝÔö·¨µÄÍøÊ¡ÐèÒªÔÙ·´À¡²âÊÔ
+       --ç¬¬ä¸€é˜¶æ¢¯ç”µè´¹              
+       --ç”µè´¹èŽ·å–æŒ‰ç…§ç½‘çœæ•°æ®ä¸ºåˆ†æ¡£æ³•å­˜æ”¾,ç¬¬äºŒæ¡£,ç¬¬ä¸‰æ¡£ç”µä»·é‡æ–°è®¡ç®—åŽä¸Žå¯¹åº”æ¡£ä½çš„ç”µé‡ç›¸ä¹˜,é€’å¢žæ³•çš„ç½‘çœéœ€è¦å†åé¦ˆæµ‹è¯•
        DECODE(V_JTCFLX,
               '1',
               SUM(NVL(C.T_SETTLE_PQ, 0) *
@@ -1190,7 +1190,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                       AND BB.PRC_CODE = C.PRC_CODE
                       AND AA.RANGE_TYPE_CODE = '31')),
               SUM(DECODE(C.LEVEL_NUM, '1', NVL(C.T_AMT, 0), 0))) FIRST_LADDER_AMT,
-       --µÚ¶þ½×ÌÝÔöÁ¿µç·Ñ          
+       --ç¬¬äºŒé˜¶æ¢¯å¢žé‡ç”µè´¹          
        DECODE(V_JTCFLX,
               '1',
               SUM(DECODE(C.LEVEL_NUM, 2, NVL(C.T_SETTLE_PQ, 0), 0) *
@@ -1201,7 +1201,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                       AND BB.PRC_CODE = C.PRC_CODE
                       AND AA.RANGE_TYPE_CODE IN ('31', '32'))),
               SUM(DECODE(C.LEVEL_NUM, '2', NVL(C.T_AMT, 0), 0))) SECOND_LADDER_AMT,
-       --µÚÈý½×ÌÝÔöÁ¿µç·Ñ          
+       --ç¬¬ä¸‰é˜¶æ¢¯å¢žé‡ç”µè´¹          
        DECODE(V_JTCFLX,
               '1',
               SUM(DECODE(C.LEVEL_NUM, 3, NVL(C.T_SETTLE_PQ, 0), 0) *
@@ -1212,9 +1212,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                       AND BB.PRC_CODE = C.PRC_CODE
                       AND AA.RANGE_TYPE_CODE IN ('31', '33'))),
               SUM(DECODE(C.LEVEL_NUM, '3', NVL(C.T_AMT, 0), 0))) THIRD_LADDER_AMT,
-       --·á¿Ýµç·Ñ                  
-       0 H_AND_L_PA, --·á¿Ýµç·Ñ
-       --Ê±¼ä´Á                    
+       --ä¸°æž¯ç”µè´¹                  
+       0 H_AND_L_PA, --ä¸°æž¯ç”µè´¹
+       --æ—¶é—´æˆ³                    
        SYSDATE
         FROM SY_SG_ARC_E_CONS_SNAP    A,
              SY_SG_ARC_E_CONSPRC_SNAP B,
@@ -1229,7 +1229,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
          AND A.CALC_ID = B.CALC_ID
          AND B.CALC_ID = C.CALC_ID
          AND B.PRC_SNAP_ID = C.PRC_SNAP_ID
-         AND B.PRC_TACTIC_SNAP_ID = D.PRC_TACTIC_SNAP_ID(+) --´æÔÚÓÐµç·Ñµ«ÎÞµç¼Û²ßÂÔ¿ìÕÕµÄÇé¿ö
+         AND B.PRC_TACTIC_SNAP_ID = D.PRC_TACTIC_SNAP_ID(+) --å­˜åœ¨æœ‰ç”µè´¹ä½†æ— ç”µä»·ç­–ç•¥å¿«ç…§çš„æƒ…å†µ
          AND B.CALC_ID = D.CALC_ID(+)
          AND C.PRC_AMT_ID = E.PRC_AMT_ID(+)
          AND C.PRC_AMT_ID = F.PRC_AMT_ID(+)
@@ -1305,11 +1305,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
        PRC_IO_FLAG,
        TIME_STAMP)
       SELECT
-      --Êý¾Ý±êÊ¶                  
+      --æ•°æ®æ ‡è¯†                  
        PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO) DATA_ID,
-       --Ê¡ÊÐ±àºÅ                  
+       --çœå¸‚ç¼–å·                  
        V_PRO_ORG_NO PRO_ORG_NO,
-       --¹©µçµ¥Î»±àºÅ              
+       --ä¾›ç”µå•ä½ç¼–å·              
        A.ORG_NO,
        A.PS_BUSI_AREA_CODE,
        A.SPECIAL_HANDL_TYPE,
@@ -1330,13 +1330,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
        A.TWO_PRC_FLAG,
        A.PF_EVAL_MODE,
        A.LADDER_TYPE,
-       --´úÕ÷Ïî´úÂë
+       --ä»£å¾é¡¹ä»£ç 
        F.HEAD_PL_CODE,
-       --´úÕ÷µçÁ¿
+       --ä»£å¾ç”µé‡
        H.PL_PQ PL_PQ,
-       --´úÕ÷µç·Ñ½ð¶î
+       --ä»£å¾ç”µè´¹é‡‘é¢
        H.PL_AMT,
-       --¼ÛÄÚ¼ÛÍâ±êÖ¾
+       --ä»·å†…ä»·å¤–æ ‡å¿—
        F.PRC_IO_FLAG,
        SYSDATE
         FROM DW_O_SPECIAL_USER_DET A,
@@ -1352,7 +1352,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
   
     COMMIT;
   
-    --°´ÕÕÒªÇó502µÄµç·Ñ¶¼¸üÐÂ³É0
+    --æŒ‰ç…§è¦æ±‚502çš„ç”µè´¹éƒ½æ›´æ–°æˆ0
     UPDATE YWGKODS.DW_O_SPECIAL_USER_DET
        SET SPA               = 0,
            ACME_KWH_PA       = 0,
@@ -1389,7 +1389,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
        AND RELEASE_YMD = V_YMD;
     COMMIT;
   
-    --°´ÕÕÒªÇó503µÄµçÁ¿¶¼¸üÐÂ³É0
+    --æŒ‰ç…§è¦æ±‚503çš„ç”µé‡éƒ½æ›´æ–°æˆ0
     UPDATE YWGKODS.DW_O_SPECIAL_USER_DET
        SET BILL_CAP         = 0,
            BILL_DMD         = 0,
@@ -1407,7 +1407,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
        AND RELEASE_YMD = V_YMD;
     COMMIT;
   
-    --½«Ö´ÐÐ·Ç½×ÌÝµç¼ÛµÄµÚÒ»,¶þ,Èý½×ÌÝµçÁ¿µç¼Û¸ÄÎª0
+    --å°†æ‰§è¡Œéžé˜¶æ¢¯ç”µä»·çš„ç¬¬ä¸€,äºŒ,ä¸‰é˜¶æ¢¯ç”µé‡ç”µä»·æ”¹ä¸º0
     UPDATE DW_O_SPECIAL_USER_DET A
        SET A.FIRST_LADDER_AMT  = 0,
            A.SECOND_LADDER_AMT = 0,
@@ -1430,19 +1430,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
     COMMIT;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'Ö´ÐÐ P_INS_DW_O_SPE_USER_DET_RPRC  ³É¹¦';
+    OUT_MSG  := 'æ‰§è¡Œ P_INS_DW_O_SPE_USER_DET_RPRC  æˆåŠŸ';
   
-    --¼ÇÂ¼Õý³£½áÊøÈÕÖ¾
+    --è®°å½•æ­£å¸¸ç»“æŸæ—¥å¿—
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --Òì³£´¦Àí
+    --å¼‚å¸¸å¤„ç†
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEÎª0´ú±íÔËÐÐÊ§°Ü,»Ø¹öÊÂÎñ
+      --OUT_CODEä¸º0ä»£è¡¨è¿è¡Œå¤±è´¥,å›žæ»šäº‹åŠ¡
       OUT_CODE := 0;
-      OUT_MSG  := 'Ö´ÐÐ P_INS_DW_O_SPE_USER_DET_RPRC  ³öÏÖÒì³£' || ',Òì³£ÐÅÏ¢Îª£º' ||
+      OUT_MSG  := 'æ‰§è¡Œ P_INS_DW_O_SPE_USER_DET_RPRC  å‡ºçŽ°å¼‚å¸¸' || ',å¼‚å¸¸ä¿¡æ¯ä¸ºï¼š' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --¼ÇÂ¼Òì³£½áÊøÈÕÖ¾
+      --è®°å½•å¼‚å¸¸ç»“æŸæ—¥å¿—
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END P_INS_DW_O_SPE_USER_DET_RPRC;
@@ -1450,12 +1450,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
   PROCEDURE P_INS_DW_O_SPE_USER_DET_RPL(I_DATE   IN VARCHAR2,
                                         OUT_CODE OUT NUMBER,
                                         OUT_MSG  OUT VARCHAR2) IS
-    --ÈÕÖ¾ID
+    --æ—¥å¿—ID
     V_DATA_ID VARCHAR2(24);
     V_NUM     NUMBER;
-    --»ñÈ¡ÍøÊ¡µÄµ¥Î»±àÂë
+    --èŽ·å–ç½‘çœçš„å•ä½ç¼–ç 
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
-    --µç·ÑÄêÔÂ
+    --ç”µè´¹å¹´æœˆ
     V_YM  VARCHAR2(6) := SUBSTR(I_DATE, 1, 6);
     V_LYM VARCHAR2(6) := TO_CHAR(ADD_MONTHS(TO_DATE(V_YM, 'YYYYMM'), -1),
                                  'YYYYMM');
@@ -1463,28 +1463,28 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                                  'YYYYMM');
     V_YMD VARCHAR2(8) := SUBSTR(I_DATE, 1, 8);
     TYPE PL_ITEM_ARRAY IS TABLE OF VARCHAR2(32) INDEX BY PLS_INTEGER;
-    V_PL_CODE       PL_ITEM_ARRAY; --´úÕ÷Ïî
+    V_PL_CODE       PL_ITEM_ARRAY; --ä»£å¾é¡¹
     V_SP_PL_CODE    VARCHAR2(64) := 'XXX';
-    V_TOPPK_YM_FLAG VARCHAR2(8); --¼â·åµçÁ¿ÄêÔÂ±êÖ¾
-    --½×ÌÝµçÁ¿´æ·ÅÀàÐÍ:·Öµµ·¨(1),µÝÔö·¨(2).Ä¬ÈÏÎª·Öµµ·¨1,Èç¹ûÍøÊ¡ÎªµÝÔö·¨ÇëÔÚdw_gk_code_transÄÚÅäÖÃÎª2
+    V_TOPPK_YM_FLAG VARCHAR2(8); --å°–å³°ç”µé‡å¹´æœˆæ ‡å¿—
+    --é˜¶æ¢¯ç”µé‡å­˜æ”¾ç±»åž‹:åˆ†æ¡£æ³•(1),é€’å¢žæ³•(2).é»˜è®¤ä¸ºåˆ†æ¡£æ³•1,å¦‚æžœç½‘çœä¸ºé€’å¢žæ³•è¯·åœ¨dw_gk_code_transå†…é…ç½®ä¸º2
     V_JTCFLX VARCHAR2(1) := PKG_GK_PUBLIC.F_TRANS_CODE('JTCFLX', '1');
   BEGIN
-    --¼ÇÂ¼¿ªÊ¼ÈÕÖ¾
+    --è®°å½•å¼€å§‹æ—¥å¿—
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_O_SPE_USER_DET_RPL',
                                         I_DATE);
     FOR I IN 1 .. 13 LOOP
-      SELECT NVL(MAX(CONT1), 'NODATA'), NVL(MAX(CONT2), '0') --content2='1'µÄÎªÌØÊâ´úÕ÷
+      SELECT NVL(MAX(CONT1), 'NODATA'), NVL(MAX(CONT2), '0') --content2='1'çš„ä¸ºç‰¹æ®Šä»£å¾
         INTO V_PL_CODE(I), V_NUM
         FROM GK_DW_CODE_TRANS
        WHERE CODE_TYPE = 'PrtPlItem'
-         AND LPAD(TRANS_VALUE, 2, '0') = LPAD(I, 2, '0'); --TRANS_VALUE´æ·ÅµÄ¾ÍÊÇSGPM_OUT.ARC_E_PL_AMTµÄPL_AMT__×Ö¶ÎµÄÐòºÅ
+         AND LPAD(TRANS_VALUE, 2, '0') = LPAD(I, 2, '0'); --TRANS_VALUEå­˜æ”¾çš„å°±æ˜¯SGPM_OUT.ARC_E_PL_AMTçš„PL_AMT__å­—æ®µçš„åºå·
       IF V_NUM = '1' THEN
         V_SP_PL_CODE := V_SP_PL_CODE || V_PL_CODE(I);
       END IF;
     END LOOP;
   
     SELECT SIGN(INSTR(CONT1, SUBSTR(V_YM, 5, 2)))
-      INTO V_TOPPK_YM_FLAG --¼â·åµçÁ¿ÄêÔÂ¼ÆËã±êÊ¶
+      INTO V_TOPPK_YM_FLAG --å°–å³°ç”µé‡å¹´æœˆè®¡ç®—æ ‡è¯†
       FROM GK_DW_CODE_TRANS
      WHERE CODE_TYPE = 'acmeYm';
   
@@ -1559,67 +1559,67 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
        PL_AMT20,
        TIME_STAMP)
       SELECT /*+PARALLEL(A 2)(B 2)(C 2)(D 2)(E 2)(F 2)(G 2)(H 2)*/
-      --Êý¾Ý±êÊ¶                  
+      --æ•°æ®æ ‡è¯†                  
        PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO) DATA_ID,
-       --Ê¡ÊÐ±àºÅ                  
+       --çœå¸‚ç¼–å·                  
        V_PRO_ORG_NO PRO_ORG_NO,
-       --¹©µçµ¥Î»±àºÅ              
+       --ä¾›ç”µå•ä½ç¼–å·              
        A.ORG_NO ORG_NO,
-       --ÓªÒµÇøÐÔÖÊ                
+       --è¥ä¸šåŒºæ€§è´¨                
        NULL PS_BUSI_AREA_CODE,
-       --ÌØÊâ´¦ÀíÀà±ð              
+       --ç‰¹æ®Šå¤„ç†ç±»åˆ«              
        '04' SPECIAL_HANDL_TYPE,
-       --ÓÃ»§±êÊ¶                  
+       --ç”¨æˆ·æ ‡è¯†                  
        A.CONS_ID CONS_ID,
-       --ÓÃ»§±àºÅ                 
+       --ç”¨æˆ·ç¼–å·                 
        A.CONS_NO CONS_NO,
-       --µç·Ñ¼ÆËã±êÊ¶             
+       --ç”µè´¹è®¡ç®—æ ‡è¯†             
        A.CALC_ID CALC_ID,
-       --µç·Ñ·¢ÐÐÈÕÆÚ              
+       --ç”µè´¹å‘è¡Œæ—¥æœŸ              
        TO_CHAR(A.SEND_DATE, 'YYYYMMDD') AMT_YMD,
-       --µç·ÑÄêÔÂ                  
+       --ç”µè´¹å¹´æœˆ                  
        A.YM AMT_YM,
-       --ÓÃµçÀà±ð                  
+       --ç”¨ç”µç±»åˆ«                  
        PKG_GK_PUBLIC.F_TRANS_CODE('ELEC_TYPE_CODE', C.ELEC_TYPE_CODE) ELEC_TYPE_CODE,
-       --µç¼ÛÂë                    
+       --ç”µä»·ç                     
        C.PRC_CODE PRC_CODE,
-       --µç¼Û°æ±¾                  
+       --ç”µä»·ç‰ˆæœ¬                  
        C.PARA_VN PRC_PARA_VN,
-       --³­±í¶Î±àºÅ                
+       --æŠ„è¡¨æ®µç¼–å·                
        A.MR_SECT_NO PRC_PARA_VN,
-       --ÓÃ»§·ÖÀà                  
+       --ç”¨æˆ·åˆ†ç±»                  
        PKG_GK_PUBLIC.F_TRANS_CODE('CUST_TYPE_CODE', A.CONS_SORT_CODE) CONS_SORT_CODE,
-       --ÐÐÒµ·ÖÀà                  
+       --è¡Œä¸šåˆ†ç±»                  
        PKG_GK_PUBLIC.F_TRANS_CODE('TRADE_TYPE_CODE', C.TRADE_TYPE_CODE) TRADE_CODE,
-       --µçÑ¹µÈ¼¶                  
+       --ç”µåŽ‹ç­‰çº§                  
        PKG_GK_PUBLIC.F_TRANS_CODE('VOLT_CODE', A.VOLT_CODE) VOLT_CODE,
-       --¸ßºÄÄÜÐÐÒµ·ÖÀà            
+       --é«˜è€—èƒ½è¡Œä¸šåˆ†ç±»            
        PKG_GK_PUBLIC.F_TRANS_CODE('HUE_TRADE_TYPE_CODE', A.HEC_TRADE_CODE) HEC_TRADE_CODE,
-       --ÊÇ·ñÖ´ÐÐ·å¹È              
+       --æ˜¯å¦æ‰§è¡Œå³°è°·              
        PKG_GK_PUBLIC.F_TRANS_CODE('YES_NO_FLAG', B.TS_FLAG) EXEC_PV_FLAG,
-       --ÊÇ·ñÖ´ÐÐÁ½²¿ÖÆµç¼Û        
+       --æ˜¯å¦æ‰§è¡Œä¸¤éƒ¨åˆ¶ç”µä»·        
        PKG_GK_PUBLIC.F_TRANS_CODE('PRC_TYPE_CODE', D.TYPE_CODE) TWO_PRC_FLAG,
-       --¹¦ÂÊÒòÊý¿¼ºË·½Ê½          
+       --åŠŸçŽ‡å› æ•°è€ƒæ ¸æ–¹å¼          
        PKG_GK_PUBLIC.F_TRANS_CODE('PF_EVAL_MODE', D.PF_EVAL_MODE) PF_EVAL_MODE,
-       --½×ÌÝ·ÖÀà                  
-       PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02'), --¸÷µ¥Î»×ÔÐÐÈ·¶¨¿ÉÔÚGK_DW_CODE_TANS±íÄÚÅäÖÃ,00ÎÞ  01Äê½×ÌÝ  02ÔÂ½×ÌÝ,
-       --ÊÛµçÁ¿                    
+       --é˜¶æ¢¯åˆ†ç±»                  
+       PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02'), --å„å•ä½è‡ªè¡Œç¡®å®šå¯åœ¨GK_DW_CODE_TANSè¡¨å†…é…ç½®,00æ—   01å¹´é˜¶æ¢¯  02æœˆé˜¶æ¢¯,
+       --å”®ç”µé‡                    
        SUM(C.T_SETTLE_PQ) SPQ,
-       --×Ü½áËãµç·Ñ                
+       --æ€»ç»“ç®—ç”µè´¹                
        SUM(C.T_AMT) SPA,
-       --¼â·åµçÁ¿                  
+       --å°–å³°ç”µé‡                  
        SUM(E.ACME_PQ) ACME_PQ,
-       --·åµçÁ¿                    
+       --å³°ç”µé‡                    
        SUM(E.PEAK_PQ) PEAK_PQ,
-       --Æ½µçÁ¿                    
+       --å¹³ç”µé‡                    
        SUM(E.FLAT_PQ) FLAT_PQ,
-       --¹ÈµçÁ¿                    
+       --è°·ç”µé‡                    
        SUM(E.VALLEY_PQ) VALLEY_PQ,
-       --¼¹¹ÈµçÁ¿                  
+       --è„Šè°·ç”µé‡                  
        SUM(E.NADIR_PQ) NADIR_PQ,
-       --µÚÒ»½×ÌÝµçÁ¿              
+       --ç¬¬ä¸€é˜¶æ¢¯ç”µé‡              
        SUM(NVL(C.T_SETTLE_PQ, 0)) FIRST_LADDER_PQ,
-       --µÚ¶þ½×ÌÝµçÁ¿              
+       --ç¬¬äºŒé˜¶æ¢¯ç”µé‡              
        SUM(DECODE(C.LEVEL_NUM,
                   '2',
                   DECODE(V_JTCFLX,
@@ -1627,7 +1627,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                          NVL(C.T_SETTLE_PQ, 0),
                          NVL(C.LEVEL_INC_PQ, 0)),
                   0)) SECOND_LADDER_PQ,
-       --µÚÈý½×ÌÝµçÁ¿              
+       --ç¬¬ä¸‰é˜¶æ¢¯ç”µé‡              
        SUM(DECODE(C.LEVEL_NUM,
                   '3',
                   DECODE(V_JTCFLX,
@@ -1635,25 +1635,25 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                          NVL(C.T_SETTLE_PQ, 0),
                          NVL(C.LEVEL_INC_PQ, 0)),
                   0)) THIRD_LADDER_PQ,
-       --¼â·åµç¶Èµç·Ñ              
+       --å°–å³°ç”µåº¦ç”µè´¹              
        SUM(E.ACME_KWH_AMT) ACME_KWH_PA,
-       --·åµç¶Èµç·Ñ                
+       --å³°ç”µåº¦ç”µè´¹                
        SUM(E.PEAK_KWH_AMT) PEAK_KWH_PA,
-       --Æ½µç¶Èµç·Ñ                
+       --å¹³ç”µåº¦ç”µè´¹                
        SUM(E.FLAT_KWH_AMT) FLAT_KWH_PA,
-       --¹Èµç¶Èµç·Ñ                
+       --è°·ç”µåº¦ç”µè´¹                
        SUM(E.VALLEY_KWH_AMT) VALLEY_KWH_PA,
-       --¼¹¹Èµç¶Èµç·Ñ              
+       --è„Šè°·ç”µåº¦ç”µè´¹              
        SUM(E.NADIR_KWH_AMT) NADIR_KWH_PA,
-       --¼Æ·ÑÈÝÁ¿                  
+       --è®¡è´¹å®¹é‡                  
        SUM(F.BILL_CAP) BILL_CAP,
-       --¼Æ·ÑÐèÁ¿                  
+       --è®¡è´¹éœ€é‡                  
        SUM(F.BILL_DMD) BILL_DMD,
-       --ÈÝÁ¿µç·Ñ                  
+       --å®¹é‡ç”µè´¹                  
        SUM(F.CAP_PA) CAP_PA,
-       --ÐèÁ¿µç·Ñ                  
+       --éœ€é‡ç”µè´¹                  
        SUM(F.DMD_PA) DMD_PA,
-       --·åÓ¯µç·Ñ                  
+       --å³°ç›ˆç”µè´¹                  
        SUM(ROUND((NVL(ACME_CATKWH_PRC, 0) -
                  DECODE(NVL(FLAT_CATKWH_PRC, 0),
                          0,
@@ -1676,7 +1676,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                              AND BB.PRC_TI_CODE = '03'),
                          FLAT_CATKWH_PRC)) * NVL(PEAK_PQ, 0),
                  2)) PEAKADD_PA,
-       --¹È¿÷µç·Ñ                  
+       --è°·äºç”µè´¹                  
        SUM(ROUND((DECODE(NVL(FLAT_CATKWH_PRC, 0),
                          0,
                          (SELECT NVL(MAX(CAT_KWH_PRC), 0)
@@ -1699,12 +1699,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                          FLAT_CATKWH_PRC) - NVL(NADIR_CATKWH_PRC, 0)) *
                  NVL(NADIR_PQ, 0),
                  2)) VALLEYSUB_PA,
-       --Á¦µ÷Ôöµç·Ñ                
+       --åŠ›è°ƒå¢žç”µè´¹                
        SUM(G.PF_AMT_ADD),
-       --Á¦µ÷¼õµç·Ñ                
+       --åŠ›è°ƒå‡ç”µè´¹                
        SUM(G.PF_AMT_SUB),
-       --µÚÒ»½×ÌÝµç·Ñ              
-       --µç·Ñ»ñÈ¡°´ÕÕÍøÊ¡Êý¾ÝÎª·Öµµ·¨´æ·Å,µÚ¶þµµ,µÚÈýµµµç¼ÛÖØÐÂ¼ÆËãºóÓë¶ÔÓ¦µµÎ»µÄµçÁ¿Ïà³Ë,µÝÔö·¨µÄÍøÊ¡ÐèÒªÔÙ·´À¡²âÊÔ
+       --ç¬¬ä¸€é˜¶æ¢¯ç”µè´¹              
+       --ç”µè´¹èŽ·å–æŒ‰ç…§ç½‘çœæ•°æ®ä¸ºåˆ†æ¡£æ³•å­˜æ”¾,ç¬¬äºŒæ¡£,ç¬¬ä¸‰æ¡£ç”µä»·é‡æ–°è®¡ç®—åŽä¸Žå¯¹åº”æ¡£ä½çš„ç”µé‡ç›¸ä¹˜,é€’å¢žæ³•çš„ç½‘çœéœ€è¦å†åé¦ˆæµ‹è¯•
        DECODE(V_JTCFLX,
               '1',
               SUM(NVL(C.T_SETTLE_PQ, 0) *
@@ -1715,7 +1715,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                       AND BB.PRC_CODE = C.PRC_CODE
                       AND AA.RANGE_TYPE_CODE = '31')),
               SUM(DECODE(C.LEVEL_NUM, '1', NVL(C.T_AMT, 0), 0))) FIRST_LADDER_AMT,
-       --µÚ¶þ½×ÌÝÔöÁ¿µç·Ñ          
+       --ç¬¬äºŒé˜¶æ¢¯å¢žé‡ç”µè´¹          
        DECODE(V_JTCFLX,
               '1',
               SUM(DECODE(C.LEVEL_NUM, 2, NVL(C.T_SETTLE_PQ, 0), 0) *
@@ -1726,7 +1726,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                       AND BB.PRC_CODE = C.PRC_CODE
                       AND AA.RANGE_TYPE_CODE IN ('31', '32'))),
               SUM(DECODE(C.LEVEL_NUM, '2', NVL(C.T_AMT, 0), 0))) SECOND_LADDER_AMT,
-       --µÚÈý½×ÌÝÔöÁ¿µç·Ñ          
+       --ç¬¬ä¸‰é˜¶æ¢¯å¢žé‡ç”µè´¹          
        DECODE(V_JTCFLX,
               '1',
               SUM(DECODE(C.LEVEL_NUM, 3, NVL(C.T_SETTLE_PQ, 0), 0) *
@@ -1737,37 +1737,37 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                       AND BB.PRC_CODE = C.PRC_CODE
                       AND AA.RANGE_TYPE_CODE IN ('31', '33'))),
               SUM(DECODE(C.LEVEL_NUM, '3', NVL(C.T_AMT, 0), 0))) THIRD_LADDER_AMT,
-       --·á¿Ýµç·Ñ                  
-       0 H_AND_L_PA, --·á¿Ýµç·Ñ
-       --Ò»»§Ò»±í¸ÄÔì              
+       --ä¸°æž¯ç”µè´¹                  
+       0 H_AND_L_PA, --ä¸°æž¯ç”µè´¹
+       --ä¸€æˆ·ä¸€è¡¨æ”¹é€               
        SUM(H.PL_AMT11) PL_AMT11,
-       --Å©´åµÍÑ¹µçÍøÎ¬»¤·Ñ        
+       --å†œæ‘ä½ŽåŽ‹ç”µç½‘ç»´æŠ¤è´¹        
        SUM(H.PL_AMT08) PL_AMT08,
-       --Ë®Àû»ù½ð                  
+       --æ°´åˆ©åŸºé‡‘                  
        SUM(H.PL_AMT01) PL_AMT01,
-       --µçÁ¦½¨Éè                  
+       --ç”µåŠ›å»ºè®¾                  
        SUM(H.PL_AMT02) PL_AMT02,
-       --³ÇÊÐ¸½¼Ó                  
+       --åŸŽå¸‚é™„åŠ                   
        SUM(H.PL_AMT03) PL_AMT03,
-       --Å©Íø»¹´û                  
+       --å†œç½‘è¿˜è´·                  
        SUM(H.PL_AMT04) PL_AMT04,
-       --´óÖÐÐÍË®¿âÒÆÃñºóÆÚ·ö³Ö×Ê½ð
+       --å¤§ä¸­åž‹æ°´åº“ç§»æ°‘åŽæœŸæ‰¶æŒèµ„é‡‘
        SUM(H.PL_AMT05) PL_AMT05,
-       --Ð¡ÐÍË®¿âÒÆÃñºóÆÚ·ö³Ö×Ê½ð  
+       --å°åž‹æ°´åº“ç§»æ°‘åŽæœŸæ‰¶æŒèµ„é‡‘  
        SUM(H.PL_AMT06) PL_AMT06,
-       --¿ÉÔÙÉúÄÜÔ´¸½¼Ó            
+       --å¯å†ç”Ÿèƒ½æºé™„åŠ             
        SUM(H.PL_AMT07) PL_AMT06,
-       --Å©µç»ù½ð                  
+       --å†œç”µåŸºé‡‘                  
        SUM(H.PL_AMT09) PL_AMT09,
-       --´úÕ÷·Ñ01                  
+       --ä»£å¾è´¹01                  
        SUM(H.PL_AMT12) PL_AMT12,
-       --´úÕ÷·Ñ02                  
+       --ä»£å¾è´¹02                  
        SUM(H.PL_AMT13) PL_AMT13,
-       --ÆäËü´úÕ÷·Ñ                
+       --å…¶å®ƒä»£å¾è´¹                
        SUM(H.PL_AMT10) PL_AMT10,
-       --ÌØÊâÌÞ³ý´úÕ÷½ð¶î          
+       --ç‰¹æ®Šå‰”é™¤ä»£å¾é‡‘é¢          
        SUM(H.PL_AMT20) PL_AMT20,
-       --Ê±¼ä´Á                    
+       --æ—¶é—´æˆ³                    
        SYSDATE
         FROM SY_SG_ARC_E_CONS_SNAP    A,
              SY_SG_ARC_E_CONSPRC_SNAP B,
@@ -1783,14 +1783,14 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
          AND A.CALC_ID = B.CALC_ID
          AND B.CALC_ID = C.CALC_ID
          AND B.PRC_SNAP_ID = C.PRC_SNAP_ID
-         AND B.PRC_TACTIC_SNAP_ID = D.PRC_TACTIC_SNAP_ID(+) --´æÔÚÓÐµç·Ñµ«ÎÞµç¼Û²ßÂÔ¿ìÕÕµÄÇé¿ö
+         AND B.PRC_TACTIC_SNAP_ID = D.PRC_TACTIC_SNAP_ID(+) --å­˜åœ¨æœ‰ç”µè´¹ä½†æ— ç”µä»·ç­–ç•¥å¿«ç…§çš„æƒ…å†µ
          AND B.CALC_ID = D.CALC_ID(+)
          AND C.PRC_AMT_ID = E.PRC_AMT_ID(+)
          AND C.PRC_AMT_ID = F.PRC_AMT_ID(+)
          AND C.PRC_AMT_ID = G.PRC_AMT_ID(+)
-            --ÌØÊâ´úÕ÷Æ¥Åä
+            --ç‰¹æ®Šä»£å¾åŒ¹é…
          AND C.PRC_AMT_ID = H.PRC_AMT_ID
-            --ÌØÊâ´úÕ÷·Ñ´óÓÚ0
+            --ç‰¹æ®Šä»£å¾è´¹å¤§äºŽ0
          AND H.PL_AMT20 > 0
             --AND A.ORG_NO = B.ORG_NO
             --AND B.ORG_NO = C.ORG_NO
@@ -1862,11 +1862,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
        PRC_IO_FLAG,
        TIME_STAMP)
       SELECT
-      --Êý¾Ý±êÊ¶                  
+      --æ•°æ®æ ‡è¯†                  
        PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO) DATA_ID,
-       --Ê¡ÊÐ±àºÅ                  
+       --çœå¸‚ç¼–å·                  
        V_PRO_ORG_NO PRO_ORG_NO,
-       --¹©µçµ¥Î»±àºÅ              
+       --ä¾›ç”µå•ä½ç¼–å·              
        A.ORG_NO,
        A.PS_BUSI_AREA_CODE,
        A.SPECIAL_HANDL_TYPE,
@@ -1887,13 +1887,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
        A.TWO_PRC_FLAG,
        A.PF_EVAL_MODE,
        A.LADDER_TYPE,
-       --´úÕ÷Ïî´úÂë
+       --ä»£å¾é¡¹ä»£ç 
        F.HEAD_PL_CODE,
-       --´úÕ÷µçÁ¿
+       --ä»£å¾ç”µé‡
        H.PL_PQ PL_PQ,
-       --´úÕ÷µç·Ñ½ð¶î
+       --ä»£å¾ç”µè´¹é‡‘é¢
        H.PL_AMT,
-       --¼ÛÄÚ¼ÛÍâ±êÖ¾
+       --ä»·å†…ä»·å¤–æ ‡å¿—
        F.PRC_IO_FLAG,
        SYSDATE
         FROM DW_O_SPECIAL_USER_DET A,
@@ -1909,7 +1909,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
   
     COMMIT;
   
-    --½«Ö´ÐÐ·Ç½×ÌÝµç¼ÛµÄµÚÒ»,¶þ,Èý½×ÌÝµçÁ¿µç¼Û¸ÄÎª0
+    --å°†æ‰§è¡Œéžé˜¶æ¢¯ç”µä»·çš„ç¬¬ä¸€,äºŒ,ä¸‰é˜¶æ¢¯ç”µé‡ç”µä»·æ”¹ä¸º0
     UPDATE DW_O_SPECIAL_USER_DET A
        SET A.FIRST_LADDER_AMT  = 0,
            A.SECOND_LADDER_AMT = 0,
@@ -1930,19 +1930,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
     COMMIT;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'Ö´ÐÐ P_INS_DW_O_SPE_USER_DET_RPL  ³É¹¦';
+    OUT_MSG  := 'æ‰§è¡Œ P_INS_DW_O_SPE_USER_DET_RPL  æˆåŠŸ';
   
-    --¼ÇÂ¼Õý³£½áÊøÈÕÖ¾
+    --è®°å½•æ­£å¸¸ç»“æŸæ—¥å¿—
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --Òì³£´¦Àí
+    --å¼‚å¸¸å¤„ç†
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEÎª0´ú±íÔËÐÐÊ§°Ü,»Ø¹öÊÂÎñ
+      --OUT_CODEä¸º0ä»£è¡¨è¿è¡Œå¤±è´¥,å›žæ»šäº‹åŠ¡
       OUT_CODE := 0;
-      OUT_MSG  := 'Ö´ÐÐ P_INS_DW_O_SPE_USER_DET_RPL  ³öÏÖÒì³£' || ',Òì³£ÐÅÏ¢Îª£º' ||
+      OUT_MSG  := 'æ‰§è¡Œ P_INS_DW_O_SPE_USER_DET_RPL  å‡ºçŽ°å¼‚å¸¸' || ',å¼‚å¸¸ä¿¡æ¯ä¸ºï¼š' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --¼ÇÂ¼Òì³£½áÊøÈÕÖ¾
+      --è®°å½•å¼‚å¸¸ç»“æŸæ—¥å¿—
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END P_INS_DW_O_SPE_USER_DET_RPL;
@@ -1950,12 +1950,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
   PROCEDURE P_INS_DW_O_SPE_USER_DET_RCONS(I_DATE   IN VARCHAR2,
                                           OUT_CODE OUT NUMBER,
                                           OUT_MSG  OUT VARCHAR2) IS
-    --ÈÕÖ¾ID
+    --æ—¥å¿—ID
     V_DATA_ID VARCHAR2(24);
     V_NUM     NUMBER;
-    --»ñÈ¡ÍøÊ¡µÄµ¥Î»±àÂë
+    --èŽ·å–ç½‘çœçš„å•ä½ç¼–ç 
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
-    --µç·ÑÄêÔÂ
+    --ç”µè´¹å¹´æœˆ
     V_YM  VARCHAR2(6) := SUBSTR(I_DATE, 1, 6);
     V_LYM VARCHAR2(6) := TO_CHAR(ADD_MONTHS(TO_DATE(V_YM, 'YYYYMM'), -1),
                                  'YYYYMM');
@@ -1963,28 +1963,28 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                                  'YYYYMM');
     V_YMD VARCHAR2(8) := SUBSTR(I_DATE, 1, 8);
     TYPE PL_ITEM_ARRAY IS TABLE OF VARCHAR2(32) INDEX BY PLS_INTEGER;
-    V_PL_CODE       PL_ITEM_ARRAY; --´úÕ÷Ïî
+    V_PL_CODE       PL_ITEM_ARRAY; --ä»£å¾é¡¹
     V_SP_PL_CODE    VARCHAR2(64) := 'XXX';
-    V_TOPPK_YM_FLAG VARCHAR2(8); --¼â·åµçÁ¿ÄêÔÂ±êÖ¾
-    --½×ÌÝµçÁ¿´æ·ÅÀàÐÍ:·Öµµ·¨(1),µÝÔö·¨(2).Ä¬ÈÏÎª·Öµµ·¨1,Èç¹ûÍøÊ¡ÎªµÝÔö·¨ÇëÔÚdw_gk_code_transÄÚÅäÖÃÎª2
+    V_TOPPK_YM_FLAG VARCHAR2(8); --å°–å³°ç”µé‡å¹´æœˆæ ‡å¿—
+    --é˜¶æ¢¯ç”µé‡å­˜æ”¾ç±»åž‹:åˆ†æ¡£æ³•(1),é€’å¢žæ³•(2).é»˜è®¤ä¸ºåˆ†æ¡£æ³•1,å¦‚æžœç½‘çœä¸ºé€’å¢žæ³•è¯·åœ¨dw_gk_code_transå†…é…ç½®ä¸º2
     V_JTCFLX VARCHAR2(1) := PKG_GK_PUBLIC.F_TRANS_CODE('JTCFLX', '1');
   BEGIN
-    --¼ÇÂ¼¿ªÊ¼ÈÕÖ¾
+    --è®°å½•å¼€å§‹æ—¥å¿—
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_O_SPE_USER_DET_RCONS',
                                         I_DATE);
     FOR I IN 1 .. 13 LOOP
-      SELECT NVL(MAX(CONT1), 'NODATA'), NVL(MAX(CONT2), '0') --content2='1'µÄÎªÌØÊâ´úÕ÷
+      SELECT NVL(MAX(CONT1), 'NODATA'), NVL(MAX(CONT2), '0') --content2='1'çš„ä¸ºç‰¹æ®Šä»£å¾
         INTO V_PL_CODE(I), V_NUM
         FROM GK_DW_CODE_TRANS
        WHERE CODE_TYPE = 'PrtPlItem'
-         AND LPAD(TRANS_VALUE, 2, '0') = LPAD(I, 2, '0'); --TRANS_VALUE´æ·ÅµÄ¾ÍÊÇSGPM_OUT.ARC_E_PL_AMTµÄPL_AMT__×Ö¶ÎµÄÐòºÅ
+         AND LPAD(TRANS_VALUE, 2, '0') = LPAD(I, 2, '0'); --TRANS_VALUEå­˜æ”¾çš„å°±æ˜¯SGPM_OUT.ARC_E_PL_AMTçš„PL_AMT__å­—æ®µçš„åºå·
       IF V_NUM = '1' THEN
         V_SP_PL_CODE := V_SP_PL_CODE || V_PL_CODE(I);
       END IF;
     END LOOP;
   
     SELECT SIGN(INSTR(CONT1, SUBSTR(V_YM, 5, 2)))
-      INTO V_TOPPK_YM_FLAG --¼â·åµçÁ¿ÄêÔÂ¼ÆËã±êÊ¶
+      INTO V_TOPPK_YM_FLAG --å°–å³°ç”µé‡å¹´æœˆè®¡ç®—æ ‡è¯†
       FROM GK_DW_CODE_TRANS
      WHERE CODE_TYPE = 'acmeYm';
   
@@ -2046,67 +2046,67 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
        H_AND_L_PA,
        TIME_STAMP)
       SELECT /*+PARALLEL(A 2)(B 2)(C 2)(D 2)(E 2)(F 2)(G 2)(H 2)*/
-      --Êý¾Ý±êÊ¶                  
+      --æ•°æ®æ ‡è¯†                  
        PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO) DATA_ID,
-       --Ê¡ÊÐ±àºÅ                  
+       --çœå¸‚ç¼–å·                  
        V_PRO_ORG_NO PRO_ORG_NO,
-       --¹©µçµ¥Î»±àºÅ              
+       --ä¾›ç”µå•ä½ç¼–å·              
        A.ORG_NO ORG_NO,
-       --ÓªÒµÇøÐÔÖÊ                
+       --è¥ä¸šåŒºæ€§è´¨                
        NULL PS_BUSI_AREA_CODE,
-       --ÌØÊâ´¦ÀíÀà±ð              
+       --ç‰¹æ®Šå¤„ç†ç±»åˆ«              
        X.TYPE_CODE SPECIAL_HANDL_TYPE,
-       --ÓÃ»§±êÊ¶                  
+       --ç”¨æˆ·æ ‡è¯†                  
        A.CONS_ID CONS_ID,
-       --ÓÃ»§±àºÅ                 
+       --ç”¨æˆ·ç¼–å·                 
        A.CONS_NO CONS_NO,
-       --µç·Ñ¼ÆËã±êÊ¶             
+       --ç”µè´¹è®¡ç®—æ ‡è¯†             
        A.CALC_ID CALC_ID,
-       --µç·Ñ·¢ÐÐÈÕÆÚ              
+       --ç”µè´¹å‘è¡Œæ—¥æœŸ              
        TO_CHAR(A.SEND_DATE, 'YYYYMMDD') AMT_YMD,
-       --µç·ÑÄêÔÂ                  
+       --ç”µè´¹å¹´æœˆ                  
        A.YM AMT_YM,
-       --ÓÃµçÀà±ð                  
+       --ç”¨ç”µç±»åˆ«                  
        PKG_GK_PUBLIC.F_TRANS_CODE('ELEC_TYPE_CODE', C.ELEC_TYPE_CODE) ELEC_TYPE_CODE,
-       --µç¼ÛÂë                    
+       --ç”µä»·ç                     
        C.PRC_CODE PRC_CODE,
-       --µç¼Û°æ±¾                  
+       --ç”µä»·ç‰ˆæœ¬                  
        C.PARA_VN PRC_PARA_VN,
-       --³­±í¶Î±àºÅ                
+       --æŠ„è¡¨æ®µç¼–å·                
        A.MR_SECT_NO PRC_PARA_VN,
-       --ÓÃ»§·ÖÀà                  
+       --ç”¨æˆ·åˆ†ç±»                  
        PKG_GK_PUBLIC.F_TRANS_CODE('CUST_TYPE_CODE', A.CONS_SORT_CODE) CONS_SORT_CODE,
-       --ÐÐÒµ·ÖÀà                  
+       --è¡Œä¸šåˆ†ç±»                  
        PKG_GK_PUBLIC.F_TRANS_CODE('TRADE_TYPE_CODE', C.TRADE_TYPE_CODE) TRADE_CODE,
-       --µçÑ¹µÈ¼¶                  
+       --ç”µåŽ‹ç­‰çº§                  
        PKG_GK_PUBLIC.F_TRANS_CODE('VOLT_CODE', A.VOLT_CODE) VOLT_CODE,
-       --¸ßºÄÄÜÐÐÒµ·ÖÀà            
+       --é«˜è€—èƒ½è¡Œä¸šåˆ†ç±»            
        PKG_GK_PUBLIC.F_TRANS_CODE('HUE_TRADE_TYPE_CODE', A.HEC_TRADE_CODE) HEC_TRADE_CODE,
-       --ÊÇ·ñÖ´ÐÐ·å¹È              
+       --æ˜¯å¦æ‰§è¡Œå³°è°·              
        PKG_GK_PUBLIC.F_TRANS_CODE('YES_NO_FLAG', B.TS_FLAG) EXEC_PV_FLAG,
-       --ÊÇ·ñÖ´ÐÐÁ½²¿ÖÆµç¼Û        
+       --æ˜¯å¦æ‰§è¡Œä¸¤éƒ¨åˆ¶ç”µä»·        
        PKG_GK_PUBLIC.F_TRANS_CODE('PRC_TYPE_CODE', D.TYPE_CODE) TWO_PRC_FLAG,
-       --¹¦ÂÊÒòÊý¿¼ºË·½Ê½          
+       --åŠŸçŽ‡å› æ•°è€ƒæ ¸æ–¹å¼          
        PKG_GK_PUBLIC.F_TRANS_CODE('PF_EVAL_MODE', D.PF_EVAL_MODE) PF_EVAL_MODE,
-       --½×ÌÝ·ÖÀà                  
-       PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02'), --¸÷µ¥Î»×ÔÐÐÈ·¶¨¿ÉÔÚGK_DW_CODE_TANS±íÄÚÅäÖÃ,00ÎÞ  01Äê½×ÌÝ  02ÔÂ½×ÌÝ,
-       --ÊÛµçÁ¿                    
+       --é˜¶æ¢¯åˆ†ç±»                  
+       PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02'), --å„å•ä½è‡ªè¡Œç¡®å®šå¯åœ¨GK_DW_CODE_TANSè¡¨å†…é…ç½®,00æ—   01å¹´é˜¶æ¢¯  02æœˆé˜¶æ¢¯,
+       --å”®ç”µé‡                    
        SUM(C.T_SETTLE_PQ) SPQ,
-       --×Ü½áËãµç·Ñ                
+       --æ€»ç»“ç®—ç”µè´¹                
        SUM(C.T_AMT) SPA,
-       --¼â·åµçÁ¿                  
+       --å°–å³°ç”µé‡                  
        SUM(E.ACME_PQ) ACME_PQ,
-       --·åµçÁ¿                    
+       --å³°ç”µé‡                    
        SUM(E.PEAK_PQ) PEAK_PQ,
-       --Æ½µçÁ¿                    
+       --å¹³ç”µé‡                    
        SUM(E.FLAT_PQ) FLAT_PQ,
-       --¹ÈµçÁ¿                    
+       --è°·ç”µé‡                    
        SUM(E.VALLEY_PQ) VALLEY_PQ,
-       --¼¹¹ÈµçÁ¿                  
+       --è„Šè°·ç”µé‡                  
        SUM(E.NADIR_PQ) NADIR_PQ,
-       --µÚÒ»½×ÌÝµçÁ¿              
+       --ç¬¬ä¸€é˜¶æ¢¯ç”µé‡              
        SUM(NVL(C.T_SETTLE_PQ, 0)) FIRST_LADDER_PQ,
-       --µÚ¶þ½×ÌÝµçÁ¿              
+       --ç¬¬äºŒé˜¶æ¢¯ç”µé‡              
        SUM(DECODE(C.LEVEL_NUM,
                   '2',
                   DECODE(V_JTCFLX,
@@ -2114,7 +2114,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                          NVL(C.T_SETTLE_PQ, 0),
                          NVL(C.LEVEL_INC_PQ, 0)),
                   0)) SECOND_LADDER_PQ,
-       --µÚÈý½×ÌÝµçÁ¿              
+       --ç¬¬ä¸‰é˜¶æ¢¯ç”µé‡              
        SUM(DECODE(C.LEVEL_NUM,
                   '3',
                   DECODE(V_JTCFLX,
@@ -2122,25 +2122,25 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                          NVL(C.T_SETTLE_PQ, 0),
                          NVL(C.LEVEL_INC_PQ, 0)),
                   0)) THIRD_LADDER_PQ,
-       --¼â·åµç¶Èµç·Ñ              
+       --å°–å³°ç”µåº¦ç”µè´¹              
        SUM(E.ACME_KWH_AMT) ACME_KWH_PA,
-       --·åµç¶Èµç·Ñ                
+       --å³°ç”µåº¦ç”µè´¹                
        SUM(E.PEAK_KWH_AMT) PEAK_KWH_PA,
-       --Æ½µç¶Èµç·Ñ                
+       --å¹³ç”µåº¦ç”µè´¹                
        SUM(E.FLAT_KWH_AMT) FLAT_KWH_PA,
-       --¹Èµç¶Èµç·Ñ                
+       --è°·ç”µåº¦ç”µè´¹                
        SUM(E.VALLEY_KWH_AMT) VALLEY_KWH_PA,
-       --¼¹¹Èµç¶Èµç·Ñ              
+       --è„Šè°·ç”µåº¦ç”µè´¹              
        SUM(E.NADIR_KWH_AMT) NADIR_KWH_PA,
-       --¼Æ·ÑÈÝÁ¿                  
+       --è®¡è´¹å®¹é‡                  
        SUM(F.BILL_CAP) BILL_CAP,
-       --¼Æ·ÑÐèÁ¿                  
+       --è®¡è´¹éœ€é‡                  
        SUM(F.BILL_DMD) BILL_DMD,
-       --ÈÝÁ¿µç·Ñ                  
+       --å®¹é‡ç”µè´¹                  
        SUM(F.CAP_PA) CAP_PA,
-       --ÐèÁ¿µç·Ñ                  
+       --éœ€é‡ç”µè´¹                  
        SUM(F.DMD_PA) DMD_PA,
-       --·åÓ¯µç·Ñ                  
+       --å³°ç›ˆç”µè´¹                  
        SUM(ROUND((NVL(ACME_CATKWH_PRC, 0) -
                  DECODE(NVL(FLAT_CATKWH_PRC, 0),
                          0,
@@ -2163,7 +2163,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                              AND BB.PRC_TI_CODE = '03'),
                          FLAT_CATKWH_PRC)) * NVL(PEAK_PQ, 0),
                  2)) PEAKADD_PA,
-       --¹È¿÷µç·Ñ                  
+       --è°·äºç”µè´¹                  
        SUM(ROUND((DECODE(NVL(FLAT_CATKWH_PRC, 0),
                          0,
                          (SELECT NVL(MAX(CAT_KWH_PRC), 0)
@@ -2186,12 +2186,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                          FLAT_CATKWH_PRC) - NVL(NADIR_CATKWH_PRC, 0)) *
                  NVL(NADIR_PQ, 0),
                  2)) VALLEYSUB_PA,
-       --Á¦µ÷Ôöµç·Ñ                
+       --åŠ›è°ƒå¢žç”µè´¹                
        SUM(G.PF_AMT_ADD),
-       --Á¦µ÷¼õµç·Ñ                
+       --åŠ›è°ƒå‡ç”µè´¹                
        SUM(G.PF_AMT_SUB),
-       --µÚÒ»½×ÌÝµç·Ñ              
-       --µç·Ñ»ñÈ¡°´ÕÕÍøÊ¡Êý¾ÝÎª·Öµµ·¨´æ·Å,µÚ¶þµµ,µÚÈýµµµç¼ÛÖØÐÂ¼ÆËãºóÓë¶ÔÓ¦µµÎ»µÄµçÁ¿Ïà³Ë,µÝÔö·¨µÄÍøÊ¡ÐèÒªÔÙ·´À¡²âÊÔ
+       --ç¬¬ä¸€é˜¶æ¢¯ç”µè´¹              
+       --ç”µè´¹èŽ·å–æŒ‰ç…§ç½‘çœæ•°æ®ä¸ºåˆ†æ¡£æ³•å­˜æ”¾,ç¬¬äºŒæ¡£,ç¬¬ä¸‰æ¡£ç”µä»·é‡æ–°è®¡ç®—åŽä¸Žå¯¹åº”æ¡£ä½çš„ç”µé‡ç›¸ä¹˜,é€’å¢žæ³•çš„ç½‘çœéœ€è¦å†åé¦ˆæµ‹è¯•
        DECODE(V_JTCFLX,
               '1',
               SUM(NVL(C.T_SETTLE_PQ, 0) *
@@ -2202,7 +2202,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                       AND BB.PRC_CODE = C.PRC_CODE
                       AND AA.RANGE_TYPE_CODE = '31')),
               SUM(DECODE(C.LEVEL_NUM, '1', NVL(C.T_AMT, 0), 0))) FIRST_LADDER_AMT,
-       --µÚ¶þ½×ÌÝÔöÁ¿µç·Ñ          
+       --ç¬¬äºŒé˜¶æ¢¯å¢žé‡ç”µè´¹          
        DECODE(V_JTCFLX,
               '1',
               SUM(DECODE(C.LEVEL_NUM, 2, NVL(C.T_SETTLE_PQ, 0), 0) *
@@ -2213,7 +2213,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                       AND BB.PRC_CODE = C.PRC_CODE
                       AND AA.RANGE_TYPE_CODE IN ('31', '32'))),
               SUM(DECODE(C.LEVEL_NUM, '2', NVL(C.T_AMT, 0), 0))) SECOND_LADDER_AMT,
-       --µÚÈý½×ÌÝÔöÁ¿µç·Ñ          
+       --ç¬¬ä¸‰é˜¶æ¢¯å¢žé‡ç”µè´¹          
        DECODE(V_JTCFLX,
               '1',
               SUM(DECODE(C.LEVEL_NUM, 3, NVL(C.T_SETTLE_PQ, 0), 0) *
@@ -2224,9 +2224,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                       AND BB.PRC_CODE = C.PRC_CODE
                       AND AA.RANGE_TYPE_CODE IN ('31', '33'))),
               SUM(DECODE(C.LEVEL_NUM, '3', NVL(C.T_AMT, 0), 0))) THIRD_LADDER_AMT,
-       --·á¿Ýµç·Ñ                  
-       0 H_AND_L_PA, --·á¿Ýµç·Ñ
-       --Ê±¼ä´Á                    
+       --ä¸°æž¯ç”µè´¹                  
+       0 H_AND_L_PA, --ä¸°æž¯ç”µè´¹
+       --æ—¶é—´æˆ³                    
        SYSDATE
         FROM SY_SG_ARC_E_CONS_SNAP A,
              SY_SG_ARC_E_CONSPRC_SNAP B,
@@ -2244,7 +2244,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
          AND A.CALC_ID = B.CALC_ID
          AND B.CALC_ID = C.CALC_ID
          AND B.PRC_SNAP_ID = C.PRC_SNAP_ID
-         AND B.PRC_TACTIC_SNAP_ID = D.PRC_TACTIC_SNAP_ID(+) --´æÔÚÓÐµç·Ñµ«ÎÞµç¼Û²ßÂÔ¿ìÕÕµÄÇé¿ö
+         AND B.PRC_TACTIC_SNAP_ID = D.PRC_TACTIC_SNAP_ID(+) --å­˜åœ¨æœ‰ç”µè´¹ä½†æ— ç”µä»·ç­–ç•¥å¿«ç…§çš„æƒ…å†µ
          AND B.CALC_ID = D.CALC_ID(+)
          AND C.PRC_AMT_ID = E.PRC_AMT_ID(+)
          AND C.PRC_AMT_ID = F.PRC_AMT_ID(+)
@@ -2320,11 +2320,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
        PRC_IO_FLAG,
        TIME_STAMP)
       SELECT
-      --Êý¾Ý±êÊ¶                  
+      --æ•°æ®æ ‡è¯†                  
        PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO) DATA_ID,
-       --Ê¡ÊÐ±àºÅ                  
+       --çœå¸‚ç¼–å·                  
        V_PRO_ORG_NO PRO_ORG_NO,
-       --¹©µçµ¥Î»±àºÅ              
+       --ä¾›ç”µå•ä½ç¼–å·              
        A.ORG_NO,
        A.PS_BUSI_AREA_CODE,
        A.SPECIAL_HANDL_TYPE,
@@ -2345,13 +2345,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
        A.TWO_PRC_FLAG,
        A.PF_EVAL_MODE,
        A.LADDER_TYPE,
-       --´úÕ÷Ïî´úÂë
+       --ä»£å¾é¡¹ä»£ç 
        F.HEAD_PL_CODE,
-       --´úÕ÷µçÁ¿
+       --ä»£å¾ç”µé‡
        H.PL_PQ PL_PQ,
-       --´úÕ÷µç·Ñ½ð¶î
+       --ä»£å¾ç”µè´¹é‡‘é¢
        H.PL_AMT,
-       --¼ÛÄÚ¼ÛÍâ±êÖ¾
+       --ä»·å†…ä»·å¤–æ ‡å¿—
        F.PRC_IO_FLAG,
        SYSDATE
         FROM DW_O_SPECIAL_USER_DET A,
@@ -2367,7 +2367,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
          AND H.PL_CODE = F.PL_CODE;
     COMMIT;
   
-    --½«Ö´ÐÐ·Ç½×ÌÝµç¼ÛµÄµÚÒ»,¶þ,Èý½×ÌÝµçÁ¿µç¼Û¸ÄÎª0
+    --å°†æ‰§è¡Œéžé˜¶æ¢¯ç”µä»·çš„ç¬¬ä¸€,äºŒ,ä¸‰é˜¶æ¢¯ç”µé‡ç”µä»·æ”¹ä¸º0
     UPDATE DW_O_SPECIAL_USER_DET A
        SET A.FIRST_LADDER_AMT  = 0,
            A.SECOND_LADDER_AMT = 0,
@@ -2389,19 +2389,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
     COMMIT;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'Ö´ÐÐ P_INS_DW_O_SPE_USER_DET_RCONS  ³É¹¦';
+    OUT_MSG  := 'æ‰§è¡Œ P_INS_DW_O_SPE_USER_DET_RCONS  æˆåŠŸ';
   
-    --¼ÇÂ¼Õý³£½áÊøÈÕÖ¾
+    --è®°å½•æ­£å¸¸ç»“æŸæ—¥å¿—
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --Òì³£´¦Àí
+    --å¼‚å¸¸å¤„ç†
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEÎª0´ú±íÔËÐÐÊ§°Ü,»Ø¹öÊÂÎñ
+      --OUT_CODEä¸º0ä»£è¡¨è¿è¡Œå¤±è´¥,å›žæ»šäº‹åŠ¡
       OUT_CODE := 0;
-      OUT_MSG  := 'Ö´ÐÐ P_INS_DW_O_SPE_USER_DET_RCONS  ³öÏÖÒì³£' || ',Òì³£ÐÅÏ¢Îª£º' ||
+      OUT_MSG  := 'æ‰§è¡Œ P_INS_DW_O_SPE_USER_DET_RCONS  å‡ºçŽ°å¼‚å¸¸' || ',å¼‚å¸¸ä¿¡æ¯ä¸ºï¼š' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --¼ÇÂ¼Òì³£½áÊøÈÕÖ¾
+      --è®°å½•å¼‚å¸¸ç»“æŸæ—¥å¿—
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END P_INS_DW_O_SPE_USER_DET_RCONS;
@@ -2409,12 +2409,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
   PROCEDURE P_INS_DW_O_SPE_USER_DET_BCONS(I_DATE   IN VARCHAR2,
                                           OUT_CODE OUT NUMBER,
                                           OUT_MSG  OUT VARCHAR2) IS
-    --ÈÕÖ¾ID
+    --æ—¥å¿—ID
     V_DATA_ID VARCHAR2(24);
     V_NUM     NUMBER;
-    --»ñÈ¡ÍøÊ¡µÄµ¥Î»±àÂë
+    --èŽ·å–ç½‘çœçš„å•ä½ç¼–ç 
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
-    --µç·ÑÄêÔÂ
+    --ç”µè´¹å¹´æœˆ
     V_YM  VARCHAR2(6) := SUBSTR(I_DATE, 1, 6);
     V_LYM VARCHAR2(6) := TO_CHAR(ADD_MONTHS(TO_DATE(V_YM, 'YYYYMM'), -1),
                                  'YYYYMM');
@@ -2422,28 +2422,28 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                                  'YYYYMM');
     V_YMD VARCHAR2(8) := SUBSTR(I_DATE, 1, 8);
     TYPE PL_ITEM_ARRAY IS TABLE OF VARCHAR2(32) INDEX BY PLS_INTEGER;
-    V_PL_CODE       PL_ITEM_ARRAY; --´úÕ÷Ïî
+    V_PL_CODE       PL_ITEM_ARRAY; --ä»£å¾é¡¹
     V_SP_PL_CODE    VARCHAR2(64) := 'XXX';
-    V_TOPPK_YM_FLAG VARCHAR2(8); --¼â·åµçÁ¿ÄêÔÂ±êÖ¾
-    --½×ÌÝµçÁ¿´æ·ÅÀàÐÍ:·Öµµ·¨(1),µÝÔö·¨(2).Ä¬ÈÏÎª·Öµµ·¨1,Èç¹ûÍøÊ¡ÎªµÝÔö·¨ÇëÔÚdw_gk_code_transÄÚÅäÖÃÎª2
+    V_TOPPK_YM_FLAG VARCHAR2(8); --å°–å³°ç”µé‡å¹´æœˆæ ‡å¿—
+    --é˜¶æ¢¯ç”µé‡å­˜æ”¾ç±»åž‹:åˆ†æ¡£æ³•(1),é€’å¢žæ³•(2).é»˜è®¤ä¸ºåˆ†æ¡£æ³•1,å¦‚æžœç½‘çœä¸ºé€’å¢žæ³•è¯·åœ¨dw_gk_code_transå†…é…ç½®ä¸º2
     V_JTCFLX VARCHAR2(1) := PKG_GK_PUBLIC.F_TRANS_CODE('JTCFLX', '1');
   BEGIN
-    --¼ÇÂ¼¿ªÊ¼ÈÕÖ¾
+    --è®°å½•å¼€å§‹æ—¥å¿—
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_O_SPE_USER_DET_BCONS',
                                         I_DATE);
     FOR I IN 1 .. 13 LOOP
-      SELECT NVL(MAX(CONT1), 'NODATA'), NVL(MAX(CONT2), '0') --content2='1'µÄÎªÌØÊâ´úÕ÷
+      SELECT NVL(MAX(CONT1), 'NODATA'), NVL(MAX(CONT2), '0') --content2='1'çš„ä¸ºç‰¹æ®Šä»£å¾
         INTO V_PL_CODE(I), V_NUM
         FROM GK_DW_CODE_TRANS
        WHERE CODE_TYPE = 'PrtPlItem'
-         AND LPAD(TRANS_VALUE, 2, '0') = LPAD(I, 2, '0'); --TRANS_VALUE´æ·ÅµÄ¾ÍÊÇSGPM_OUT.ARC_E_PL_AMTµÄPL_AMT__×Ö¶ÎµÄÐòºÅ
+         AND LPAD(TRANS_VALUE, 2, '0') = LPAD(I, 2, '0'); --TRANS_VALUEå­˜æ”¾çš„å°±æ˜¯SGPM_OUT.ARC_E_PL_AMTçš„PL_AMT__å­—æ®µçš„åºå·
       IF V_NUM = '1' THEN
         V_SP_PL_CODE := V_SP_PL_CODE || V_PL_CODE(I);
       END IF;
     END LOOP;
   
     SELECT SIGN(INSTR(CONT1, SUBSTR(V_YM, 5, 2)))
-      INTO V_TOPPK_YM_FLAG --¼â·åµçÁ¿ÄêÔÂ¼ÆËã±êÊ¶
+      INTO V_TOPPK_YM_FLAG --å°–å³°ç”µé‡å¹´æœˆè®¡ç®—æ ‡è¯†
       FROM GK_DW_CODE_TRANS
      WHERE CODE_TYPE = 'acmeYm';
   
@@ -2508,67 +2508,67 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
        TIME_STAMP)
       SELECT
       /*+PARALLEL(A 2)(B 2)(C 2)(D 2)(E 2)(F 2)(G 2)(H 2)*/
-      --Êý¾Ý±êÊ¶                  
+      --æ•°æ®æ ‡è¯†                  
        PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO) DATA_ID,
-       --Ê¡ÊÐ±àºÅ                  
+       --çœå¸‚ç¼–å·                  
        V_PRO_ORG_NO PRO_ORG_NO,
-       --¹©µçµ¥Î»±àºÅ              
+       --ä¾›ç”µå•ä½ç¼–å·              
        A.ORG_NO ORG_NO,
-       --ÓªÒµÇøÐÔÖÊ                
+       --è¥ä¸šåŒºæ€§è´¨                
        NULL PS_BUSI_AREA_CODE,
-       --ÌØÊâ´¦ÀíÀà±ð              
+       --ç‰¹æ®Šå¤„ç†ç±»åˆ«              
        X.TYPE_CODE SPECIAL_HANDL_TYPE,
-       --ÓÃ»§±êÊ¶                  
+       --ç”¨æˆ·æ ‡è¯†                  
        A.CONS_ID CONS_ID,
-       --ÓÃ»§±àºÅ                 
+       --ç”¨æˆ·ç¼–å·                 
        A.CONS_NO CONS_NO,
-       --µç·Ñ¼ÆËã±êÊ¶             
+       --ç”µè´¹è®¡ç®—æ ‡è¯†             
        A.CALC_ID CALC_ID,
-       --µç·Ñ·¢ÐÐÈÕÆÚ              
+       --ç”µè´¹å‘è¡Œæ—¥æœŸ              
        TO_CHAR(A.SEND_DATE, 'YYYYMMDD') AMT_YMD,
-       --µç·ÑÄêÔÂ                  
+       --ç”µè´¹å¹´æœˆ                  
        A.YM AMT_YM,
-       --ÓÃµçÀà±ð                  
+       --ç”¨ç”µç±»åˆ«                  
        PKG_GK_PUBLIC.F_TRANS_CODE('ELEC_TYPE_CODE', C.ELEC_TYPE_CODE) ELEC_TYPE_CODE,
-       --µç¼ÛÂë                    
+       --ç”µä»·ç                     
        C.PRC_CODE PRC_CODE,
-       --µç¼Û°æ±¾                  
+       --ç”µä»·ç‰ˆæœ¬                  
        C.PARA_VN PRC_PARA_VN,
-       --³­±í¶Î±àºÅ                
+       --æŠ„è¡¨æ®µç¼–å·                
        A.MR_SECT_NO PRC_PARA_VN,
-       --ÓÃ»§·ÖÀà                  
+       --ç”¨æˆ·åˆ†ç±»                  
        PKG_GK_PUBLIC.F_TRANS_CODE('CUST_TYPE_CODE', A.CONS_SORT_CODE) CONS_SORT_CODE,
-       --ÐÐÒµ·ÖÀà                  
+       --è¡Œä¸šåˆ†ç±»                  
        PKG_GK_PUBLIC.F_TRANS_CODE('TRADE_TYPE_CODE', C.TRADE_TYPE_CODE) TRADE_CODE,
-       --µçÑ¹µÈ¼¶                  
+       --ç”µåŽ‹ç­‰çº§                  
        PKG_GK_PUBLIC.F_TRANS_CODE('VOLT_CODE', A.VOLT_CODE) VOLT_CODE,
-       --¸ßºÄÄÜÐÐÒµ·ÖÀà            
+       --é«˜è€—èƒ½è¡Œä¸šåˆ†ç±»            
        PKG_GK_PUBLIC.F_TRANS_CODE('HUE_TRADE_TYPE_CODE', A.HEC_TRADE_CODE) HEC_TRADE_CODE,
-       --ÊÇ·ñÖ´ÐÐ·å¹È              
+       --æ˜¯å¦æ‰§è¡Œå³°è°·              
        PKG_GK_PUBLIC.F_TRANS_CODE('YES_NO_FLAG', B.TS_FLAG) EXEC_PV_FLAG,
-       --ÊÇ·ñÖ´ÐÐÁ½²¿ÖÆµç¼Û        
+       --æ˜¯å¦æ‰§è¡Œä¸¤éƒ¨åˆ¶ç”µä»·        
        PKG_GK_PUBLIC.F_TRANS_CODE('PRC_TYPE_CODE', D.TYPE_CODE) TWO_PRC_FLAG,
-       --¹¦ÂÊÒòÊý¿¼ºË·½Ê½          
+       --åŠŸçŽ‡å› æ•°è€ƒæ ¸æ–¹å¼          
        PKG_GK_PUBLIC.F_TRANS_CODE('PF_EVAL_MODE', D.PF_EVAL_MODE) PF_EVAL_MODE,
-       --½×ÌÝ·ÖÀà                  
-       PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02'), --¸÷µ¥Î»×ÔÐÐÈ·¶¨¿ÉÔÚGK_DW_CODE_TANS±íÄÚÅäÖÃ,00ÎÞ  01Äê½×ÌÝ  02ÔÂ½×ÌÝ,
-       --ÊÛµçÁ¿                    
+       --é˜¶æ¢¯åˆ†ç±»                  
+       PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02'), --å„å•ä½è‡ªè¡Œç¡®å®šå¯åœ¨GK_DW_CODE_TANSè¡¨å†…é…ç½®,00æ—   01å¹´é˜¶æ¢¯  02æœˆé˜¶æ¢¯,
+       --å”®ç”µé‡                    
        SUM(C.T_SETTLE_PQ) SPQ,
-       --×Ü½áËãµç·Ñ                
+       --æ€»ç»“ç®—ç”µè´¹                
        SUM(C.T_AMT) SPA,
-       --¼â·åµçÁ¿                  
+       --å°–å³°ç”µé‡                  
        SUM(E.ACME_PQ) ACME_PQ,
-       --·åµçÁ¿                    
+       --å³°ç”µé‡                    
        SUM(E.PEAK_PQ) PEAK_PQ,
-       --Æ½µçÁ¿                    
+       --å¹³ç”µé‡                    
        SUM(E.FLAT_PQ) FLAT_PQ,
-       --¹ÈµçÁ¿                    
+       --è°·ç”µé‡                    
        SUM(E.VALLEY_PQ) VALLEY_PQ,
-       --¼¹¹ÈµçÁ¿                  
+       --è„Šè°·ç”µé‡                  
        SUM(E.NADIR_PQ) NADIR_PQ,
-       --µÚÒ»½×ÌÝµçÁ¿              
+       --ç¬¬ä¸€é˜¶æ¢¯ç”µé‡              
        SUM(NVL(C.T_SETTLE_PQ, 0)) FIRST_LADDER_PQ,
-       --µÚ¶þ½×ÌÝµçÁ¿              
+       --ç¬¬äºŒé˜¶æ¢¯ç”µé‡              
        SUM(DECODE(C.LEVEL_NUM,
                   '2',
                   DECODE(V_JTCFLX,
@@ -2576,7 +2576,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                          NVL(C.T_SETTLE_PQ, 0),
                          NVL(C.LEVEL_INC_PQ, 0)),
                   0)) SECOND_LADDER_PQ,
-       --µÚÈý½×ÌÝµçÁ¿              
+       --ç¬¬ä¸‰é˜¶æ¢¯ç”µé‡              
        SUM(DECODE(C.LEVEL_NUM,
                   '3',
                   DECODE(V_JTCFLX,
@@ -2584,25 +2584,25 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                          NVL(C.T_SETTLE_PQ, 0),
                          NVL(C.LEVEL_INC_PQ, 0)),
                   0)) THIRD_LADDER_PQ,
-       --¼â·åµç¶Èµç·Ñ              
+       --å°–å³°ç”µåº¦ç”µè´¹              
        SUM(E.ACME_KWH_AMT) ACME_KWH_PA,
-       --·åµç¶Èµç·Ñ                
+       --å³°ç”µåº¦ç”µè´¹                
        SUM(E.PEAK_KWH_AMT) PEAK_KWH_PA,
-       --Æ½µç¶Èµç·Ñ                
+       --å¹³ç”µåº¦ç”µè´¹                
        SUM(E.FLAT_KWH_AMT) FLAT_KWH_PA,
-       --¹Èµç¶Èµç·Ñ                
+       --è°·ç”µåº¦ç”µè´¹                
        SUM(E.VALLEY_KWH_AMT) VALLEY_KWH_PA,
-       --¼¹¹Èµç¶Èµç·Ñ              
+       --è„Šè°·ç”µåº¦ç”µè´¹              
        SUM(E.NADIR_KWH_AMT) NADIR_KWH_PA,
-       --¼Æ·ÑÈÝÁ¿                  
+       --è®¡è´¹å®¹é‡                  
        SUM(F.BILL_CAP) BILL_CAP,
-       --¼Æ·ÑÐèÁ¿                  
+       --è®¡è´¹éœ€é‡                  
        SUM(F.BILL_DMD) BILL_DMD,
-       --ÈÝÁ¿µç·Ñ                  
+       --å®¹é‡ç”µè´¹                  
        SUM(F.CAP_PA) CAP_PA,
-       --ÐèÁ¿µç·Ñ                  
+       --éœ€é‡ç”µè´¹                  
        SUM(F.DMD_PA) DMD_PA,
-       --·åÓ¯µç·Ñ                  
+       --å³°ç›ˆç”µè´¹                  
        SUM(ROUND((NVL(ACME_CATKWH_PRC, 0) -
                  DECODE(NVL(FLAT_CATKWH_PRC, 0),
                          0,
@@ -2625,7 +2625,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                              AND BB.PRC_TI_CODE = '03'),
                          FLAT_CATKWH_PRC)) * NVL(PEAK_PQ, 0),
                  2)) PEAKADD_PA,
-       --¹È¿÷µç·Ñ                  
+       --è°·äºç”µè´¹                  
        SUM(ROUND((DECODE(NVL(FLAT_CATKWH_PRC, 0),
                          0,
                          (SELECT NVL(MAX(CAT_KWH_PRC), 0)
@@ -2648,12 +2648,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                          FLAT_CATKWH_PRC) - NVL(NADIR_CATKWH_PRC, 0)) *
                  NVL(NADIR_PQ, 0),
                  2)) VALLEYSUB_PA,
-       --Á¦µ÷Ôöµç·Ñ                
+       --åŠ›è°ƒå¢žç”µè´¹                
        SUM(G.PF_AMT_ADD),
-       --Á¦µ÷¼õµç·Ñ                
+       --åŠ›è°ƒå‡ç”µè´¹                
        SUM(G.PF_AMT_SUB),
-       --µÚÒ»½×ÌÝµç·Ñ              
-       --µç·Ñ»ñÈ¡°´ÕÕÍøÊ¡Êý¾ÝÎª·Öµµ·¨´æ·Å,µÚ¶þµµ,µÚÈýµµµç¼ÛÖØÐÂ¼ÆËãºóÓë¶ÔÓ¦µµÎ»µÄµçÁ¿Ïà³Ë,µÝÔö·¨µÄÍøÊ¡ÐèÒªÔÙ·´À¡²âÊÔ
+       --ç¬¬ä¸€é˜¶æ¢¯ç”µè´¹              
+       --ç”µè´¹èŽ·å–æŒ‰ç…§ç½‘çœæ•°æ®ä¸ºåˆ†æ¡£æ³•å­˜æ”¾,ç¬¬äºŒæ¡£,ç¬¬ä¸‰æ¡£ç”µä»·é‡æ–°è®¡ç®—åŽä¸Žå¯¹åº”æ¡£ä½çš„ç”µé‡ç›¸ä¹˜,é€’å¢žæ³•çš„ç½‘çœéœ€è¦å†åé¦ˆæµ‹è¯•
        DECODE(V_JTCFLX,
               '1',
               SUM(NVL(C.T_SETTLE_PQ, 0) *
@@ -2664,7 +2664,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                       AND BB.PRC_CODE = C.PRC_CODE
                       AND AA.RANGE_TYPE_CODE = '31')),
               SUM(DECODE(C.LEVEL_NUM, '1', NVL(C.T_AMT, 0), 0))) FIRST_LADDER_AMT,
-       --µÚ¶þ½×ÌÝÔöÁ¿µç·Ñ          
+       --ç¬¬äºŒé˜¶æ¢¯å¢žé‡ç”µè´¹          
        DECODE(V_JTCFLX,
               '1',
               SUM(DECODE(C.LEVEL_NUM, 2, NVL(C.T_SETTLE_PQ, 0), 0) *
@@ -2675,7 +2675,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                       AND BB.PRC_CODE = C.PRC_CODE
                       AND AA.RANGE_TYPE_CODE IN ('31', '32'))),
               SUM(DECODE(C.LEVEL_NUM, '2', NVL(C.T_AMT, 0), 0))) SECOND_LADDER_AMT,
-       --µÚÈý½×ÌÝÔöÁ¿µç·Ñ          
+       --ç¬¬ä¸‰é˜¶æ¢¯å¢žé‡ç”µè´¹          
        DECODE(V_JTCFLX,
               '1',
               SUM(DECODE(C.LEVEL_NUM, 3, NVL(C.T_SETTLE_PQ, 0), 0) *
@@ -2686,9 +2686,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                       AND BB.PRC_CODE = C.PRC_CODE
                       AND AA.RANGE_TYPE_CODE IN ('31', '33'))),
               SUM(DECODE(C.LEVEL_NUM, '3', NVL(C.T_AMT, 0), 0))) THIRD_LADDER_AMT,
-       --·á¿Ýµç·Ñ                  
-       0 H_AND_L_PA, --·á¿Ýµç·Ñ
-       --Ê±¼ä´Á                    
+       --ä¸°æž¯ç”µè´¹                  
+       0 H_AND_L_PA, --ä¸°æž¯ç”µè´¹
+       --æ—¶é—´æˆ³                    
        SYSDATE
         FROM SY_SG_ARC_E_CONS_SNAP A,
              SY_SG_ARC_E_CONSPRC_SNAP B,
@@ -2706,7 +2706,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
          AND A.CALC_ID = B.CALC_ID
          AND B.CALC_ID = C.CALC_ID
          AND B.PRC_SNAP_ID = C.PRC_SNAP_ID
-         AND B.PRC_TACTIC_SNAP_ID = D.PRC_TACTIC_SNAP_ID(+) --´æÔÚÓÐµç·Ñµ«ÎÞµç¼Û²ßÂÔ¿ìÕÕµÄÇé¿ö
+         AND B.PRC_TACTIC_SNAP_ID = D.PRC_TACTIC_SNAP_ID(+) --å­˜åœ¨æœ‰ç”µè´¹ä½†æ— ç”µä»·ç­–ç•¥å¿«ç…§çš„æƒ…å†µ
          AND B.CALC_ID = D.CALC_ID(+)
          AND C.PRC_AMT_ID = E.PRC_AMT_ID(+)
          AND C.PRC_AMT_ID = F.PRC_AMT_ID(+)
@@ -2782,11 +2782,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
        PRC_IO_FLAG,
        TIME_STAMP)
       SELECT
-      --Êý¾Ý±êÊ¶                  
+      --æ•°æ®æ ‡è¯†                  
        PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO) DATA_ID,
-       --Ê¡ÊÐ±àºÅ                  
+       --çœå¸‚ç¼–å·                  
        V_PRO_ORG_NO PRO_ORG_NO,
-       --¹©µçµ¥Î»±àºÅ              
+       --ä¾›ç”µå•ä½ç¼–å·              
        A.ORG_NO,
        A.PS_BUSI_AREA_CODE,
        A.SPECIAL_HANDL_TYPE,
@@ -2807,13 +2807,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
        A.TWO_PRC_FLAG,
        A.PF_EVAL_MODE,
        A.LADDER_TYPE,
-       --´úÕ÷Ïî´úÂë
+       --ä»£å¾é¡¹ä»£ç 
        F.HEAD_PL_CODE,
-       --´úÕ÷µçÁ¿
+       --ä»£å¾ç”µé‡
        H.PL_PQ PL_PQ,
-       --´úÕ÷µç·Ñ½ð¶î
+       --ä»£å¾ç”µè´¹é‡‘é¢
        H.PL_AMT,
-       --¼ÛÄÚ¼ÛÍâ±êÖ¾
+       --ä»·å†…ä»·å¤–æ ‡å¿—
        F.PRC_IO_FLAG,
        SYSDATE
         FROM DW_O_SPECIAL_USER_DET A,
@@ -2829,7 +2829,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
   
     COMMIT;
   
-    --½«Ö´ÐÐ·Ç½×ÌÝµç¼ÛµÄµÚÒ»,¶þ,Èý½×ÌÝµçÁ¿µç¼Û¸ÄÎª0
+    --å°†æ‰§è¡Œéžé˜¶æ¢¯ç”µä»·çš„ç¬¬ä¸€,äºŒ,ä¸‰é˜¶æ¢¯ç”µé‡ç”µä»·æ”¹ä¸º0
     UPDATE DW_O_SPECIAL_USER_DET A
        SET A.FIRST_LADDER_AMT  = 0,
            A.SECOND_LADDER_AMT = 0,
@@ -2850,19 +2850,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
     COMMIT;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'Ö´ÐÐ P_INS_DW_O_SPE_USER_DET_BCONS  ³É¹¦';
+    OUT_MSG  := 'æ‰§è¡Œ P_INS_DW_O_SPE_USER_DET_BCONS  æˆåŠŸ';
   
-    --¼ÇÂ¼Õý³£½áÊøÈÕÖ¾
+    --è®°å½•æ­£å¸¸ç»“æŸæ—¥å¿—
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --Òì³£´¦Àí
+    --å¼‚å¸¸å¤„ç†
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEÎª0´ú±íÔËÐÐÊ§°Ü,»Ø¹öÊÂÎñ
+      --OUT_CODEä¸º0ä»£è¡¨è¿è¡Œå¤±è´¥,å›žæ»šäº‹åŠ¡
       OUT_CODE := 0;
-      OUT_MSG  := 'Ö´ÐÐ P_INS_DW_O_SPE_USER_DET_BCONS  ³öÏÖÒì³£' || ',Òì³£ÐÅÏ¢Îª£º' ||
+      OUT_MSG  := 'æ‰§è¡Œ P_INS_DW_O_SPE_USER_DET_BCONS  å‡ºçŽ°å¼‚å¸¸' || ',å¼‚å¸¸ä¿¡æ¯ä¸ºï¼š' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --¼ÇÂ¼Òì³£½áÊøÈÕÖ¾
+      --è®°å½•å¼‚å¸¸ç»“æŸæ—¥å¿—
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END P_INS_DW_O_SPE_USER_DET_BCONS;
@@ -2871,13 +2871,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2) IS
   
-    --ÈÕÖ¾ID
+    --æ—¥å¿—ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(8) := SUBSTR(I_DATE, 1, 8);
   
   BEGIN
-    --¼ÇÂ¼¿ªÊ¼ÈÕÖ¾
+    --è®°å½•å¼€å§‹æ—¥å¿—
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_O_SPE_USER_DET_RPRC',
                                         I_DATE);
   
@@ -3089,20 +3089,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
              (SELECT DISTINCT X.SPECIAL_HANDL_TYPE
                 FROM SY_OM_DW_O_REMOVE_PRC X);
     OUT_CODE := 1;
-    OUT_MSG  := 'Ö´ÐÐ P_ETL_DW_O_SPE_USER_DET_RPRC  ³É¹¦';
+    OUT_MSG  := 'æ‰§è¡Œ P_ETL_DW_O_SPE_USER_DET_RPRC  æˆåŠŸ';
     COMMIT;
   
-    --¼ÇÂ¼Õý³£½áÊøÈÕÖ¾
+    --è®°å½•æ­£å¸¸ç»“æŸæ—¥å¿—
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --Òì³£´¦Àí
+    --å¼‚å¸¸å¤„ç†
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEÎª0´ú±íÔËÐÐÊ§°Ü,»Ø¹öÊÂÎñ
+      --OUT_CODEä¸º0ä»£è¡¨è¿è¡Œå¤±è´¥,å›žæ»šäº‹åŠ¡
       OUT_CODE := 0;
-      OUT_MSG  := 'Ö´ÐÐ P_ETL_DW_O_SPE_USER_DET_RPRC  ³öÏÖÒì³£' || ',Òì³£ÐÅÏ¢Îª£º' ||
+      OUT_MSG  := 'æ‰§è¡Œ P_ETL_DW_O_SPE_USER_DET_RPRC  å‡ºçŽ°å¼‚å¸¸' || ',å¼‚å¸¸ä¿¡æ¯ä¸ºï¼š' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --¼ÇÂ¼Òì³£½áÊøÈÕÖ¾
+      --è®°å½•å¼‚å¸¸ç»“æŸæ—¥å¿—
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -3110,13 +3110,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                                         OUT_CODE OUT NUMBER,
                                         OUT_MSG  OUT VARCHAR2) IS
   
-    --ÈÕÖ¾ID
+    --æ—¥å¿—ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(8) := SUBSTR(I_DATE, 1, 8);
   
   BEGIN
-    --¼ÇÂ¼¿ªÊ¼ÈÕÖ¾
+    --è®°å½•å¼€å§‹æ—¥å¿—
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_O_SPE_USER_DET_RPL',
                                         I_DATE);
   
@@ -3323,20 +3323,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
          AND A.SPECIAL_HANDL_TYPE = '04';
   
     OUT_CODE := 1;
-    OUT_MSG  := 'Ö´ÐÐ P_ETL_DW_O_SPE_USER_DET_RPL  ³É¹¦';
+    OUT_MSG  := 'æ‰§è¡Œ P_ETL_DW_O_SPE_USER_DET_RPL  æˆåŠŸ';
     COMMIT;
   
-    --¼ÇÂ¼Õý³£½áÊøÈÕÖ¾
+    --è®°å½•æ­£å¸¸ç»“æŸæ—¥å¿—
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --Òì³£´¦Àí
+    --å¼‚å¸¸å¤„ç†
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEÎª0´ú±íÔËÐÐÊ§°Ü,»Ø¹öÊÂÎñ
+      --OUT_CODEä¸º0ä»£è¡¨è¿è¡Œå¤±è´¥,å›žæ»šäº‹åŠ¡
       OUT_CODE := 0;
-      OUT_MSG  := 'Ö´ÐÐ P_ETL_DW_O_SPE_USER_DET_RPL  ³öÏÖÒì³£' || ',Òì³£ÐÅÏ¢Îª£º' ||
+      OUT_MSG  := 'æ‰§è¡Œ P_ETL_DW_O_SPE_USER_DET_RPL  å‡ºçŽ°å¼‚å¸¸' || ',å¼‚å¸¸ä¿¡æ¯ä¸ºï¼š' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --¼ÇÂ¼Òì³£½áÊøÈÕÖ¾
+      --è®°å½•å¼‚å¸¸ç»“æŸæ—¥å¿—
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -3344,13 +3344,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                                           OUT_CODE OUT NUMBER,
                                           OUT_MSG  OUT VARCHAR2) IS
   
-    --ÈÕÖ¾ID
+    --æ—¥å¿—ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(8) := SUBSTR(I_DATE, 1, 8);
   
   BEGIN
-    --¼ÇÂ¼¿ªÊ¼ÈÕÖ¾
+    --è®°å½•å¼€å§‹æ—¥å¿—
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_O_SPE_USER_DET_RCONS',
                                         I_DATE);
   
@@ -3560,20 +3560,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
              (SELECT DISTINCT SPECIAL_HANDL_TYPE FROM SY_OM_DW_O_REMOVE_CONS);
   
     OUT_CODE := 1;
-    OUT_MSG  := 'Ö´ÐÐ P_ETL_DW_O_SPE_USER_DET_RCONS  ³É¹¦';
+    OUT_MSG  := 'æ‰§è¡Œ P_ETL_DW_O_SPE_USER_DET_RCONS  æˆåŠŸ';
     COMMIT;
   
-    --¼ÇÂ¼Õý³£½áÊøÈÕÖ¾
+    --è®°å½•æ­£å¸¸ç»“æŸæ—¥å¿—
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --Òì³£´¦Àí
+    --å¼‚å¸¸å¤„ç†
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEÎª0´ú±íÔËÐÐÊ§°Ü,»Ø¹öÊÂÎñ
+      --OUT_CODEä¸º0ä»£è¡¨è¿è¡Œå¤±è´¥,å›žæ»šäº‹åŠ¡
       OUT_CODE := 0;
-      OUT_MSG  := 'Ö´ÐÐ P_ETL_DW_O_SPE_USER_DET_RCONS  ³öÏÖÒì³£' || ',Òì³£ÐÅÏ¢Îª£º' ||
+      OUT_MSG  := 'æ‰§è¡Œ P_ETL_DW_O_SPE_USER_DET_RCONS  å‡ºçŽ°å¼‚å¸¸' || ',å¼‚å¸¸ä¿¡æ¯ä¸ºï¼š' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --¼ÇÂ¼Òì³£½áÊøÈÕÖ¾
+      --è®°å½•å¼‚å¸¸ç»“æŸæ—¥å¿—
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -3581,13 +3581,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
                                           OUT_CODE OUT NUMBER,
                                           OUT_MSG  OUT VARCHAR2) IS
   
-    --ÈÕÖ¾ID
+    --æ—¥å¿—ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(8) := SUBSTR(I_DATE, 1, 8);
   
   BEGIN
-    --¼ÇÂ¼¿ªÊ¼ÈÕÖ¾
+    --è®°å½•å¼€å§‹æ—¥å¿—
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_O_SPE_USER_DET_BCONS',
                                         I_DATE);
   
@@ -3794,20 +3794,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_SPE_AC IS
          AND A.SPECIAL_HANDL_TYPE = '03';
   
     OUT_CODE := 1;
-    OUT_MSG  := 'Ö´ÐÐ P_ETL_DW_O_SPE_USER_DET_BCONS  ³É¹¦';
+    OUT_MSG  := 'æ‰§è¡Œ P_ETL_DW_O_SPE_USER_DET_BCONS  æˆåŠŸ';
     COMMIT;
   
-    --¼ÇÂ¼Õý³£½áÊøÈÕÖ¾
+    --è®°å½•æ­£å¸¸ç»“æŸæ—¥å¿—
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --Òì³£´¦Àí
+    --å¼‚å¸¸å¤„ç†
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEÎª0´ú±íÔËÐÐÊ§°Ü,»Ø¹öÊÂÎñ
+      --OUT_CODEä¸º0ä»£è¡¨è¿è¡Œå¤±è´¥,å›žæ»šäº‹åŠ¡
       OUT_CODE := 0;
-      OUT_MSG  := 'Ö´ÐÐ P_ETL_DW_O_SPE_USER_DET_BCONS  ³öÏÖÒì³£' || ',Òì³£ÐÅÏ¢Îª£º' ||
+      OUT_MSG  := 'æ‰§è¡Œ P_ETL_DW_O_SPE_USER_DET_BCONS  å‡ºçŽ°å¼‚å¸¸' || ',å¼‚å¸¸ä¿¡æ¯ä¸ºï¼š' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --¼ÇÂ¼Òì³£½áÊøÈÕÖ¾
+      --è®°å½•å¼‚å¸¸ç»“æŸæ—¥å¿—
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 

@@ -1,307 +1,307 @@
 CREATE OR REPLACE PACKAGE PKG_YWGK_DW_DSM IS
 
-  --��λ�ղɼ��ɹ�����ʱ���ã�ע�͵�
+  --单位日采集成功率暂时不用，注释掉
   /*\**
-  �������ƣ�P_ENT_DW_R_COLL_SUCCR_DAY/��λ�ղɼ��ɹ�����ڹ���
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 14:00:37
-  ������������λ�ղɼ��ɹ�����ڹ���,�����ݿ�JOB����
-  ͳ��Ƶ�ȣ����ճ�ȡ, I_DATA ΪҪ�������ݵ�ͳ�Ƶ����� 
-  �޸���:
-  �޸�����:
+  过程名称：P_ENT_DW_R_COLL_SUCCR_DAY/单位日采集成功率入口过程
+  作者：李培
+  编写日期：2014-03-08 14:00:37
+  过程描述：单位日采集成功率入口过程,被数据库JOB调用
+  统计频度：按日抽取, I_DATA 为要进行数据的统计的日期 
+  修改人:
+  修改日期:
   **\
   PROCEDURE P_ENT_DW_R_COLL_SUCCR_DAY(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2);
   
   \**
-  �������ƣ�P_INS_DW_R_COLL_SUCCR_DAY/��λ�ղɼ��ɹ��ʳ�ȡ����
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 15:02:39
-  ������������λ�ղɼ��ɹ��ʳ�ȡ����,��P_ENT_DW_R_COLL_SUCCR_DAY���ã����������к�������ݵ�������OMAC��DW_R_COLL_SUCCR_DAY����
+  过程名称：P_INS_DW_R_COLL_SUCCR_DAY/单位日采集成功率抽取过程
+  作者：李培
+  编写日期：2014-03-08 15:02:39
+  过程描述：单位日采集成功率抽取过程,被P_ENT_DW_R_COLL_SUCCR_DAY调用，本过程运行后插入数据到管理库OMAC的DW_R_COLL_SUCCR_DAY表中
   **\
   PROCEDURE P_INS_DW_R_COLL_SUCCR_DAY(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2);
   
   \**
-  �������ƣ�P_ETL_DW_R_COLL_SUCCR_DAY/��λ�ղɼ��ɹ������͹���
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 17:00:55
-  ������������λ�ղɼ��ɹ������͹���,��ȡ���̱���ڹ��̵��ú󣬴ӹ�����OMAC�Ľ������ȡ���ݲ��뵽�����OMAC�û��µ�DW_R_COLL_SUCCR_DAY��
+  过程名称：P_ETL_DW_R_COLL_SUCCR_DAY/单位日采集成功率推送过程
+  作者：李培
+  编写日期：2014-03-08 17:00:55
+  过程描述：单位日采集成功率推送过程,抽取过程被入口过程调用后，从管理库OMAC的结果表中取数据插入到稽查库OMAC用户下的DW_R_COLL_SUCCR_DAY表
   **\
   PROCEDURE P_ETL_DW_R_COLL_SUCCR_DAY(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2);*/
 
   /**
-  �������ƣ�P_ENT_DW_R_COLL_SUCCR_DAY/��λ�²ɼ��ɹ�����ڹ���
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 14:00:37
-  ������������λ�²ɼ��ɹ�����ڹ���,�����ݿ�JOB����
-  ͳ��Ƶ�ȣ����³�ȡ, I_DATA ΪҪ�������ݵ�ͳ�Ƶ����� 
-  �޸���:
-  �޸�����:
+  过程名称：P_ENT_DW_R_COLL_SUCCR_DAY/单位月采集成功率入口过程
+  作者：李培
+  编写日期：2014-03-08 14:00:37
+  过程描述：单位月采集成功率入口过程,被数据库JOB调用
+  统计频度：按月抽取, I_DATA 为要进行数据的统计的日期 
+  修改人:
+  修改日期:
   **/
   PROCEDURE P_ENT_DW_R_COLL_SUCCR_MON(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�P_INS_DW_R_COLL_SUCCR_MON/��λ�²ɼ��ɹ��ʳ�ȡ����
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 15:02:39
-  ������������λ�²ɼ��ɹ��ʳ�ȡ����,��P_ENT_DW_R_COLL_SUCCR_MON���ã����������к�������ݵ�������OMAC��DW_R_COLL_SUCCR_MON����
+  过程名称：P_INS_DW_R_COLL_SUCCR_MON/单位月采集成功率抽取过程
+  作者：李培
+  编写日期：2014-03-08 15:02:39
+  过程描述：单位月采集成功率抽取过程,被P_ENT_DW_R_COLL_SUCCR_MON调用，本过程运行后插入数据到管理库OMAC的DW_R_COLL_SUCCR_MON表中
   **/
   PROCEDURE P_INS_DW_R_COLL_SUCCR_MON(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�P_ETL_DW_R_COLL_SUCCR_MON/��λ�²ɼ��ɹ������͹���
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 17:00:55
-  ������������λ�²ɼ��ɹ������͹���,��ȡ���̱���ڹ��̵��ú󣬴ӹ�����OMAC�Ľ������ȡ���ݲ��뵽�����OMAC�û��µ�DW_R_COLL_SUCCR_MON��
+  过程名称：P_ETL_DW_R_COLL_SUCCR_MON/单位月采集成功率推送过程
+  作者：李培
+  编写日期：2014-03-08 17:00:55
+  过程描述：单位月采集成功率推送过程,抽取过程被入口过程调用后，从管理库OMAC的结果表中取数据插入到稽查库OMAC用户下的DW_R_COLL_SUCCR_MON表
   **/
   PROCEDURE P_ETL_DW_R_COLL_SUCCR_MON(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�P_ENT_DW_R_INTEL_METER_INFO/�¶����ܵ����Ϣ
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 14:00:37
-  �����������¶����ܵ����Ϣ��ڹ���,�����ݿ�JOB����
-  ͳ��Ƶ�ȣ����ճ�ȡ, I_DATA ΪҪ�������ݵ�ͳ�Ƶ����� 
-  �޸���:
-  �޸�����:
+  过程名称：P_ENT_DW_R_INTEL_METER_INFO/月度智能电表信息
+  作者：李培
+  编写日期：2014-03-08 14:00:37
+  过程描述：月度智能电表信息入口过程,被数据库JOB调用
+  统计频度：按日抽取, I_DATA 为要进行数据的统计的日期 
+  修改人:
+  修改日期:
   **/
   PROCEDURE P_ENT_DW_R_INTEL_METER_INFO(I_DATA   VARCHAR2,
                                         OUT_CODE OUT NUMBER,
                                         OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�p_ins_dw_r_intel_meter_info/�¶����ܵ����Ϣ��ȡ����
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 15:02:39
-  �����������¶����ܵ����Ϣ��ȡ����,��P_ENT_DW_R_INTEL_METER_INFO���ã����������к�������ݵ�������OMAC��DW_R_INTEL_METER_INFO����
+  过程名称：p_ins_dw_r_intel_meter_info/月度智能电表信息抽取过程
+  作者：李培
+  编写日期：2014-03-08 15:02:39
+  过程描述：月度智能电表信息抽取过程,被P_ENT_DW_R_INTEL_METER_INFO调用，本过程运行后插入数据到管理库OMAC的DW_R_INTEL_METER_INFO表中
   **/
   PROCEDURE P_INS_DW_R_INTEL_METER_INFO(I_DATA   VARCHAR2,
                                         OUT_CODE OUT NUMBER,
                                         OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�p_etl_dw_r_intel_meter_info/�¶����ܵ����Ϣ���͹���
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 17:00:55
-  �����������¶����ܵ����Ϣ���͹���,��ȡ���̱���ڹ��̵��ú󣬴ӹ�����OMAC�Ľ������ȡ���ݲ��뵽�����OMAC�û��µ�DW_R_INTEL_METER_INFO��
+  过程名称：p_etl_dw_r_intel_meter_info/月度智能电表信息推送过程
+  作者：李培
+  编写日期：2014-03-08 17:00:55
+  过程描述：月度智能电表信息推送过程,抽取过程被入口过程调用后，从管理库OMAC的结果表中取数据插入到稽查库OMAC用户下的DW_R_INTEL_METER_INFO表
   **/
   PROCEDURE P_ETL_DW_R_INTEL_METER_INFO(I_DATA   VARCHAR2,
                                         OUT_CODE OUT NUMBER,
                                         OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�p_ent_dw_r_gate_coll_cove/�¶ȹؿڲɼ��������
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 14:00:37
-  �����������¶ȹؿڲɼ����������ڹ���,�����ݿ�JOB����
-  ͳ��Ƶ�ȣ����ճ�ȡ, I_DATA ΪҪ�������ݵ�ͳ�Ƶ����� 
-  �޸���:
-  �޸�����:
+  过程名称：p_ent_dw_r_gate_coll_cove/月度关口采集覆盖情况
+  作者：李培
+  编写日期：2014-03-08 14:00:37
+  过程描述：月度关口采集覆盖情况入口过程,被数据库JOB调用
+  统计频度：按日抽取, I_DATA 为要进行数据的统计的日期 
+  修改人:
+  修改日期:
   **/
   PROCEDURE P_ENT_DW_R_GATE_COLL_COVE(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�p_ins_dw_r_gate_coll_cove/�¶ȹؿڲɼ����������ȡ����
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 15:02:39
-  �����������¶ȹؿڲɼ����������ȡ����,��P_ENT_DW_R_INTEL_METER_INFO���ã����������к�������ݵ�������OMAC��dw_r_gate_coll_cove����
+  过程名称：p_ins_dw_r_gate_coll_cove/月度关口采集覆盖情况抽取过程
+  作者：李培
+  编写日期：2014-03-08 15:02:39
+  过程描述：月度关口采集覆盖情况抽取过程,被P_ENT_DW_R_INTEL_METER_INFO调用，本过程运行后插入数据到管理库OMAC的dw_r_gate_coll_cove表中
   **/
   PROCEDURE P_INS_DW_R_GATE_COLL_COVE(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�p_etl_dw_r_gate_coll_cove/�¶ȹؿڲɼ�����������͹���
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 17:00:55
-  �����������¶ȹؿڲɼ�����������͹���,��ȡ���̱���ڹ��̵��ú󣬴ӹ�����OMAC�Ľ������ȡ���ݲ��뵽�����OMAC�û��µ�dw_r_gate_coll_cove��
+  过程名称：p_etl_dw_r_gate_coll_cove/月度关口采集覆盖情况推送过程
+  作者：李培
+  编写日期：2014-03-08 17:00:55
+  过程描述：月度关口采集覆盖情况推送过程,抽取过程被入口过程调用后，从管理库OMAC的结果表中取数据插入到稽查库OMAC用户下的dw_r_gate_coll_cove表
   **/
   PROCEDURE P_ETL_DW_R_GATE_COLL_COVE(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�p_ent_dw_r_cons_coll_cover/�¶ȵ�λ�û��ɼ��������
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 14:00:37
-  �����������¶ȵ�λ�û��ɼ����������ڹ���,�����ݿ�JOB����
-  ͳ��Ƶ�ȣ����ճ�ȡ, I_DATA ΪҪ�������ݵ�ͳ�Ƶ����� 
-  �޸���:
-  �޸�����:
+  过程名称：p_ent_dw_r_cons_coll_cover/月度单位用户采集覆盖情况
+  作者：李培
+  编写日期：2014-03-08 14:00:37
+  过程描述：月度单位用户采集覆盖情况入口过程,被数据库JOB调用
+  统计频度：按日抽取, I_DATA 为要进行数据的统计的日期 
+  修改人:
+  修改日期:
   **/
   PROCEDURE P_ENT_DW_R_CONS_COLL_COVER(I_DATA   VARCHAR2,
                                        OUT_CODE OUT NUMBER,
                                        OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�p_ins_dw_r_cons_coll_cover/�¶ȵ�λ�û��ɼ����������ȡ����
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 15:02:39
-  �����������¶ȵ�λ�û��ɼ����������ȡ����,��P_ENT_DW_R_INTEL_METER_INFO���ã����������к�������ݵ�������OMAC��dw_r_cons_coll_cover����
+  过程名称：p_ins_dw_r_cons_coll_cover/月度单位用户采集覆盖情况抽取过程
+  作者：李培
+  编写日期：2014-03-08 15:02:39
+  过程描述：月度单位用户采集覆盖情况抽取过程,被P_ENT_DW_R_INTEL_METER_INFO调用，本过程运行后插入数据到管理库OMAC的dw_r_cons_coll_cover表中
   **/
   PROCEDURE P_INS_DW_R_CONS_COLL_COVER(I_DATA   VARCHAR2,
                                        OUT_CODE OUT NUMBER,
                                        OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�p_etl_dw_r_cons_coll_cover/�¶ȵ�λ�û��ɼ�����������͹���
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 17:00:55
-  �����������¶ȵ�λ�û��ɼ�����������͹���,��ȡ���̱���ڹ��̵��ú󣬴ӹ�����OMAC�Ľ������ȡ���ݲ��뵽�����OMAC�û��µ�dw_r_cons_coll_cover��
+  过程名称：p_etl_dw_r_cons_coll_cover/月度单位用户采集覆盖情况推送过程
+  作者：李培
+  编写日期：2014-03-08 17:00:55
+  过程描述：月度单位用户采集覆盖情况推送过程,抽取过程被入口过程调用后，从管理库OMAC的结果表中取数据插入到稽查库OMAC用户下的dw_r_cons_coll_cover表
   **/
   PROCEDURE P_ETL_DW_R_CONS_COLL_COVER(I_DATA   VARCHAR2,
                                        OUT_CODE OUT NUMBER,
                                        OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�p_ent_dw_r_coll_coverage/�¶ȵ�λӪҵ���ɼ��������
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 14:00:37
-  �����������¶ȵ�λӪҵ���ɼ����������ڹ���,�����ݿ�JOB����
-  ͳ��Ƶ�ȣ����ճ�ȡ, I_DATA ΪҪ�������ݵ�ͳ�Ƶ����� 
-  �޸���:
-  �޸�����:
+  过程名称：p_ent_dw_r_coll_coverage/月度单位营业户采集覆盖情况
+  作者：李培
+  编写日期：2014-03-08 14:00:37
+  过程描述：月度单位营业户采集覆盖情况入口过程,被数据库JOB调用
+  统计频度：按日抽取, I_DATA 为要进行数据的统计的日期 
+  修改人:
+  修改日期:
   **/
   PROCEDURE P_ENT_DW_R_COLL_COVERAGE(I_DATA   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�p_ins_dw_r_coll_coverage/�¶ȵ�λӪҵ���ɼ����������ȡ����
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 15:02:39
-  �����������¶ȵ�λӪҵ���ɼ����������ȡ����,��P_ENT_DW_R_INTEL_METER_INFO���ã����������к�������ݵ�������OMAC��dw_r_coll_coverage����
+  过程名称：p_ins_dw_r_coll_coverage/月度单位营业户采集覆盖情况抽取过程
+  作者：李培
+  编写日期：2014-03-08 15:02:39
+  过程描述：月度单位营业户采集覆盖情况抽取过程,被P_ENT_DW_R_INTEL_METER_INFO调用，本过程运行后插入数据到管理库OMAC的dw_r_coll_coverage表中
   **/
   PROCEDURE P_INS_DW_R_COLL_COVERAGE(I_DATA   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�p_etl_dw_r_coll_coverage/�¶ȵ�λӪҵ���ɼ�����������͹���
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 17:00:55
-  �����������¶ȵ�λӪҵ���ɼ�����������͹���,��ȡ���̱���ڹ��̵��ú󣬴ӹ�����OMAC�Ľ������ȡ���ݲ��뵽�����OMAC�û��µ�dw_r_coll_coverage��
+  过程名称：p_etl_dw_r_coll_coverage/月度单位营业户采集覆盖情况推送过程
+  作者：李培
+  编写日期：2014-03-08 17:00:55
+  过程描述：月度单位营业户采集覆盖情况推送过程,抽取过程被入口过程调用后，从管理库OMAC的结果表中取数据插入到稽查库OMAC用户下的dw_r_coll_coverage表
   **/
   PROCEDURE P_ETL_DW_R_COLL_COVERAGE(I_DATA   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�p_ent_dw_r_coll_master/�¶ȹؿڲɼ��������
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 14:00:37
-  �����������ɼ���վ���������ڹ���,�����ݿ�JOB����
-  ͳ��Ƶ�ȣ����ճ�ȡ, I_DATA ΪҪ�������ݵ�ͳ�Ƶ����� 
-  �޸���:
-  �޸�����:
+  过程名称：p_ent_dw_r_coll_master/月度关口采集覆盖情况
+  作者：李培
+  编写日期：2014-03-08 14:00:37
+  过程描述：采集主站运行情况入口过程,被数据库JOB调用
+  统计频度：按日抽取, I_DATA 为要进行数据的统计的日期 
+  修改人:
+  修改日期:
   **/
   PROCEDURE P_ENT_DW_R_COLL_MASTER(I_DATA   VARCHAR2,
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�p_ins_dw_r_coll_master/�ɼ���վ���������ȡ����
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 15:02:39
-  �����������ɼ���վ���������ȡ����,��P_ENT_DW_R_INTEL_METER_INFO���ã����������к�������ݵ�������OMAC��dw_r_coll_maste����
+  过程名称：p_ins_dw_r_coll_master/采集主站运行情况抽取过程
+  作者：李培
+  编写日期：2014-03-08 15:02:39
+  过程描述：采集主站运行情况抽取过程,被P_ENT_DW_R_INTEL_METER_INFO调用，本过程运行后插入数据到管理库OMAC的dw_r_coll_maste表中
   **/
   PROCEDURE P_INS_DW_R_COLL_MASTER(I_DATA   VARCHAR2,
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�p_etl_dw_r_coll_master/�ɼ���վ����������͹���
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 17:00:55
-  �����������ɼ���վ����������͹���,��ȡ���̱���ڹ��̵��ú󣬴ӹ�����OMAC�Ľ������ȡ���ݲ��뵽�����OMAC�û��µ�dw_r_coll_maste��
+  过程名称：p_etl_dw_r_coll_master/采集主站运行情况推送过程
+  作者：李培
+  编写日期：2014-03-08 17:00:55
+  过程描述：采集主站运行情况推送过程,抽取过程被入口过程调用后，从管理库OMAC的结果表中取数据插入到稽查库OMAC用户下的dw_r_coll_maste表
   **/
   PROCEDURE P_ETL_DW_R_COLL_MASTER(I_DATA   VARCHAR2,
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2);
 
   /**
-   �������ƣ�P_ENT_DW_R_PA_CONTROL_MON/��λ�·ѿظ��������ڹ���
-  ���ߣ�chenyulian
-  ��д���ڣ�2014-03-07 10:37
-  ������������λ�·ѿظ��������ڹ���,�����ݿ�JOB���� 
+   过程名称：P_ENT_DW_R_PA_CONTROL_MON/单位月费控覆盖情况入口过程
+  作者：chenyulian
+  编写日期：2014-03-07 10:37
+  过程描述：单位月费控覆盖情况入口过程,被数据库JOB调用 
   
-  ͳ��Ƶ�ȣ����³�ȡ, I_DATA ΪҪ�������ݵ�ͳ�Ƶ��·� 
+  统计频度：按月抽取, I_DATA 为要进行数据的统计的月份 
   **/
   PROCEDURE P_ENT_DW_R_PA_CONTROL_MON(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�P_INS_DW_R_PA_CONTROL_MON/��λ�·ѿظ��������ȡ����
-  ���ߣ�chenyulian
-  ��д���ڣ�2014-03-07 10:37
-  ������������λ�·ѿظ��������ȡ����,��P_ENT_DW_R_PA_CONTROL_MON���ã����������к�������ݵ�������OMAC��DW_R_PA_CONTROL_MON����
+  过程名称：P_INS_DW_R_PA_CONTROL_MON/单位月费控覆盖情况抽取过程
+  作者：chenyulian
+  编写日期：2014-03-07 10:37
+  过程描述：单位月费控覆盖情况抽取过程,被P_ENT_DW_R_PA_CONTROL_MON调用，本过程运行后插入数据到管理库OMAC的DW_R_PA_CONTROL_MON表中
   */
   PROCEDURE P_INS_DW_R_PA_CONTROL_MON(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�P_ETL_DW_R_PA_CONTROL_MON/��λ�·ѿظ���������͹���
-  ���ߣ�chenyulian
-  ��д���ڣ�2014-03-07 10:37
-  ������������λ�·ѿظ���������͹���,��ȡ���̱���ڹ��̵��ú󣬴ӹ�����OMAC�Ľ������ȡ���ݲ��뵽�����OMAC�û��µ�DW_R_PA_CONTROL_MON��
+  过程名称：P_ETL_DW_R_PA_CONTROL_MON/单位月费控覆盖情况推送过程
+  作者：chenyulian
+  编写日期：2014-03-07 10:37
+  过程描述：单位月费控覆盖情况推送过程,抽取过程被入口过程调用后，从管理库OMAC的结果表中取数据插入到稽查库OMAC用户下的DW_R_PA_CONTROL_MON表
   */
   PROCEDURE P_ETL_DW_R_PA_CONTROL_MON(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�p_ent_DW_R_AUTO_CALC_MON/�¶��Զ�����������Ӧ�����
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 14:00:37
-  �����������¶��Զ�����������Ӧ�������ڹ���,�����ݿ�JOB����
-  ͳ��Ƶ�ȣ����ճ�ȡ, I_DATA ΪҪ�������ݵ�ͳ�Ƶ����� 
-  �޸���:
-  �޸�����:
+  过程名称：p_ent_DW_R_AUTO_CALC_MON/月度自动化抄表核算应用情况
+  作者：李培
+  编写日期：2014-03-08 14:00:37
+  过程描述：月度自动化抄表核算应用情况入口过程,被数据库JOB调用
+  统计频度：按日抽取, I_DATA 为要进行数据的统计的日期 
+  修改人:
+  修改日期:
   **/
   PROCEDURE P_ENT_DW_R_AUTO_CALC_MON(I_DATA   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�p_ins_DW_R_AUTO_CALC_MON/�¶��Զ�����������Ӧ�������ȡ����
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 15:02:39
-  �����������¶��Զ�����������Ӧ�������ȡ����,��P_ENT_DW_R_INTEL_METER_INFO���ã����������к�������ݵ�������OMAC��DW_R_AUTO_CALC_MON����
+  过程名称：p_ins_DW_R_AUTO_CALC_MON/月度自动化抄表核算应用情况抽取过程
+  作者：李培
+  编写日期：2014-03-08 15:02:39
+  过程描述：月度自动化抄表核算应用情况抽取过程,被P_ENT_DW_R_INTEL_METER_INFO调用，本过程运行后插入数据到管理库OMAC的DW_R_AUTO_CALC_MON表中
   **/
   PROCEDURE P_INS_DW_R_AUTO_CALC_MON(I_DATA   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�p_etl_DW_R_AUTO_CALC_MON/�¶��Զ�����������Ӧ��������͹���
-  ���ߣ�����
-  ��д���ڣ�2014-03-08 17:00:55
-  �����������¶��Զ�����������Ӧ��������͹���,��ȡ���̱���ڹ��̵��ú󣬴ӹ�����OMAC�Ľ������ȡ���ݲ��뵽�����OMAC�û��µ�DW_R_AUTO_CALC_MON��
+  过程名称：p_etl_DW_R_AUTO_CALC_MON/月度自动化抄表核算应用情况推送过程
+  作者：李培
+  编写日期：2014-03-08 17:00:55
+  过程描述：月度自动化抄表核算应用情况推送过程,抽取过程被入口过程调用后，从管理库OMAC的结果表中取数据插入到稽查库OMAC用户下的DW_R_AUTO_CALC_MON表
   **/
   PROCEDURE P_ETL_DW_R_AUTO_CALC_MON(I_DATA   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�P_ENT_DW_BM_TGPQ_DAY/Ӫ�������ն���������,ÿ��16������
-  ���ߣ����ѵ�
-  ��д���ڣ�2014-10-03 00:02:55
-  ����������ÿ��16�����У���ÿ��12:00�ɼ�ϵͳ���͹����Ĳɼ������ն����������л�ȡ.
+  过程名称：P_ENT_DW_BM_TGPQ_DAY/营销公变日冻结电量情况,每天16点运行
+  作者：姜友德
+  编写日期：2014-10-03 00:02:55
+  过程描述：每日16点运行，从每日12:00采集系统推送过来的采集公变日冻结电量情况中获取.
   **/
   PROCEDURE P_ENT_DW_BM_TGPQ_DAY(I_DATA   VARCHAR2,
                                  OUT_CODE OUT NUMBER,
@@ -314,10 +314,10 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_DSM IS
                                  OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�P_ENT_DW_BM_CONSPQ_DAY/Ӫ���û��ն���������,ÿ��16������
-  ���ߣ����ѵ�
-  ��д���ڣ�2014-10-03 00:44:25
-  ����������ÿ��16�����У���ÿ��12:00�ɼ�ϵͳ���͹����Ĳɼ��û��ն�����������ȡ.
+  过程名称：P_ENT_DW_BM_CONSPQ_DAY/营销用户日冻结电量情况,每天16点运行
+  作者：姜友德
+  编写日期：2014-10-03 00:44:25
+  过程描述：每日16点运行，从每日12:00采集系统推送过来的采集用户日冻结电量情况获取.
   **/
   PROCEDURE P_ENT_DW_BM_CONSPQ_DAY(I_DATA   VARCHAR2,
                                    OUT_CODE OUT NUMBER,
@@ -330,10 +330,10 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_DSM IS
                                    OUT_MSG  OUT VARCHAR2);
 
   /**
-  �������ƣ�P_ENT_CP_EXP_DAY/�ɼ��ն�������쳣���,ÿ��16������
-  ���ߣ����ѵ�
-  ��д���ڣ�2014-10-03 02:31:10
-  ����������ÿ��16�����У�Ӫ�����ɼ��ṩ�Ķ�Ӧ���ϻ�����̨��ID��Ϣ������д�룬�����ܲ�ҵ��ܿ�ƽ̨���ݲֿ�Ͳɼ�ϵͳ��
+  过程名称：P_ENT_CP_EXP_DAY/采集日冻结电量异常情况,每天16点运行
+  作者：姜友德
+  编写日期：2014-10-03 02:31:10
+  过程描述：每日16点运行，营销将采集提供的对应不上户号与台区ID信息的数据写入，传递总部业务管控平台数据仓库和采集系统。
   **/
   PROCEDURE P_ENT_CP_EXP_DAY(I_DATA   VARCHAR2,
                              OUT_CODE OUT NUMBER,
@@ -361,21 +361,21 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
   /*PROCEDURE P_ENT_DW_R_COLL_SUCCR_DAY(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YMD      VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_R_COLL_SUCCR_DAY', V_YMD);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_R_COLL_SUCCR_DAY��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_R_COLL_SUCCR_DAY表
     P_INS_DW_R_COLL_SUCCR_DAY(V_YMD, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_R_COLL_SUCCR_DAY��ȡ���ݲ��뵽�����OMAC�û��µ�DW_R_COLL_SUCCR_DAY��
+    --调用推送过程，从管理库OMAC用户下的DW_R_COLL_SUCCR_DAY表取数据插入到稽查库OMAC用户下的DW_R_COLL_SUCCR_DAY表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_R_COLL_SUCCR_DAY(V_YMD, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_R_COLL_SUCCR_DAY A
          SET A.PS_BUSI_AREA_CODE = (SELECT \*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*\
                                      B.BUSI_AREA_STAT_CODE
@@ -383,43 +383,43 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                                      WHERE B.SG_ORG_NO = A.ORG_NO)
        WHERE A.STAT_YMD = V_YMD;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_R_COLL_SUCCR_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_R_COLL_SUCCR_DAY  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_R_COLL_SUCCR_DAY  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_R_COLL_SUCCR_DAY  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   
   PROCEDURE P_INS_DW_R_COLL_SUCCR_DAY(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
-    --����
+    --当月
     --V_YM VARCHAR2(8) := SUBSTR(I_DATA, 1, 6);
-    --ͳ������
+    --统计日期
     V_LT_DAY VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_R_COLL_SUCCR_DAY', I_DATA);
     --V_LT_DAY := TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD');
-    --ɾ��ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除原有的抽取的记录，维度为日
     DELETE FROM DW_R_COLL_SUCCR_DAY X WHERE X.STAT_YMD = V_LT_DAY;
-    --��ʼ����ͳ��,���뵽���������OMAC��DW_R_COLL_SUCCR_DAY
-    --����ʵ�����ѡ���Ƿ���Ҫ��λѭ����һ���Ƿ���������Ҫ��
+    --开始数据统计,插入到稽查管理库OMAC的DW_R_COLL_SUCCR_DAY
+    --根据实际情况选择是否需要单位循环（一般是分区表才需要）
     FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
                                        1,
                                        DECODE(V_PRO_ORG_NO, '12101', 5, 7)) ORG_NO
@@ -483,37 +483,37 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                   D.TERMINAL_TYPE_CODE,
                   C.VOLT_CODE;
     END LOOP;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_R_COLL_SUCCR_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_R_COLL_SUCCR_DAY  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_R_COLL_SUCCR_DAY  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_R_COLL_SUCCR_DAY  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   
   PROCEDURE P_ETL_DW_R_COLL_SUCCR_DAY(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
-    --����
+    --当日
     V_YMD VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_R_COLL_SUCCR_DAY', I_DATA);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为日
     DELETE FROM SY_OM_DW_R_COLL_SUCCR_DAY X WHERE X.STAT_YMD = V_YMD;
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_DW_R_COLL_SUCCR_DAY VALUE
       (DATA_ID,
        PRO_ORG_NO,
@@ -551,45 +551,45 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
        RUN_TERMINAL_COUNT,
        TIME_STAMP
         FROM DW_R_COLL_SUCCR_DAY A, SY_OM_DW_O_ORG_CONTRAST B
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_YMD = V_YMD
          AND A.ORG_NO = B.SG_ORG_NO(+);
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_R_COLL_SUCCR_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_R_COLL_SUCCR_DAY  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_R_COLL_SUCCR_DAY  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_R_COLL_SUCCR_DAY  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;*/
 
   PROCEDURE P_ENT_DW_R_COLL_SUCCR_MON(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR2(8) := SUBSTR(I_DATA, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_R_COLL_SUCCR_MON', V_YM);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_R_COLL_SUCCR_MON��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_R_COLL_SUCCR_MON表
     P_INS_DW_R_COLL_SUCCR_MON(V_YM, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_R_COLL_SUCCR_MON��ȡ���ݲ��뵽�����OMAC�û��µ�DW_R_COLL_SUCCR_MON��
+    --调用推送过程，从管理库OMAC用户下的DW_R_COLL_SUCCR_MON表取数据插入到稽查库OMAC用户下的DW_R_COLL_SUCCR_MON表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_R_COLL_SUCCR_MON(V_YM, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_R_COLL_SUCCR_MON A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -600,41 +600,41 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                      B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_YM = V_YM;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_R_COLL_SUCCR_MON  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_R_COLL_SUCCR_MON  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_R_COLL_SUCCR_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_R_COLL_SUCCR_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_INS_DW_R_COLL_SUCCR_MON(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
-    --����
+    --当月
     V_YM VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_R_COLL_SUCCR_MON', I_DATA);
-    --ɾ��ԭ�еĳ�ȡ�ļ�¼
+    --删除原有的抽取的记录
     DELETE FROM DW_R_COLL_SUCCR_MON X WHERE X.STAT_YM = V_YM;
-    --��ʼ����ͳ��,���뵽���������OMAC��DW_R_COLL_SUCCR_MON
-    --����ʵ�����ѡ���Ƿ���Ҫ��λѭ����һ���Ƿ���������Ҫ��
+    --开始数据统计,插入到稽查管理库OMAC的DW_R_COLL_SUCCR_MON
+    --根据实际情况选择是否需要单位循环（一般是分区表才需要）
     INSERT INTO DW_R_COLL_SUCCR_MON VALUE
       (DATA_ID,
        PRO_ORG_NO,
@@ -671,37 +671,37 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
         FROM INS_DW_R_COLL_SUCCR_MON A
        WHERE A.STAT_YM = V_YM;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_R_COLL_SUCCR_MON  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_R_COLL_SUCCR_MON  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_R_COLL_SUCCR_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_R_COLL_SUCCR_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ETL_DW_R_COLL_SUCCR_MON(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
-    --����
+    --当月
     V_YM VARCHAR2(8) := SUBSTR(I_DATA, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_R_COLL_SUCCR_MON', I_DATA);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为日
     DELETE FROM SY_OM_DW_R_COLL_SUCCR_MON X WHERE X.STAT_YM = V_YM;
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_DW_R_COLL_SUCCR_MON VALUE
       (DATA_ID,
        PRO_ORG_NO,
@@ -735,47 +735,47 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
        RUN_TERMINAL_COUNT,
        TIME_STAMP
         FROM DW_R_COLL_SUCCR_MON A, SY_OM_DW_O_ORG_CONTRAST B
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_YM = V_YM
          AND TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD') BETWEEN
              B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_R_COLL_SUCCR_MON  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_R_COLL_SUCCR_MON  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_R_COLL_SUCCR_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_R_COLL_SUCCR_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_R_INTEL_METER_INFO(I_DATA   VARCHAR2,
                                         OUT_CODE OUT NUMBER,
                                         OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_R_INTEL_METER_INFO', V_YM);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_R_INTEL_METER_INFO��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_R_INTEL_METER_INFO表
     P_INS_DW_R_INTEL_METER_INFO(V_YM, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_R_INTEL_METER_INFO��ȡ���ݲ��뵽�����OMAC�û��µ�DW_R_INTEL_METER_INFO��
+    --调用推送过程，从管理库OMAC用户下的DW_R_INTEL_METER_INFO表取数据插入到稽查库OMAC用户下的DW_R_INTEL_METER_INFO表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_R_INTEL_METER_INFO(V_YM, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_R_INTEL_METER_INFO A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -786,21 +786,21 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                      B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_YM = V_YM;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_R_INTEL_METER_INFO  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_R_INTEL_METER_INFO  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_R_INTEL_METER_INFO  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_R_INTEL_METER_INFO  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -810,13 +810,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
     V_DATA_ID  VARCHAR2(24);
     V_YM       VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
     V_Y        VARCHAR2(6) := SUBSTR(I_DATA, 1, 4);
-    BEG_V_DATE DATE := TO_DATE(V_YM || '01', 'yyyymmdd'); --����1��
-    --end_v_date date := last_day(beg_v_date); --�������һ��
-    Y_V_DATE DATE := TO_DATE(V_Y || '0101', 'yyyymmdd'); --����1��1��
-    --��ȡ��ʡ�ĵ�λ����
+    BEG_V_DATE DATE := TO_DATE(V_YM || '01', 'yyyymmdd'); --当月1日
+    --end_v_date date := last_day(beg_v_date); --当月最后一天
+    Y_V_DATE DATE := TO_DATE(V_Y || '0101', 'yyyymmdd'); --当年1月1日
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   BEGIN
-    --��ʼ��¼��־  
+    --开始记录日志  
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_R_INTEL_METER_INFO',
                                         I_DATA);
     -- DELETE FROM DW_R_INTEL_METER_INFO WHERE STAT_YM = V_YM;
@@ -913,38 +913,38 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
       COMMIT;
     END LOOP;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_R_INTEL_METER_INFO  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_R_INTEL_METER_INFO  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_R_INTEL_METER_INFO  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_R_INTEL_METER_INFO  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ETL_DW_R_INTEL_METER_INFO(I_DATA   VARCHAR2,
                                         OUT_CODE OUT NUMBER,
                                         OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
-    --����
+    --当月
     V_YM VARCHAR2(8) := SUBSTR(I_DATA, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_R_INTEL_METER_INFO',
                                         I_DATA);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_R_INTEL_METER_INFO X WHERE X.STAT_YM = V_YM;
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_DW_R_INTEL_METER_INFO X
       (DATA_ID,
        PRO_ORG_NO,
@@ -970,47 +970,47 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
        RUN_METER_COUNT,
        TIME_STAMP
         FROM DW_R_INTEL_METER_INFO A, SY_OM_DW_O_ORG_CONTRAST B
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_YM = V_YM
          AND TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD') BETWEEN
              B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_R_INTEL_METER_INFO  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_R_INTEL_METER_INFO  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_R_INTEL_METER_INFO  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_R_INTEL_METER_INFO  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_R_GATE_COLL_COVE(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR2(8) := SUBSTR(I_DATA, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_R_GATE_COLL_COVE', V_YM);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_R_GATE_COLL_COVE��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_R_GATE_COLL_COVE表
     P_INS_DW_R_GATE_COLL_COVE(V_YM, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_R_GATE_COLL_COVE��ȡ���ݲ��뵽�����OMAC�û��µ�DW_R_GATE_COLL_COVE��
+    --调用推送过程，从管理库OMAC用户下的DW_R_GATE_COLL_COVE表取数据插入到稽查库OMAC用户下的DW_R_GATE_COLL_COVE表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_R_GATE_COLL_COVE(V_YM, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_R_GATE_COLL_COVE A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -1021,21 +1021,21 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                      B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_YM = V_YM;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_R_GATE_COLL_COVE  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_R_GATE_COLL_COVE  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_R_GATE_COLL_COVE  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_R_GATE_COLL_COVE  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -1044,11 +1044,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                                       OUT_MSG  OUT VARCHAR2) IS
     V_DATA_ID  VARCHAR2(24);
     V_YM       VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
-    BEG_V_DATE DATE := TO_DATE(V_YM || '01', 'yyyymmdd'); --����1��
-    --��ȡ��ʡ�ĵ�λ����
+    BEG_V_DATE DATE := TO_DATE(V_YM || '01', 'yyyymmdd'); --当月1日
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   BEGIN
-    --��ʼ��¼��־  
+    --开始记录日志  
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_R_GATE_COLL_COVE', I_DATA);
     --DELETE FROM DW_R_GATE_COLL_COVE WHERE STAT_YM = V_YM;
     FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
@@ -1111,37 +1111,37 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                   A.MD_TYPE_CODE;
       COMMIT;
     END LOOP;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_R_GATE_COLL_COVE  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_R_GATE_COLL_COVE  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_R_GATE_COLL_COVE  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_R_GATE_COLL_COVE  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ETL_DW_R_GATE_COLL_COVE(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
-    --����
+    --当月
     V_YM VARCHAR2(8) := SUBSTR(I_DATA, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_R_GATE_COLL_COVE', I_DATA);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_R_GATE_COLL_COVE X WHERE X.STAT_YM = V_YM;
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_DW_R_GATE_COLL_COVE X
       (DATA_ID,
        PRO_ORG_NO,
@@ -1175,48 +1175,48 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
        COLL_COVE_NUM,
        TIME_STAMP
         FROM DW_R_GATE_COLL_COVE A, SY_OM_DW_O_ORG_CONTRAST B
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_YM = V_YM
          AND TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD') BETWEEN
              B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_R_GATE_COLL_COVE  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_R_GATE_COLL_COVE  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_R_GATE_COLL_COVE  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_R_GATE_COLL_COVE  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_R_CONS_COLL_COVER(I_DATA   VARCHAR2,
                                        OUT_CODE OUT NUMBER,
                                        OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
-    --����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
+    --当月
     V_YM VARCHAR2(8) := SUBSTR(I_DATA, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_R_CONS_COLL_COVER', V_YM);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_R_CONS_COLL_COVER��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_R_CONS_COLL_COVER表
     P_INS_DW_R_CONS_COLL_COVER(V_YM, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_R_CONS_COLL_COVER��ȡ���ݲ��뵽�����OMAC�û��µ�DW_R_CONS_COLL_COVER��
+    --调用推送过程，从管理库OMAC用户下的DW_R_CONS_COLL_COVER表取数据插入到稽查库OMAC用户下的DW_R_CONS_COLL_COVER表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_R_CONS_COLL_COVER(V_YM, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_R_CONS_COLL_COVER A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -1227,21 +1227,21 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                      B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_YM = V_YM;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_R_CONS_COLL_COVER  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_R_CONS_COLL_COVER  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_R_CONS_COLL_COVER  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_R_CONS_COLL_COVER  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -1250,11 +1250,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                                        OUT_MSG  OUT VARCHAR2) IS
     V_DATA_ID  VARCHAR2(24);
     V_YM       VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
-    BEG_V_DATE DATE := TO_DATE(V_YM || '01', 'yyyymmdd'); --����1��
-    --��ȡ��ʡ�ĵ�λ����
+    BEG_V_DATE DATE := TO_DATE(V_YM || '01', 'yyyymmdd'); --当月1日
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   BEGIN
-    --��ʼ��¼��־  
+    --开始记录日志  
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_R_CONS_COLL_COVER',
                                         I_DATA);
     -- DELETE FROM DW_R_CONS_COLL_COVER WHERE STAT_YM = V_YM;
@@ -1295,25 +1295,25 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                 WHERE AA.CP_NO = E.CP_NO
                   AND E.CONS_ID = D.CONS_ID
                   AND AA.RUN_DATE < ADD_MONTHS(BEG_V_DATE, 1)
-                     --AND AA.STATUS_CODE = '01'  ---ͳ�Ƹ����ʲ����ն��Ƿ�Ͷ�˶��㸲��
+                     --AND AA.STATUS_CODE = '01'  ---统计覆盖率不管终端是否投运都算覆盖
                   AND ROWNUM = 1)) AS NOTCOLL_CC,
          COUNT((SELECT CONS_ID
                  FROM SY_SG_R_TMNL_RUN AA, SY_SG_R_CP_CONS_RELA E
                 WHERE AA.CP_NO = E.CP_NO
                   AND E.CONS_ID = D.CONS_ID
                   AND AA.RUN_DATE < ADD_MONTHS(BEG_V_DATE, 1)
-                     -- AND AA.STATUS_CODE = '01' ---ͳ�Ƹ����ʲ����ն��Ƿ�Ͷ�˶��㸲��
+                     -- AND AA.STATUS_CODE = '01' ---统计覆盖率不管终端是否投运都算覆盖
                   AND ROWNUM = 1)) AS COLL_CC,
          COUNT((SELECT CONS_ID
                  FROM SY_SG_R_TMNL_RUN AA, SY_SG_R_CP_CONS_RELA E
                 WHERE AA.CP_NO = E.CP_NO
                   AND E.CONS_ID = D.CONS_ID
                   AND AA.RUN_DATE < ADD_MONTHS(BEG_V_DATE, 1)
-                  AND AA.STATUS_CODE = '01' ---�ն�Ͷ��״̬
+                  AND AA.STATUS_CODE = '01' ---终端投运状态
                   AND ROWNUM = 1)) AS CONS_RUN_NUM,
          SYSDATE
           FROM SY_SG_C_CONS D
-         WHERE EXISTS (SELECT 1 ---ֻ����ʵ����������û���ͳ��
+         WHERE EXISTS (SELECT 1 ---只有有实抄计量点的用户才统计
                   FROM SY_SG_C_MP F
                  WHERE D.CONS_ID = F.CONS_ID
                    AND F.ORG_NO = D.ORG_NO
@@ -1324,39 +1324,39 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
          GROUP BY D.ORG_NO, D.ELEC_TYPE_CODE, D.VOLT_CODE, D.CONS_SORT_CODE;
       COMMIT;
     END LOOP;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_R_CONS_COLL_COVER  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_R_CONS_COLL_COVER  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_R_CONS_COLL_COVER  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_R_CONS_COLL_COVER  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ETL_DW_R_CONS_COLL_COVER(I_DATA   VARCHAR2,
                                        OUT_CODE OUT NUMBER,
                                        OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
-    --����
+    --当月
     V_YM VARCHAR2(8) := SUBSTR(I_DATA, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_R_CONS_COLL_COVER',
                                         I_DATA);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_R_CONS_COLL_COVER X WHERE X.STAT_YM = V_YM;
   
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_DW_R_CONS_COLL_COVER X
       (DATA_ID,
        PRO_ORG_NO,
@@ -1384,47 +1384,47 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
        CONS_RUN_NUM,
        TIME_STAMP
         FROM DW_R_CONS_COLL_COVER A, SY_OM_DW_O_ORG_CONTRAST B
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_YM = V_YM
          AND TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD') BETWEEN
              B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_R_CONS_COLL_COVER  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_R_CONS_COLL_COVER  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_R_CONS_COLL_COVER  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_R_CONS_COLL_COVER  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_R_COLL_COVERAGE(I_DATA   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR2(8) := SUBSTR(I_DATA, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_R_COLL_COVERAGE', V_YM);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_R_COLL_COVERAGE��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_R_COLL_COVERAGE表
     P_INS_DW_R_COLL_COVERAGE(V_YM, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_R_COLL_COVERAGE��ȡ���ݲ��뵽�����OMAC�û��µ�DW_R_COLL_COVERAGE��
+    --调用推送过程，从管理库OMAC用户下的DW_R_COLL_COVERAGE表取数据插入到稽查库OMAC用户下的DW_R_COLL_COVERAGE表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_R_COLL_COVERAGE(V_YM, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_R_COLL_COVERAGE A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -1435,21 +1435,21 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                      B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_YM = V_YM;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_R_COLL_COVERAGE  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_R_COLL_COVERAGE  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_R_COLL_COVERAGE  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_R_COLL_COVERAGE  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -1458,13 +1458,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                                      OUT_MSG  OUT VARCHAR2) IS
     V_DATA_ID  VARCHAR2(24);
     V_YM       VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
-    BEG_V_DATE DATE := TO_DATE(V_YM || '01', 'yyyymmdd'); --����1��
-    --��ȡ��ʡ�ĵ�λ����
+    BEG_V_DATE DATE := TO_DATE(V_YM || '01', 'yyyymmdd'); --当月1日
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   BEGIN
-    --��ʼ��¼��־  
+    --开始记录日志  
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_R_COLL_COVERAGE', I_DATA);
-    --ͳ�ƽ�ֹ���ڣ�ͳ����ĩ��
+    --统计截止日期（统计月末）
     --DELETE FROM DW_R_COLL_COVERAGE WHERE STAT_YM = V_YM;
     /*FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
                           1,
@@ -1511,13 +1511,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                FROM SY_SG_R_TMNL_RUN BB, SGPM.R_CP_MP_RELA CC
               WHERE CC.CP_NO = BB.CP_NO
                 AND CC.MP_ID = C.MP_ID
-                   --  AND BB.STATUS_CODE = '01'  ---ͳ�Ƹ����ʲ����ն��Ƿ�Ͷ�˶��㸲��
+                   --  AND BB.STATUS_CODE = '01'  ---统计覆盖率不管终端是否投运都算覆盖
                 AND BB.RUN_DATE < ADD_MONTHS(BEG_V_DATE, 1))) AS NOTCOLL_BUSI_CC,
        COUNT((SELECT DISTINCT (C.MP_ID)
                FROM SY_SG_R_TMNL_RUN BB, SGPM.R_CP_MP_RELA CC
               WHERE CC.CP_NO = BB.CP_NO
                 AND CC.MP_ID = C.MP_ID
-                AND BB.STATUS_CODE = '01' --�ն������е�  �ն����в���Ͷ��
+                AND BB.STATUS_CODE = '01' --终端是运行的  终端运行才算投运
                 AND BB.RUN_DATE < ADD_MONTHS(BEG_V_DATE, 1))) AS RUN_NUM,
        SYSDATE
         FROM SY_SG_C_CONS          A,
@@ -1541,38 +1541,38 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                 D.TYPE_CODE,
                 C.VOLT_CODE;
     COMMIT;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_R_COLL_COVERAGE  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_R_COLL_COVERAGE  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_R_COLL_COVERAGE  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_R_COLL_COVERAGE  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ETL_DW_R_COLL_COVERAGE(I_DATA   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
-    --����
+    --当月
     V_YM VARCHAR2(8) := SUBSTR(I_DATA, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_R_COLL_COVERAGE', I_DATA);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_R_COLL_COVERAGE X WHERE X.STAT_YM = V_YM;
   
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_DW_R_COLL_COVERAGE X
       (DATA_ID,
        PRO_ORG_NO,
@@ -1610,47 +1610,47 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
        RUN_NUM,
        TIME_STAMP
         FROM DW_R_COLL_COVERAGE A, SY_OM_DW_O_ORG_CONTRAST B
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_YM = V_YM
          AND TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD') BETWEEN
              B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_R_COLL_COVERAGE  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_R_COLL_COVERAGE  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_R_COLL_COVERAGE  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_R_COLL_COVERAGE  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_R_COLL_MASTER(I_DATA   VARCHAR2,
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR2(8) := SUBSTR(I_DATA, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_R_COLL_MASTER', V_YM);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_R_COLL_MASTER��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_R_COLL_MASTER表
     P_INS_DW_R_COLL_MASTER(V_YM, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_R_COLL_MASTER��ȡ���ݲ��뵽�����OMAC�û��µ�DW_R_COLL_MASTER��
+    --调用推送过程，从管理库OMAC用户下的DW_R_COLL_MASTER表取数据插入到稽查库OMAC用户下的DW_R_COLL_MASTER表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_R_COLL_MASTER(V_YM, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_R_COLL_MASTER A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -1661,21 +1661,21 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                      B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_YM = V_YM;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_R_COLL_MASTER  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_R_COLL_MASTER  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_R_COLL_MASTER  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ENT_DW_R_COLL_MASTER  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -1684,10 +1684,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                                    OUT_MSG  OUT VARCHAR2) IS
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   BEGIN
-    --��ʼ��¼��־  
+    --开始记录日志  
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_R_COLL_MASTER', I_DATA);
     DELETE FROM DW_R_COLL_MASTER WHERE STAT_YM = V_YM;
     INSERT INTO DW_R_COLL_MASTER
@@ -1713,37 +1713,37 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
         FROM INS_DW_R_COLL_MASTER A
        WHERE STAT_YM = V_YM;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_R_COLL_MASTER  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_R_COLL_MASTER  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_R_COLL_MASTER  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_INS_DW_R_COLL_MASTER  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ETL_DW_R_COLL_MASTER(I_DATA   VARCHAR2,
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
-    --����
+    --当月
     V_YM VARCHAR2(8) := SUBSTR(I_DATA, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_R_COLL_MASTER', I_DATA);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_R_COLL_MASTER X WHERE X.STAT_YM = V_YM;
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_DW_R_COLL_MASTER X
       (DATA_ID,
        PRO_ORG_NO,
@@ -1765,47 +1765,47 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
        MAIN_STAT_FAULT,
        TIME_STAMP
         FROM DW_R_COLL_MASTER A, SY_OM_DW_O_ORG_CONTRAST B
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_YM = V_YM
          AND TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD') BETWEEN
              B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_R_COLL_MASTER  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_R_COLL_MASTER  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_R_COLL_MASTER  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_R_COLL_MASTER  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_R_PA_CONTROL_MON(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('DW_R_PA_CONTROL_MON', V_YM);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_R_PA_CONTROL_MON��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_R_PA_CONTROL_MON表
     P_INS_DW_R_PA_CONTROL_MON(V_YM, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_R_PA_CONTROL_MON��ȡ���ݲ��뵽�����OMAC�û��µ�DW_R_PA_CONTROL_MON��
+    --调用推送过程，从管理库OMAC用户下的DW_R_PA_CONTROL_MON表取数据插入到稽查库OMAC用户下的DW_R_PA_CONTROL_MON表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_R_PA_CONTROL_MON(V_YM, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_R_PA_CONTROL_MON A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -1816,46 +1816,46 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                      B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_YM = V_YM;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� DW_R_PA_CONTROL_MON  �ɹ�';
+    OUT_MSG  := '执行 DW_R_PA_CONTROL_MON  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� DW_R_PA_CONTROL_MON  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 DW_R_PA_CONTROL_MON  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_INS_DW_R_PA_CONTROL_MON(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
-    --����
+    --当月
     V_YM       VARCHAR2(8) := SUBSTR(I_DATA, 1, 6);
-    BEG_V_DATE DATE := TO_DATE(V_YM || '01', 'yyyymmdd'); --����1��
-    --�����³�
+    BEG_V_DATE DATE := TO_DATE(V_YM || '01', 'yyyymmdd'); --当月1日
+    --本月月初
     V_BEGIN_MONTH DATE := TO_DATE(V_YM || '01', 'YYYYMMDD');
-    --�����³�
+    --下月月初
     V_BEGIN_NEXT_MONTH DATE := ADD_MONTHS(V_BEGIN_MONTH, 1);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_R_PA_CONTROL_MON', I_DATA);
-    --ɾ��ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除原有的抽取的记录，维度为月
     -- DELETE FROM DW_R_PA_CONTROL_MON X WHERE X.STAT_YM = V_YM;
-    --��ʼ����ͳ��,���뵽���������OMAC��DW_R_PA_CONTROL_MON
-    --����ʵ�����ѡ���Ƿ���Ҫ��λѭ����һ���Ƿ���������Ҫ��
+    --开始数据统计,插入到稽查管理库OMAC的DW_R_PA_CONTROL_MON
+    --根据实际情况选择是否需要单位循环（一般是分区表才需要）
     FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
                                        1,
                                        DECODE(V_PRO_ORG_NO, '12101', 5, 7)) ORG_NO
@@ -1879,23 +1879,23 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
          PACONTROL_CC,
          TIME_STAMP)
       /*
-      *���ӱ�׼����ת���߼�,ת������pkg_gk_public.f_trans_code�����������group by��֤����ת����
-      *���ֶ����ͬ���͵�ά�Ⱥ󱻻���,��ֹ�����ظ�.
+      *增加标准代码转换逻辑,转换采用pkg_gk_public.f_trans_code并增加最外层group by保证函数转换后
+      *出现多个相同类型的维度后被汇总,防止出现重复.
       */
         SELECT /*+parallel(N 4) parallel(C 4)*/
          PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO) DATA_ID,
-         --����
+         --序列
          V_PRO_ORG_NO PRO_ORG_NO,
-         --��ʡ����
+         --网省代码
          N.ORG_NO,
          '',
          V_YM,
          PKG_GK_PUBLIC.F_TRANS_CODE('CUST_TYPE_CODE', N.CONS_SORT_CODE),
-         --�û�����
+         --用户分类
          PKG_GK_PUBLIC.F_TRANS_CODE('ELEC_TYPE_CODE', N.ELEC_TYPE_CODE),
-         --�õ����
+         --用电类别
          PKG_GK_PUBLIC.F_TRANS_CODE('VOLT_CODE', N.VOLT_CODE),
-         --��ѹ�ȼ� 
+         --电压等级 
          COUNT(N.CONS_ID),
          COUNT(N.CONS_ID) - SUM(CASE
                                   WHEN C.PAY_TYPE_CODE = '01' AND C.CTL_MODE = '01' THEN
@@ -1912,47 +1912,47 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
          SYSDATE TIME_STAMP
           FROM SY_SG_C_CONS N, SY_SG_C_OCS_CONS C
          WHERE N.CONS_ID = C.CONS_ID
-              --�ų������õ����� 
+              --排除考核用电类型 
            AND N.ELEC_TYPE_CODE <> '000'
            AND N.ORG_NO LIKE TSS.ORG_NO || '%'
-              --���û�״̬�����ų�,���û�������״̬������״̬Ϊ�������û�״̬�ж�,���ٵ������û�status_code�����ж�
+              --对用户状态进行排除,已用户的立户状态和销户状态为主进行用户状态判断,不再单纯以用户status_code进行判断
            AND N.BUILD_DATE < V_BEGIN_NEXT_MONTH
            AND (N.CANCEL_DATE >= V_BEGIN_MONTH OR
                (N.CANCEL_DATE IS NULL AND N.STATUS_CODE <> '9'))
          GROUP BY N.ORG_NO, N.CONS_SORT_CODE, N.ELEC_TYPE_CODE, N.VOLT_CODE;
       COMMIT;
     END LOOP;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_R_PA_CONTROL_MON  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_R_PA_CONTROL_MON  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_R_PA_CONTROL_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_R_PA_CONTROL_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ETL_DW_R_PA_CONTROL_MON(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
-    --����SUBSTR
+    --当月SUBSTR
     V_YM VARCHAR2(8) := SUBSTR(I_DATA, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_R_PA_CONTROL_MON', I_DATA);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_R_PA_CONTROL_MON X WHERE X.STAT_YM = V_YM;
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_DW_R_PA_CONTROL_MON X
       (DATA_ID,
        PRO_ORG_NO,
@@ -1980,47 +1980,47 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
        PACONTROL_CC,
        TIME_STAMP
         FROM DW_R_PA_CONTROL_MON A, SY_OM_DW_O_ORG_CONTRAST B
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_YM = V_YM
          AND TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD') BETWEEN
              B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_R_PA_CONTROL_MON  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_R_PA_CONTROL_MON  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_R_PA_CONTROL_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_R_PA_CONTROL_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_R_AUTO_CALC_MON(I_DATA   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR2(8) := SUBSTR(I_DATA, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_R_AUTO_CALC_MON', V_YM);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_R_AUTO_CALC_MON��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_R_AUTO_CALC_MON表
     P_INS_DW_R_AUTO_CALC_MON(V_YM, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_R_AUTO_CALC_MON��ȡ���ݲ��뵽�����OMAC�û��µ�DW_R_AUTO_CALC_MON��
+    --调用推送过程，从管理库OMAC用户下的DW_R_AUTO_CALC_MON表取数据插入到稽查库OMAC用户下的DW_R_AUTO_CALC_MON表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_R_AUTO_CALC_MON(V_YM, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_R_AUTO_CALC_MON A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -2031,21 +2031,21 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                      B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_YM = V_YM;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_R_AUTO_CALC_MON  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_R_AUTO_CALC_MON  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_R_AUTO_CALC_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_R_AUTO_CALC_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -2054,13 +2054,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                                      OUT_MSG  OUT VARCHAR2) IS
     V_DATA_ID  VARCHAR2(24);
     V_YM       VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
-    BEG_V_DATE DATE := TO_DATE(V_YM || '01', 'yyyymmdd'); --����1��
-    --��ȡ��ʡ�ĵ�λ����
+    BEG_V_DATE DATE := TO_DATE(V_YM || '01', 'yyyymmdd'); --当月1日
+    --获取网省的单位编码
     V_PRO_ORG_NO  VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
     V_OUT_PRCCODE VARCHAR2(2000) := PKG_GK_PUBLIC.F_TRANS_CODE('DW_R_AUTO_CALC_MON_OUT_PRCCODE',
-                                                               'DW_R_AUTO_CALC_MON_OUT_PRCCODE'); -- ���������ŵĵ����ֱ�ӹ��� ��ȡֵ
+                                                               'DW_R_AUTO_CALC_MON_OUT_PRCCODE'); -- 这个变量存放的电价码直接过滤 不取值
   BEGIN
-    --��ʼ��¼��־  
+    --开始记录日志  
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_R_AUTO_CALC_MON', I_DATA);
     FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
                                        1,
@@ -2118,14 +2118,14 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                             FROM SY_SG_ARC_R_DATA RD
                            WHERE RD.ORG_NO LIKE TSS.ORG_NO || '%'
                              AND RD.AMT_YM = V_YM
-                             AND RD.SRC_CODE = '01' --������Դ����������
+                             AND RD.SRC_CODE = '01' --数据来源正常抄表的
                            GROUP BY CALC_ID
-                          HAVING COUNT(1) = SUM(DECODE(ACTUAL_MODE, '301', 1, '302', 1, '303', 1, '401', 1, 0)) --��¼�������Զ������ļ�¼��һ��
+                          HAVING COUNT(1) = SUM(DECODE(ACTUAL_MODE, '301', 1, '302', 1, '303', 1, '401', 1, 0)) --记录总数和自动抄表的记录数一致
                           ) D,
                          SY_SG_C_CONS E
                    WHERE A.YM = V_YM
                      AND B.YM = V_YM
-                     AND A.ELEC_TYPE_CODE >= '100' --�ų������û�
+                     AND A.ELEC_TYPE_CODE >= '100' --排除考核用户
                      AND A.ORG_NO LIKE TSS.ORG_NO || '%'
                      AND B.ORG_NO LIKE TSS.ORG_NO || '%'
                      AND A.CALC_ID = B.CALC_ID
@@ -2134,8 +2134,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                      AND A.CONS_NO = E.CONS_NO
                      AND B.PRC_CODE = C.PRC_CODE
                      AND B.PARA_VN = C.PARA_VN
-                     AND C.ELEC_TYPE_CODE >= '100' --�ų����˵���
-                     AND INSTR(V_OUT_PRCCODE, B.PRC_CODE) <= 0 --�ų����ñ��ĵ����
+                     AND C.ELEC_TYPE_CODE >= '100' --排除考核电量
+                     AND INSTR(V_OUT_PRCCODE, B.PRC_CODE) <= 0 --排除配置表的电价码
                      AND D.CALC_ID = B.CALC_ID
                    GROUP BY A.ORG_NO,
                             PKG_GK_PUBLIC.F_TRANS_CODE('CUST_TYPE_CODE',
@@ -2150,37 +2150,37 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
       COMMIT;
     END LOOP;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_R_AUTO_CALC_MON  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_R_AUTO_CALC_MON  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_R_AUTO_CALC_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_R_AUTO_CALC_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ETL_DW_R_AUTO_CALC_MON(I_DATA   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
-    --����
+    --当月
     V_YM VARCHAR2(8) := SUBSTR(I_DATA, 1, 6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_R_AUTO_CALC_MON', I_DATA);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_R_AUTO_CALC_MON X WHERE X.STAT_YM = V_YM;
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_DW_R_AUTO_CALC_MON X
       (DATA_ID,
        PRO_ORG_NO,
@@ -2204,48 +2204,48 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
        AUTO_CALC_PQ,
        TIME_STAMP
         FROM DW_R_AUTO_CALC_MON A, SY_OM_DW_O_ORG_CONTRAST B
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_YM = V_YM
          AND TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD') BETWEEN
              B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_R_AUTO_CALC_MON  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_R_AUTO_CALC_MON  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_R_AUTO_CALC_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_R_AUTO_CALC_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
-  --Ӫ�������ն���������,ÿ��16������
+  --营销公变日冻结电量情况,每天16点运行
   PROCEDURE P_ENT_DW_BM_TGPQ_DAY(I_DATA   VARCHAR2,
                                  OUT_CODE OUT NUMBER,
                                  OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YMD      VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_BM_TGPQ_DAY', V_YMD);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_BM_TGPQ_DAY��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_BM_TGPQ_DAY表
     P_INS_DW_BM_TGPQ_DAY(V_YMD, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_BM_TGPQ_DAY��ȡ���ݲ��뵽�����OMAC�û��µ�DW_BM_TGPQ_DAY��
+    --调用推送过程，从管理库OMAC用户下的DW_BM_TGPQ_DAY表取数据插入到稽查库OMAC用户下的DW_BM_TGPQ_DAY表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_BM_TGPQ_DAY(V_YMD, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_BM_TGPQ_DAY A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -2255,21 +2255,21 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                  AND V_YMD BETWEEN B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_DATE = V_YMD;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_BM_TGPQ_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_BM_TGPQ_DAY  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_BM_TGPQ_DAY  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ENT_DW_BM_TGPQ_DAY  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -2278,10 +2278,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                                  OUT_MSG  OUT VARCHAR2) IS
     V_DATA_ID VARCHAR2(24);
     V_YMD     VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   BEGIN
-    --��ʼ��¼��־  
+    --开始记录日志  
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_BM_TGPQ_DAY', I_DATA);
   
     DELETE FROM DW_BM_TGPQ_DAY WHERE STAT_DATE = V_YMD;
@@ -2301,9 +2301,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
        TIME_STAMP)
       SELECT /*PARALLEL(A 4)*/
        A.DATA_ID,
-       --����ҵ��ܿ����õ���ʡ
+       --采用业务管控配置的网省
        V_PRO_ORG_NO,
-       --��λת��������ɼ���ҵ��ܿ�ʹ�õĵ�λ������ͬ����ת��
+       --单位转换，如果采集跟业务管控使用的单位代码相同则不用转换
        PKG_GK_PUBLIC.F_TRANS_CODE('ROLL_ORG_NO', A.ORG_NO),
        '',
        A.STAT_DATE,
@@ -2311,7 +2311,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
        A.TG_NAME,
        A.FROZEN_TIME,
        A.DAY_TGPQ,
-       --�ɼ��ɹ���׼,1�ɹ���2ʧ��
+       --采集成功标准,1成功，2失败
        PKG_GK_PUBLIC.F_TRANS_CODE('ROLL_SUCC_FLAG', A.SUCC_FLAG),
        A.REMARK,
        A.TIME_STAMP
@@ -2319,36 +2319,36 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
        WHERE A.STAT_DATE = V_YMD
          AND A.TG_ID = B.TG_ID;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_BM_TGPQ_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_BM_TGPQ_DAY  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_BM_TGPQ_DAY  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_INS_DW_BM_TGPQ_DAY  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ETL_DW_BM_TGPQ_DAY(I_DATA   VARCHAR2,
                                  OUT_CODE OUT NUMBER,
                                  OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YMD     VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_BM_TGPQ_DAY', I_DATA);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_BM_TGPQ_DAY A WHERE A.STAT_DATE = V_YMD;
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_DW_BM_TGPQ_DAY
       (DATA_ID,
        PRO_ORG_NO,
@@ -2376,48 +2376,48 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
        A.REMARK,
        A.TIME_STAMP
         FROM DW_BM_TGPQ_DAY A, SY_OM_DW_O_ORG_CONTRAST B
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_DATE = V_YMD
          AND V_YMD BETWEEN B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_BM_TGPQ_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_BM_TGPQ_DAY  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_BM_TGPQ_DAY  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_BM_TGPQ_DAY  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
-  --Ӫ���û��ն���������,ÿ��16������
+  --营销用户日冻结电量情况,每天16点运行
   PROCEDURE P_ENT_DW_BM_CONSPQ_DAY(I_DATA   VARCHAR2,
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YMD      VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_BM_CONSPQ_DAY', V_YMD);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_BM_TGPQ_DAY��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_BM_TGPQ_DAY表
     P_INS_DW_BM_CONSPQ_DAY(V_YMD, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_BM_TGPQ_DAY��ȡ���ݲ��뵽�����OMAC�û��µ�DW_BM_TGPQ_DAY��
+    --调用推送过程，从管理库OMAC用户下的DW_BM_TGPQ_DAY表取数据插入到稽查库OMAC用户下的DW_BM_TGPQ_DAY表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_BM_CONSPQ_DAY(V_YMD, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_BM_CONSPQ_DAY A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -2427,21 +2427,21 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                  AND V_YMD BETWEEN B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_DATE = V_YMD;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_BM_CONSPQ_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_BM_CONSPQ_DAY  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_BM_CONSPQ_DAY  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ENT_DW_BM_CONSPQ_DAY  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -2450,10 +2450,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                                    OUT_MSG  OUT VARCHAR2) IS
     V_DATA_ID VARCHAR2(24);
     V_YMD     VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   BEGIN
-    --��ʼ��¼��־  
+    --开始记录日志  
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_BM_CONSPQ_DAY', I_DATA);
   
     DELETE FROM DW_BM_CONSPQ_DAY WHERE STAT_DATE = V_YMD;
@@ -2484,9 +2484,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
          TIME_STAMP)
         SELECT /*PARALLEL(A 4)(B 4)*/
          A.DATA_ID,
-         --����ҵ��ܿ����õ���ʡ
+         --采用业务管控配置的网省
          V_PRO_ORG_NO,
-         --��λת��������ɼ���ҵ��ܿ�ʹ�õĵ�λ������ͬ����ת��
+         --单位转换，如果采集跟业务管控使用的单位代码相同则不用转换
          PKG_GK_PUBLIC.F_TRANS_CODE('ROLL_ORG_NO', A.ORG_NO),
          '',
          A.STAT_DATE,
@@ -2499,7 +2499,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                                     B.HEC_INDUSTRY_CODE),
          A.FROZEN_TIME,
          A.DAY_CONSPQ,
-         --�ɼ��ɹ���׼,1�ɹ���2ʧ��
+         --采集成功标准,1成功，2失败
          PKG_GK_PUBLIC.F_TRANS_CODE('ROLL_SUCC_FLAG', A.SUCC_FLAG),
          A.REMARK,
          A.TIME_STAMP
@@ -2510,37 +2510,37 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
     
     END LOOP;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_BM_CONSPQ_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_BM_CONSPQ_DAY  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_BM_CONSPQ_DAY  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_INS_DW_BM_CONSPQ_DAY  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ETL_DW_BM_CONSPQ_DAY(I_DATA   VARCHAR2,
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YMD     VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_BM_CONSPQ_DAY', I_DATA);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_BM_CONSPQ_DAY A WHERE A.STAT_DATE = V_YMD;
   
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_DW_BM_CONSPQ_DAY
       (DATA_ID,
        PRO_ORG_NO,
@@ -2575,48 +2575,48 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
              A.REMARK,
              A.TIME_STAMP
         FROM DW_BM_CONSPQ_DAY A, SY_OM_DW_O_ORG_CONTRAST B
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_DATE = V_YMD
          AND V_YMD BETWEEN B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_BM_CONSPQ_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_BM_CONSPQ_DAY  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_BM_CONSPQ_DAY  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_BM_CONSPQ_DAY  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
-  --�ɼ��ն�������쳣���,ÿ��16������
+  --采集日冻结电量异常情况,每天16点运行
   PROCEDURE P_ENT_CP_EXP_DAY(I_DATA   VARCHAR2,
                              OUT_CODE OUT NUMBER,
                              OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YMD      VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_CP_EXP_DAY', V_YMD);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_BM_TGPQ_DAY��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_BM_TGPQ_DAY表
     P_INS_CP_EXP_DAY(V_YMD, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�CP_EXP_DAY��ȡ���ݲ��뵽�����OMAC�û��µ�CP_EXP_DAY��
+    --调用推送过程，从管理库OMAC用户下的CP_EXP_DAY表取数据插入到稽查库OMAC用户下的CP_EXP_DAY表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_CP_EXP_DAY(V_YMD, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE CP_EXP_DAY A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -2626,21 +2626,21 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                  AND V_YMD BETWEEN B.BGN_YMD AND NVL(B.END_YMD, '99991231'))
        WHERE A.STAT_DATE = V_YMD;
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_CP_EXP_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_CP_EXP_DAY  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_CP_EXP_DAY  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ENT_CP_EXP_DAY  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -2649,15 +2649,15 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                              OUT_MSG  OUT VARCHAR2) IS
     V_DATA_ID VARCHAR2(24);
     V_YMD     VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   BEGIN
-    --��ʼ��¼��־  
+    --开始记录日志  
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_CP_EXP_DAY', I_DATA);
   
     DELETE FROM CP_EXP_DAY WHERE STAT_DATE = V_YMD;
   
-    --�ڲɼ��д��ڵ�����Ӫ���ڲ����ڵ�̨��
+    --在采集中存在但是在营销内不存在的台区
     INSERT INTO CP_EXP_DAY
       (DATA_ID,
        PRO_ORG_NO,
@@ -2672,11 +2672,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
       SELECT /*PARALLEL(A 4)(B 4)*/
        A.DATA_ID,
        V_PRO_ORG_NO,
-       --����ƥ�䲹�ϵ�̨�������ǵ�λ���������쳣���е�λ��ת��
+       --由于匹配补上的台区可能是单位不对所以异常表中单位不转换
        A.ORG_NO,
        '',
        A.STAT_DATE,
-       --02��ʾ̨��,
+       --02表示台区,
        '02',
        A.TG_ID,
        A.FROZEN_TIME,
@@ -2702,11 +2702,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
       SELECT /*PARALLEL(A 4)(B 4)*/
     /*A.DATA_ID,
     V_PRO_ORG_NO,
-    --����ƥ�䲹�ϵ�̨�������ǵ�λ���������쳣���е�λ��ת��
+    --由于匹配补上的台区可能是单位不对所以异常表中单位不转换
     A.ORG_NO,
     '',
     A.STAT_DATE,
-    --02��ʾ̨��,
+    --02表示台区,
     '01',
     A.CONS_NO,
     A.FROZEN_TIME,
@@ -2718,7 +2718,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
       AND B.CONS_NO IS NULL;
       */
   
-    --�ڲɼ��д��ڵ�����Ӫ���ڲ����ڵ��û�,�����޷�ʹ�÷����ٶȻ����,�ɲ��������NOT EXITS��ʽ    
+    --在采集中存在但是在营销内不存在的用户,由于无法使用分区速度会很慢,可采用下面的NOT EXITS方式    
     INSERT INTO CP_EXP_DAY
       (DATA_ID,
        PRO_ORG_NO,
@@ -2733,11 +2733,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
       SELECT /*PARALLEL(A 4)*/
        A.DATA_ID,
        V_PRO_ORG_NO,
-       --����ƥ�䲹�ϵ�̨�������ǵ�λ���������쳣���е�λ��ת��
+       --由于匹配补上的台区可能是单位不对所以异常表中单位不转换
        A.ORG_NO,
        '',
        A.STAT_DATE,
-       --02��ʾ̨��,
+       --02表示台区,
        '01',
        A.CONS_NO,
        A.FROZEN_TIME,
@@ -2750,36 +2750,36 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                 FROM SY_SG_C_CONS B
                WHERE B.CONS_NO = A.CONS_NO);
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_CP_EXP_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_INS_CP_EXP_DAY  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_CP_EXP_DAY  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_INS_CP_EXP_DAY  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ETL_CP_EXP_DAY(I_DATA   VARCHAR2,
                              OUT_CODE OUT NUMBER,
                              OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YMD     VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_CP_EXP_DAY', I_DATA);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_CP_EXP_DAY A WHERE A.STAT_DATE = V_YMD;
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_CP_EXP_DAY
       (DATA_ID,
        PRO_ORG_NO,
@@ -2803,51 +2803,51 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
        A.CP_PQ,
        A.TIME_STAMP
         FROM CP_EXP_DAY A, SY_OM_DW_O_ORG_CONTRAST B
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_DATE = V_YMD
          AND V_YMD BETWEEN B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_CP_EXP_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_CP_EXP_DAY  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_CP_EXP_DAY  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_CP_EXP_DAY  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
-  --�ɼ��ն�������쳣���,ÿ��16������
+  --采集日冻结电量异常情况,每天16点运行
   PROCEDURE P_ENT_DW_BM_CONSREAD_DAY(I_DATA   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YMD      VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_BM_CONSREAD_DAY', V_YMD);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_BM_TGPQ_DAY��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_BM_TGPQ_DAY表
     P_INS_DW_BM_CONSREAD_DAY(V_YMD, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_BM_CONSREAD_DAY��ȡ���ݲ��뵽�����OMAC�û��µ�DW_BM_CONSREAD_DAY��
+    --调用推送过程，从管理库OMAC用户下的DW_BM_CONSREAD_DAY表取数据插入到稽查库OMAC用户下的DW_BM_CONSREAD_DAY表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
     P_ETL_DW_BM_CONSREAD_DAY(V_YMD, OUT_CODE, OUT_MSG);
     /*
     ELSE
       
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_BM_CONSREAD_DAY A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT 
@@ -2858,21 +2858,21 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
        WHERE A.STAT_DATE = V_YMD;
        */
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_BM_CONSREAD_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_BM_CONSREAD_DAY  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_BM_CONSREAD_DAY  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_BM_CONSREAD_DAY  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -2881,10 +2881,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
                                      OUT_MSG  OUT VARCHAR2) IS
     V_DATA_ID VARCHAR2(24);
     V_YMD     VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   BEGIN
-    --��ʼ��¼��־  
+    --开始记录日志  
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_BM_CONSREAD_DAY', I_DATA);
   
     DELETE FROM DW_BM_CONSREAD_DAY WHERE STAT_DATE = V_YMD;
@@ -2924,36 +2924,36 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
         FROM SY_SG_CP_CONSREAD_DAY A
        WHERE A.STAT_DATE = V_YMD;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_BM_CONSREAD_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_BM_CONSREAD_DAY  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_BM_CONSREAD_DAY  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_BM_CONSREAD_DAY  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ETL_DW_BM_CONSREAD_DAY(I_DATA   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YMD     VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_BM_CONSREAD_DAY', I_DATA);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_BM_CONSREAD_DAY A WHERE A.STAT_DATE = V_YMD;
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_DW_BM_CONSREAD_DAY
       (DATA_ID,
        PRO_ORG_NO,
@@ -2986,24 +2986,24 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_DSM IS
              A.REMARK,
              A.TIME_STAMP
         FROM DW_BM_CONSREAD_DAY A
-      --����ʱ��ɸѡ����
+      --加入时间筛选条件
        WHERE A.STAT_DATE = V_YMD;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_BM_CONSREAD_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_BM_CONSREAD_DAY  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_BM_CONSREAD_DAY  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_BM_CONSREAD_DAY  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 

@@ -24,53 +24,53 @@ create table OMAC.CP_CONSREAD_DAY
 );
 
 comment on table OMAC.CP_CONSREAD_DAY is
-'1)���õ���Ϣ�ɼ�ϵͳд���û��ն���ʾ��
-2) ͨ���ӿڲ�����¼��
-3) ��ʵ����Ҫ���ۺ�չʾ���õ�������ʹ�á�';
+'1)由用电信息采集系统写入用户日冻结示数
+2) 通过接口产生记录。
+3) 该实体主要由综合展示日用电量分析使用。';
 
 comment on column OMAC.CP_CONSREAD_DAY.DATA_ID is
-'���ݱ�ʶ';
+'数据标识';
 
 comment on column OMAC.CP_CONSREAD_DAY.PRO_ORG_NO is
-'ʡ�б��';
+'省市编号';
 
 comment on column OMAC.CP_CONSREAD_DAY.ORG_NO is
-'�������絥λ��Ψһ���롣';
+'创建供电单位的唯一编码。';
 
 comment on column OMAC.CP_CONSREAD_DAY.STAT_DATE is
-'�ն������ݵ�����';
+'日冻结数据的日期';
 
 comment on column OMAC.CP_CONSREAD_DAY.CONS_NO is
-'�û����';
+'用户编号';
 
 comment on column OMAC.CP_CONSREAD_DAY.CONS_NAME is
-'�û�����';
+'用户名称';
 
 comment on column OMAC.CP_CONSREAD_DAY.FROZEN_TIME is
-'Ĭ��0��,��ȷ����';
+'默认0点,精确到秒';
 
 comment on column OMAC.CP_CONSREAD_DAY.ASSET_NO is
-'���Ƶ�Ψһ�ʲ���ţ�Ӧ��Ӫ��ϵͳһ��';
+'表计的唯一资产编号，应与营销系统一致';
 
 comment on column OMAC.CP_CONSREAD_DAY.BAR_CODE is
-'���Ƶ�Ψһ�����룬Ӧ��Ӫ��ϵͳһ��';
+'表计的唯一条形码，应与营销系统一致';
 
 comment on column OMAC.CP_CONSREAD_DAY.READ_TYPE_CODE is
-'11 �����й��ܣ�ֻ���������й���ʾ��';
+'11 正向有功总，只传递正向有功总示数';
 
 comment on column OMAC.CP_CONSREAD_DAY.MR_READ is
-'ʾ��ֵ';
+'示数值';
 
 comment on column OMAC.CP_CONSREAD_DAY.SUCC_FLAG is
-'1�ɼ��ɹ���2�ɼ�ʧ��';
+'1采集成功，2采集失败';
 
 comment on column OMAC.CP_CONSREAD_DAY.MR_SPECIAL_FLAG is
-'01 ��
-02 ���Ʒ�ת
+'01 无
+02 表计翻转
 ';
 
 comment on column OMAC.CP_CONSREAD_DAY.REMARK is
-'˵���ֶ�';
+'说明字段';
 
 comment on column OMAC.CP_CONSREAD_DAY.TIME_STAMP is
-'ʱ���';
+'时间戳';

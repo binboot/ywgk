@@ -2,7 +2,7 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_AC IS
 
   -- AUTHOR  : LILEILEI
   -- CREATED : 2014/2/28 14:02:38
-  -- PURPOSE : ҵ��ܿ����ݲֿ�����-���
+  -- PURPOSE : 业务管控数据仓库程序包-电费
 
   PROCEDURE P_ENT_DW_BASE_AC(I_DATA   VARCHAR2,
                              OUT_CODE OUT NUMBER,
@@ -196,7 +196,7 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_AC IS
                                 OUT_CODE OUT NUMBER,
                                 OUT_MSG  OUT VARCHAR2);
 
-  --�¶Ȳ����ھ������û����������ϸ,��������      
+  --月度并表口径特殊用户电量电费明细,按月运行      
   PROCEDURE P_ENT_DW_O_BULK_USER_AMT(I_DATA   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2);
@@ -232,7 +232,7 @@ CREATE OR REPLACE PACKAGE PKG_YWGK_DW_AC IS
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2);
                                       
-  --�¶ȵ�����Ѵ���ͳ��,��������                                   
+  --月度电量电费代征统计,按月运行                                   
   PROCEDURE P_ENT_DW_E_AMT_COMP_PL_MON(I_DATA   VARCHAR2,
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2);
@@ -251,72 +251,72 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
   PROCEDURE P_ENT_DW_BASE_AC(I_DATA   VARCHAR2,
                              OUT_CODE OUT NUMBER,
                              OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_BASE_AC', I_DATA);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_BASE_AC(I_DATA, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+    --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_BASE_AC(I_DATA, OUT_CODE, OUT_MSG);
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_BASE_AC  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_BASE_AC  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_BASE_AC  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ENT_DW_BASE_AC  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   /*
-         ��ȡ��������
-         DW_E_BILL_PARA_VER����Ѽ�������汾��
-         DW_E_CAT_PRC��Ŀ¼��ۣ�
-         DW_E_CAT_PRC_DET��Ŀ¼�����ϸ��
-         DW_E_PL_PRC��������ۣ�
-         DW_E_PL_ITEM�������
-         DW_E_ADD_PL_PRC�����մ������ۣ�
-         DW_E_BASE_PRC��������ۣ�
-         DW_E_PRC_SCOPE��ִ�з�Χ��
-         ��ȡƵ�ʣ���
+         抽取基本表：
+         DW_E_BILL_PARA_VER（电费计算参数版本）
+         DW_E_CAT_PRC（目录电价）
+         DW_E_CAT_PRC_DET（目录电价明细）
+         DW_E_PL_PRC（代征电价）
+         DW_E_PL_ITEM（代征项）
+         DW_E_ADD_PL_PRC（加收代征单价）
+         DW_E_BASE_PRC（基本电价）
+         DW_E_PRC_SCOPE（执行范围）
+         抽取频率：月
   */
   PROCEDURE P_INS_DW_BASE_AC(I_DATA   VARCHAR2,
                              OUT_CODE OUT NUMBER,
                              OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_BASE_AC', I_DATA);
   
-    --1.��ʼ��ȡ   DW_E_BILL_PARA_VER����Ѽ�������汾��
-    --ɾ��ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --1.开始抽取   DW_E_BILL_PARA_VER（电费计算参数版本）
+    --删除原有的抽取的记录，维度为月
     DELETE FROM DW_E_BILL_PARA_VER X;
   
-    --��ʼ���ݳ�ȡ,���뵽���������OMAC��DW_E_BILL_PARA_VER
+    --开始数据抽取,插入到稽查管理库OMAC的DW_E_BILL_PARA_VER
     INSERT INTO DW_E_BILL_PARA_VER
       (DATA_ID,
        PRO_ORG_NO,
@@ -346,7 +346,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
              SYSDATE
         FROM SY_SG_E_BILL_PARA_VER;
   
-    --2.��ʼ��ȡ DW_E_CAT_PRC��Ŀ¼��ۣ�
+    --2.开始抽取 DW_E_CAT_PRC（目录电价）
     DELETE FROM DW_E_CAT_PRC;
   
     INSERT INTO DW_E_CAT_PRC
@@ -388,7 +388,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
              SYSDATE
         FROM SY_SG_E_CAT_PRC;
   
-    --3.��ʼ��ȡ    DW_E_CAT_PRC_DET��Ŀ¼�����ϸ��
+    --3.开始抽取    DW_E_CAT_PRC_DET（目录电价明细）
     DELETE FROM DW_E_CAT_PRC_DET;
   
     INSERT INTO DW_E_CAT_PRC_DET
@@ -416,7 +416,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
              SYSDATE
         FROM SY_SG_E_CAT_PRC_DET;
   
-    --4.��ʼ��ȡ      DW_E_PL_PRC��������ۣ�
+    --4.开始抽取      DW_E_PL_PRC（代征电价）
     DELETE FROM DW_E_PL_PRC;
   
     INSERT INTO DW_E_PL_PRC
@@ -440,7 +440,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
              SYSDATE
         FROM SY_SG_E_PL_PRC;
   
-    --5.��ʼ��ȡ      DW_E_PL_ITEM�������
+    --5.开始抽取      DW_E_PL_ITEM（代征项）
     DELETE FROM DW_E_PL_ITEM;
   
     INSERT INTO DW_E_PL_ITEM
@@ -466,7 +466,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
              SYSDATE
         FROM SY_SG_E_PL_ITEM;
   
-    --6.��ʼ��ȡ      DW_E_ADD_PL_PRC�����մ������ۣ�
+    --6.开始抽取      DW_E_ADD_PL_PRC（加收代征单价）
     DELETE FROM DW_E_ADD_PL_PRC;
   
     INSERT INTO DW_E_ADD_PL_PRC
@@ -496,7 +496,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
              SYSDATE
         FROM SY_SG_E_ADD_PL_PRC;
   
-    --7.��ʼ��ȡ      DW_E_BASE_PRC��������ۣ�
+    --7.开始抽取      DW_E_BASE_PRC（基本电价）
     DELETE FROM DW_E_BASE_PRC;
   
     INSERT INTO DW_E_BASE_PRC
@@ -518,7 +518,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
              SYSDATE
         FROM SY_SG_E_BASE_PRC;
   
-    --8.��ʼ��ȡ      DW_E_PRC_SCOPE��ִ�з�Χ��
+    --8.开始抽取      DW_E_PRC_SCOPE（执行范围）
     DELETE FROM DW_E_PRC_SCOPE;
   
     INSERT INTO DW_E_PRC_SCOPE
@@ -549,53 +549,53 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
              SYSDATE
         FROM SY_SG_E_PRC_SCOPE;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_BASE_AC  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_BASE_AC  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_BASE_AC  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_INS_DW_BASE_AC  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
 
   /*
-  DW_E_BILL_PARA_VER����Ѽ�������汾��
-         DW_E_CAT_PRC��Ŀ¼��ۣ�
-         DW_E_CAT_PRC_DET��Ŀ¼�����ϸ��
-         DW_E_PL_PRC��������ۣ�
-         DW_E_PL_ITEM�������
-         DW_E_ADD_PL_PRC�����մ������ۣ�
-         DW_E_BASE_PRC��������ۣ�
-         DW_E_PRC_SCOPE��ִ�з�Χ��
+  DW_E_BILL_PARA_VER（电费计算参数版本）
+         DW_E_CAT_PRC（目录电价）
+         DW_E_CAT_PRC_DET（目录电价明细）
+         DW_E_PL_PRC（代征电价）
+         DW_E_PL_ITEM（代征项）
+         DW_E_ADD_PL_PRC（加收代征单价）
+         DW_E_BASE_PRC（基本电价）
+         DW_E_PRC_SCOPE（执行范围）
   
   */
   PROCEDURE P_ETL_DW_BASE_AC(I_DATA   VARCHAR2,
                              OUT_CODE OUT NUMBER,
                              OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_BASE_AC', I_DATA);
   
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_E_BILL_PARA_VER;
   
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_DW_E_BILL_PARA_VER
       (DATA_ID,
        PRO_ORG_NO,
@@ -826,23 +826,23 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
              IDU_FLAG,
              TIME_STAMP
         FROM DW_E_PRC_SCOPE;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_BASE_AC  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_BASE_AC  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_BASE_AC  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_BASE_AC  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -850,38 +850,38 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
   PROCEDURE P_ENT_DW_E_MR_SECT(I_DATA   VARCHAR2,
                                OUT_CODE OUT NUMBER,
                                OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_E_MR_SECT', I_DATA);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_E_MR_SECT(I_DATA, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+    --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_E_MR_SECT(I_DATA, OUT_CODE, OUT_MSG);
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_E_MR_SECT  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_E_MR_SECT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_E_MR_SECT  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ENT_DW_E_MR_SECT  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -889,16 +889,16 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                OUT_CODE OUT NUMBER,
                                OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
     V_TIME VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_E_MR_SECT', I_DATA);
   
     DELETE FROM DW_E_MR_SECT A WHERE A.AMT_YM = V_TIME;
@@ -953,29 +953,29 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
            AND B.AMT_YM = V_TIME
            AND A.ORG_NO LIKE TSS.ORG_NO || '%'
            AND B.ORG_NO LIKE TSS.ORG_NO || '%'
-              --������ʡ��gk_dw_code_tans�����õĳ����¼����ͽ����ų�,Ĭ�ϲ��ų���
+              --按照网省在gk_dw_code_tans中配置的抄表事件类型进行排除,默认不排除。
            AND INSTR(PKG_GK_PUBLIC.F_TRANS_CODE('CBSJLX', 'CBSJLX'),
                      B.EVENT_TYPE) <= 0
-              --������ʡ��gk_dw_code_tans�����õĳ����ƻ����ͽ����ų�,Ĭ�ϲ��ų���
+              --按照网省在gk_dw_code_tans中配置的抄表计划类型进行排除,默认不排除。
            AND INSTR(PKG_GK_PUBLIC.F_TRANS_CODE('CBJHLX', 'CBJHLX'),
                      B.PLAN_TYPE_CODE) <= 0;
     END LOOP;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_E_MR_SECT  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_E_MR_SECT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_E_MR_SECT  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_INS_DW_E_MR_SECT  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -983,13 +983,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                OUT_CODE OUT NUMBER,
                                OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_E_MR_SECT', I_DATA);
   
     DELETE FROM SY_OM_DW_E_MR_SECT A WHERE A.AMT_YM = V_TIME;
@@ -1023,58 +1023,58 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
        WHERE B.AMT_YM = V_TIME;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_E_MR_SECT  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_E_MR_SECT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_E_MR_SECT  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_E_MR_SECT  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_E_PF_AMT(I_DATA   VARCHAR2,
                               OUT_CODE OUT NUMBER,
                               OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_E_PF_AMT', I_DATA);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_E_PF_AMT(I_DATA, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+    --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_E_PF_AMT(I_DATA, OUT_CODE, OUT_MSG);
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_E_PF_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_E_PF_AMT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_E_PF_AMT  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ENT_DW_E_PF_AMT  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -1082,16 +1082,16 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                               OUT_CODE OUT NUMBER,
                               OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
     V_TIME VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_E_PF_AMT', I_DATA);
   
     DELETE FROM DW_E_PF_AMT WHERE AMT_YM = V_TIME;
@@ -1115,7 +1115,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
          PF_AMT_SUB,
          TIME_STAMP)
         SELECT
-        /*+PARALLEL(A 4) PARALLEL(B 4) */ --������䣬�������ݿ��ڲ�������.
+        /*+PARALLEL(A 4) PARALLEL(B 4) */ --并发语句，增加数据库内并发进程.
          PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO),
          V_PRO_ORG_NO,
          A.ORG_NO,
@@ -1155,20 +1155,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     END LOOP;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_E_PF_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_E_PF_AMT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_E_PF_AMT  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_INS_DW_E_PF_AMT  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -1176,13 +1176,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                               OUT_CODE OUT NUMBER,
                               OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_E_PF_AMT', I_DATA);
   
     DELETE FROM SY_OM_DW_E_PF_AMT WHERE AMT_YM = V_TIME;
@@ -1212,43 +1212,43 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
        WHERE A.AMT_YM = V_TIME;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_E_PF_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_E_PF_AMT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_E_PF_AMT  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_E_PF_AMT  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_E_AMT_COMP_DAY(I_DATA   VARCHAR2,
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_TIME     VARCHAR(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_E_AMT_COMP_DAY', V_TIME);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_E_AMT_COMP_DAY(V_TIME, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+    --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_E_AMT_COMP_DAY(V_TIME, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_E_AMT_COMP_DAY A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -1259,22 +1259,22 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
        WHERE A.STAT_YMD = V_TIME;
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_E_AMT_COMP_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_E_AMT_COMP_DAY  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_E_AMT_COMP_DAY  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_E_AMT_COMP_DAY  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -1282,10 +1282,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
     V_TIME DATE := TO_DATE(SUBSTR(I_DATA, 1, 8), 'YYYYMMDD');
@@ -1299,7 +1299,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     V_NXT_YM VARCHAR2(6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_E_AMT_COMP_DAY', I_DATA);
   
     SELECT TO_CHAR(ADD_MONTHS(V_TIME, -1), 'YYYYMM'),
@@ -1333,7 +1333,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
          RCVBL_AMT,
          TIME_STAMP)
         SELECT
-        /*+PARALLEL(A 4) PARALLEL(B 4) PARALLEL(C 4)*/ --������䣬�������ݿ��ڲ�������.
+        /*+PARALLEL(A 4) PARALLEL(B 4) PARALLEL(C 4)*/ --并发语句，增加数据库内并发进程.
          PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO),
          V_PRO_ORG_NO,
          A.ORG_NO,
@@ -1376,20 +1376,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     END LOOP;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_E_AMT_COMP_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_E_AMT_COMP_DAY  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_E_AMT_COMP_DAY  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_E_AMT_COMP_DAY  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -1397,13 +1397,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(8) := SUBSTR(I_DATA, 1, 8);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_E_AMT_COMP_DAY', I_DATA);
   
     DELETE FROM SY_OM_DW_E_AMT_COMP_DAY A WHERE A.STAT_YMD = V_TIME;
@@ -1444,43 +1444,43 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_E_AMT_COMP_DAY  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_E_AMT_COMP_DAY  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_E_AMT_COMP_DAY  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_E_AMT_COMP_DAY  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_E_AMT_COMP_MON(I_DATA   VARCHAR2,
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_TIME     VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_E_AMT_COMP_MON', V_TIME);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_E_AMT_COMP_MON(V_TIME, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+    --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_E_AMT_COMP_MON(V_TIME, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_E_AMT_COMP_MON A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -1492,22 +1492,22 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
        WHERE A.AMT_YM = V_TIME;
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_E_AMT_COMP_MON  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_E_AMT_COMP_MON  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_E_AMT_COMP_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_E_AMT_COMP_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -1515,10 +1515,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
     V_YM VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
@@ -1526,29 +1526,29 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     V_NUM NUMBER;
   
     TYPE PL_ITEM_ARRAY IS TABLE OF VARCHAR2(32) INDEX BY PLS_INTEGER;
-    V_PL_CODE       PL_ITEM_ARRAY; --������
+    V_PL_CODE       PL_ITEM_ARRAY; --代征项
     V_SP_PL_CODE    VARCHAR2(64) := 'XXX';
-    V_TOPPK_YM_FLAG VARCHAR2(8); --���������±�־
+    V_TOPPK_YM_FLAG VARCHAR2(8); --尖峰电量年月标志
     V_STEP_AMT_CODE VARCHAR2(2);
-    --���ݵ����������:�ֵ���(1),������(2).Ĭ��Ϊ�ֵ���1,�����ʡΪ����������dw_gk_code_trans������Ϊ2
+    --阶梯电量存放类型:分档法(1),递增法(2).默认为分档法1,如果网省为递增法请在dw_gk_code_trans内配置为2
     V_JTCFLX VARCHAR2(1) := PKG_GK_PUBLIC.F_TRANS_CODE('JTCFLX', '1');
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_E_AMT_COMP_MON', I_DATA);
   
     FOR I IN 1 .. 13 LOOP
-      SELECT NVL(MAX(CONT1), 'NODATA'), NVL(MAX(CONT2), '0') --content2='1'��Ϊ�������
+      SELECT NVL(MAX(CONT1), 'NODATA'), NVL(MAX(CONT2), '0') --content2='1'的为特殊代征
         INTO V_PL_CODE(I), V_NUM
         FROM GK_DW_CODE_TRANS
        WHERE CODE_TYPE = 'PrtPlItem'
-         AND LPAD(TRANS_VALUE, 2, '0') = LPAD(I, 2, '0'); --TRANS_VALUE��ŵľ���SGPM_OUT.ARC_E_PL_AMT��PL_AMT__�ֶε����
+         AND LPAD(TRANS_VALUE, 2, '0') = LPAD(I, 2, '0'); --TRANS_VALUE存放的就是SGPM_OUT.ARC_E_PL_AMT的PL_AMT__字段的序号
       IF V_NUM = '1' THEN
         V_SP_PL_CODE := V_SP_PL_CODE || V_PL_CODE(I);
       END IF;
     END LOOP;
   
     SELECT SIGN(INSTR(CONT1, SUBSTR(V_YM, 5, 2)))
-      INTO V_TOPPK_YM_FLAG --���������¼����ʶ
+      INTO V_TOPPK_YM_FLAG --尖峰电量年月计算标识
       FROM GK_DW_CODE_TRANS
      WHERE CODE_TYPE = 'acmeYm';
   
@@ -1631,7 +1631,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
          PKG_GK_PUBLIC.F_TRANS_CODE('YES_NO_FLAG', B.TS_FLAG) EXEC_PV_FLAG,
          PKG_GK_PUBLIC.F_TRANS_CODE('PRC_TYPE_CODE', D.TYPE_CODE) TWO_PRC_FLAG,
          PKG_GK_PUBLIC.F_TRANS_CODE('PF_EVAL_MODE', D.PF_EVAL_MODE),
-         PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02'), --����λ����ȷ������GK_DW_CODE_TANS��������,00��  01�����  02�½���       
+         PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02'), --各单位自行确定可在GK_DW_CODE_TANS表内配置,00无  01年阶梯  02月阶梯       
          SUM(C.T_SETTLE_PQ) SPQ,
          SUM(C.T_AMT) SPA,
          SUM(ACME_PQ),
@@ -1684,7 +1684,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                AND AA.PARA_VN = C.PARA_VN
                                AND BB.PRC_TI_CODE = '03'),
                            FLAT_CATKWH_PRC)) * NVL(PEAK_PQ, 0),
-                   2)) PEAKADD_PA, --������
+                   2)) PEAKADD_PA, --峰增加
          SUM(ROUND((DECODE(NVL(FLAT_CATKWH_PRC, 0),
                            0,
                            (SELECT NVL(MAX(CAT_KWH_PRC), 0)
@@ -1706,10 +1706,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                AND BB.PRC_TI_CODE = '03'),
                            FLAT_CATKWH_PRC) - NVL(NADIR_CATKWH_PRC, 0)) *
                    NVL(NADIR_PQ, 0),
-                   2)) VALLEYSUB_PA, --�ȼ���
+                   2)) VALLEYSUB_PA, --谷减少
          SUM(PF_AMT_ADD),
          SUM(PF_AMT_SUB),
-         --��ѻ�ȡ������ʡ����Ϊ�ֵ������,�ڶ���,������������¼�������Ӧ��λ�ĵ������,����������ʡ��Ҫ�ٷ�������
+         --电费获取按照网省数据为分档法存放,第二档,第三档电价重新计算后与对应档位的电量相乘,递增法的网省需要再反馈测试
          DECODE(V_JTCFLX,
                 '1',
                 SUM(NVL(T_SETTLE_PQ, 0) *
@@ -1740,7 +1740,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                         AND BB.PRC_CODE = C.PRC_CODE
                         AND AA.RANGE_TYPE_CODE IN ('31', '33'))),
                 SUM(DECODE(C.LEVEL_NUM, '3', NVL(T_AMT, 0), 0))) THIRD_LADDER_AMT, --33-32-31
-         0 H_AND_L_PA, --��ݵ��
+         0 H_AND_L_PA, --丰枯电费
          SYSDATE TIME_STAMP
           FROM SY_SG_ARC_E_CONS_SNAP A,
                SY_SG_ARC_E_CONSPRC_SNAP B,
@@ -1789,7 +1789,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                 '01',
                                 NVL(B.CAT_KWH_AMT, 0) + NVL(B.FLAT_BAL, 0),
                                 0)),
-                     0) ACME_CATKWH_AMT, ---20110808���ϵ�β
+                     0) ACME_CATKWH_AMT, ---20110808加上调尾
                  NVL(SUM(DECODE(B.PRC_TS_CODE,
                                 '02',
                                 NVL(B.CAT_KWH_AMT, 0) + NVL(B.FLAT_BAL, 0),
@@ -1853,7 +1853,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                  GROUP BY PRC_AMT_ID) G
          WHERE A.CALC_ID = B.CALC_ID
            AND B.PRC_SNAP_ID = C.PRC_SNAP_ID
-           AND B.PRC_TACTIC_SNAP_ID = D.PRC_TACTIC_SNAP_ID(+) --ɽ�������е�ѵ��޵�۲��Կ��յ����
+           AND B.PRC_TACTIC_SNAP_ID = D.PRC_TACTIC_SNAP_ID(+) --山东存在有电费但无电价策略快照的情况
            AND B.CALC_ID = D.CALC_ID(+)
            AND C.PRC_AMT_ID = E.PRC_AMT_ID(+)
            AND C.PRC_AMT_ID = F.PRC_AMT_ID(+)
@@ -1888,7 +1888,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     
     END LOOP;
   
-    --��ִ�зǽ��ݵ�۵ĵ�һ,��,�����ݵ�����۸�Ϊ0
+    --将执行非阶梯电价的第一,二,三阶梯电量电价改为0
     UPDATE DW_E_AMT_COMP_MON A
        SET A.FIRST_LADDER_AMT  = 0,
            A.SECOND_LADDER_AMT = 0,
@@ -1907,20 +1907,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     COMMIT;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_E_AMT_COMP_MON  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_E_AMT_COMP_MON  成功';
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_E_AMT_COMP_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_E_AMT_COMP_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
     
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -1928,13 +1928,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_E_AMT_COMP_MON', I_DATA);
   
     DELETE FROM SY_OM_DW_E_AMT_COMP_MON A WHERE A.AMT_YM = V_TIME;
@@ -2064,58 +2064,58 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_E_AMT_COMP_MON  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_E_AMT_COMP_MON  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_E_AMT_COMP_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_E_AMT_COMP_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_E_BASE_AMT(I_DATA   VARCHAR2,
                                 OUT_CODE OUT NUMBER,
                                 OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_E_BASE_AMT', I_DATA);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_E_BASE_AMT(I_DATA, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+    --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_E_BASE_AMT(I_DATA, OUT_CODE, OUT_MSG);
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_E_BASE_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_E_BASE_AMT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_E_BASE_AMT  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ENT_DW_E_BASE_AMT  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -2123,17 +2123,17 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                 OUT_CODE OUT NUMBER,
                                 OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
     V_TIME VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
     V_MAX_LEVEL NUMBER;
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_E_BASE_AMT', I_DATA);
   
     SELECT MAX(ORG_TYPE)
@@ -2162,7 +2162,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
          ORG_NO,
          TIME_STAMP)
         SELECT
-        /*+PARALLEL(A 4) PARALLEL(B 4) */ --������䣬�������ݿ��ڲ�������.
+        /*+PARALLEL(A 4) PARALLEL(B 4) */ --并发语句，增加数据库内并发进程.
          PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO),
          V_PRO_ORG_NO,
          A.PRC_AMT_ID,
@@ -2222,20 +2222,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     END LOOP;*/
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_E_BASE_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_E_BASE_AMT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_E_BASE_AMT  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_INS_DW_E_BASE_AMT  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -2243,13 +2243,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                 OUT_CODE OUT NUMBER,
                                 OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_E_BASE_AMT', I_DATA);
   
     DELETE FROM SY_OM_DW_E_BASE_AMT A WHERE A.AMT_YM = V_TIME;
@@ -2279,58 +2279,58 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
        WHERE A.AMT_YM = V_TIME;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_E_BASE_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_E_BASE_AMT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_E_BASE_AMT  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_E_BASE_AMT  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_E_KWH_AMT(I_DATA   VARCHAR2,
                                OUT_CODE OUT NUMBER,
                                OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_E_KWH_AMT', I_DATA);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_E_KWH_AMT(I_DATA, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+    --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_E_KWH_AMT(I_DATA, OUT_CODE, OUT_MSG);
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_E_KWH_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_E_KWH_AMT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_E_KWH_AMT  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ENT_DW_E_KWH_AMT  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -2338,20 +2338,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                OUT_CODE OUT NUMBER,
                                OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
     V_YM            VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
-    V_TOPPK_YM_FLAG VARCHAR2(8); --���������±�־
+    V_TOPPK_YM_FLAG VARCHAR2(8); --尖峰电量年月标志
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_E_KWH_AMT', I_DATA);
   
     SELECT SIGN(INSTR(CONT1, SUBSTR(V_YM, 5, 2)))
-      INTO V_TOPPK_YM_FLAG --���������¼����ʶ
+      INTO V_TOPPK_YM_FLAG --尖峰电量年月计算标识
       FROM GK_DW_CODE_TRANS
      WHERE CODE_TYPE = 'acmeYm';
   
@@ -2407,7 +2407,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
          ORG_NO,
          TIME_STAMP)
         SELECT
-        /*+PARALLEL(A 4) PARALLEL(B 4) */ --������䣬�������ݿ��ڲ�������.
+        /*+PARALLEL(A 4) PARALLEL(B 4) */ --并发语句，增加数据库内并发进程.
          OMAC.PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO),
          V_PRO_ORG_NO,
          A.PRC_AMT_ID,
@@ -2478,7 +2478,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                 '01',
                                 NVL(B.CAT_KWH_AMT, 0) + NVL(B.FLAT_BAL, 0),
                                 0)),
-                     0) ACME_CATKWH_AMT, ---20110808���ϵ�β
+                     0) ACME_CATKWH_AMT, ---20110808加上调尾
                  NVL(SUM(DECODE(B.PRC_TS_CODE,
                                 '02',
                                 NVL(B.CAT_KWH_AMT, 0) + NVL(B.FLAT_BAL, 0),
@@ -2553,19 +2553,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     END LOOP;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_E_KWH_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_E_KWH_AMT  成功';
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_E_KWH_AMT  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_INS_DW_E_KWH_AMT  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -2573,13 +2573,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                OUT_CODE OUT NUMBER,
                                OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_E_KWH_AMT', I_DATA);
   
     DELETE FROM SY_OM_DW_E_KWH_AMT A WHERE A.AMT_YM = V_TIME;
@@ -2667,58 +2667,58 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
        WHERE A.AMT_YM = V_TIME;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_E_KWH_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_E_KWH_AMT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_E_KWH_AMT  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_E_KWH_AMT  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_E_PL_AMT(I_DATA   VARCHAR2,
                               OUT_CODE OUT NUMBER,
                               OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_E_PL_AMT', I_DATA);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_E_PL_AMT(I_DATA, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+    --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_E_PL_AMT(I_DATA, OUT_CODE, OUT_MSG);
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_E_PL_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_E_PL_AMT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_E_PL_AMT  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ENT_DW_E_PL_AMT  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -2726,20 +2726,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                               OUT_CODE OUT NUMBER,
                               OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
     TYPE PL_ITEM_ARRAY IS TABLE OF VARCHAR2(32) INDEX BY PLS_INTEGER;
-    V_PL_CODE    PL_ITEM_ARRAY; --������
+    V_PL_CODE    PL_ITEM_ARRAY; --代征项
     V_SP_PL_CODE VARCHAR2(64) := 'XXX';
     V_YM         VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
     V_NUM        NUMBER;
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_E_PL_AMT', I_DATA);
   
     DELETE FROM DW_E_PL_AMT D WHERE D.AMT_YM = V_YM;
@@ -2777,22 +2777,22 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                SUM(E.PL_PRC) PL_PRC,
                SYSDATE
           FROM (SELECT
-                /*+PARALLEL(A 4)(B 4)(C 4) */ --������䣬�������ݿ��ڲ�������.
+                /*+PARALLEL(A 4)(B 4)(C 4) */ --并发语句，增加数据库内并发进程.
                  A.ORG_NO,
                  A.PRC_AMT_ID,
-                 --�������
+                 --电费年月
                  A.YM AMT_YM,
-                 --���������
+                 --代征项代码
                  B.PL_CODE,
-                 --��������
+                 --代征电量
                  B.PL_PQ,
-                 --������ѽ��
+                 --代征电费金额
                  B.PL_AMT,
-                 --���ڼ����־
+                 --价内价外标志
                  --B.PRC_IO_FLAG,
-                 --���ʱ�δ���
+                 --电价时段代码
                  B.PRC_TS_CODE,
-                 --��������
+                 --代征单价
                  B.PL_PRC
                   FROM SY_SG_ARC_E_CONS_PRC_AMT A,
                        SY_SG_ARC_E_PL_AMT       B,
@@ -2821,19 +2821,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     END LOOP;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_E_PL_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_E_PL_AMT  成功';
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_E_PL_AMT  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_INS_DW_E_PL_AMT  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -2841,13 +2841,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                               OUT_CODE OUT NUMBER,
                               OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_E_PL_AMT', I_DATA);
   
     DELETE FROM SY_OM_DW_E_PL_AMT A WHERE A.AMT_YM = V_TIME;
@@ -2881,58 +2881,58 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
        WHERE A.AMT_YM = V_TIME;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_E_PL_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_E_PL_AMT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_E_PL_AMT  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_E_PL_AMT  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_E_CONS_PRC_AMT(I_DATA   VARCHAR2,
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_E_CONS_PRC_AMT', I_DATA);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_E_CONS_PRC_AMT(I_DATA, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+    --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_E_CONS_PRC_AMT(I_DATA, OUT_CODE, OUT_MSG);
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_E_CONS_PRC_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_E_CONS_PRC_AMT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_E_CONS_PRC_AMT  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_E_CONS_PRC_AMT  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -2940,16 +2940,16 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
     V_YM VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_E_CONS_PRC_AMT', I_DATA);
   
     FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
@@ -3003,7 +3003,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
          T_PL_AMT,
          TIME_STAMP)
         SELECT
-        /*+PARALLEL(A 8) PARALLEL(B 8) PARALLEL(C 8) PARALLEL(D 8) PARALLEL(E 8) */ --������䣬�������ݿ��ڲ�������.
+        /*+PARALLEL(A 8) PARALLEL(B 8) PARALLEL(C 8) PARALLEL(D 8) PARALLEL(E 8) */ --并发语句，增加数据库内并发进程.
          PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO),
          V_PRO_ORG_NO,
          A.PRC_AMT_ID,
@@ -3087,19 +3087,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     END LOOP;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_E_CONS_PRC_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_E_CONS_PRC_AMT  成功';
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_E_CONS_PRC_AMT  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_E_CONS_PRC_AMT  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -3107,13 +3107,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_E_CONS_PRC_AMT', I_DATA);
   
     DELETE FROM SY_OM_DW_E_CONS_PRC_AMT A WHERE A.AMT_YM = V_TIME;
@@ -3199,43 +3199,43 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
        WHERE C.AMT_YM = V_TIME;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_E_CONS_PRC_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_E_CONS_PRC_AMT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_E_CONS_PRC_AMT  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_E_CONS_PRC_AMT  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   /*PROCEDURE P_ENT_DW_E_LOW_PRC_AMT(I_DATA   VARCHAR2,
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_TIME     VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_E_LOW_PRC_AMT', V_TIME);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_E_LOW_PRC_AMT(V_TIME, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+    --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_E_LOW_PRC_AMT(V_TIME, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_E_LOW_PRC_AMT A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT \*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*\
@@ -3246,22 +3246,22 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
        WHERE A.AMT_YM = V_TIME;
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_E_LOW_PRC_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_E_LOW_PRC_AMT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_E_LOW_PRC_AMT  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ENT_DW_E_LOW_PRC_AMT  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;*/
 
@@ -3269,10 +3269,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
     V_YM VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
@@ -3280,29 +3280,29 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     V_NUM NUMBER;
   
     TYPE PL_ITEM_ARRAY IS TABLE OF VARCHAR2(32) INDEX BY PLS_INTEGER;
-    V_PL_CODE       PL_ITEM_ARRAY; --������
+    V_PL_CODE       PL_ITEM_ARRAY; --代征项
     V_SP_PL_CODE    VARCHAR2(64) := 'XXX';
-    V_TOPPK_YM_FLAG VARCHAR2(8); --���������±�־
+    V_TOPPK_YM_FLAG VARCHAR2(8); --尖峰电量年月标志
     V_STEP_AMT_CODE VARCHAR2(2);
-    --���ݵ����������:�ֵ���(1),������(2).Ĭ��Ϊ�ֵ���1,�����ʡΪ����������dw_gk_code_trans������Ϊ2
+    --阶梯电量存放类型:分档法(1),递增法(2).默认为分档法1,如果网省为递增法请在dw_gk_code_trans内配置为2
     V_JTCFLX VARCHAR2(1) := PKG_GK_PUBLIC.F_TRANS_CODE('JTCFLX', '1');
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_E_LOW_PRC_AMT', I_DATA);
   
     FOR I IN 1 .. 13 LOOP
-      SELECT NVL(MAX(CONT1), 'NODATA'), NVL(MAX(CONT2), '0') --content2='1'��Ϊ�������
+      SELECT NVL(MAX(CONT1), 'NODATA'), NVL(MAX(CONT2), '0') --content2='1'的为特殊代征
         INTO V_PL_CODE(I), V_NUM
         FROM GK_DW_CODE_TRANS
        WHERE CODE_TYPE = 'PrtPlItem'
-         AND LPAD(TRANS_VALUE, 2, '0') = LPAD(I, 2, '0'); --TRANS_VALUE��ŵľ���SGPM_OUT.ARC_E_PL_AMT��PL_AMT__�ֶε����
+         AND LPAD(TRANS_VALUE, 2, '0') = LPAD(I, 2, '0'); --TRANS_VALUE存放的就是SGPM_OUT.ARC_E_PL_AMT的PL_AMT__字段的序号
       IF V_NUM = '1' THEN
         V_SP_PL_CODE := V_SP_PL_CODE || V_PL_CODE(I);
       END IF;
     END LOOP;
   
     SELECT SIGN(INSTR(CONT1, SUBSTR(V_YM, 5, 2)))
-      INTO V_TOPPK_YM_FLAG --���������¼����ʶ
+      INTO V_TOPPK_YM_FLAG --尖峰电量年月计算标识
       FROM GK_DW_CODE_TRANS
      WHERE CODE_TYPE = 'acmeYm';
   
@@ -3398,7 +3398,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
          PKG_GK_PUBLIC.F_TRANS_CODE('YES_NO_FLAG', B.TS_FLAG),
          PKG_GK_PUBLIC.F_TRANS_CODE('PRC_TYPE_CODE', D.TYPE_CODE) TWO_PRC_FLAG,
          PKG_GK_PUBLIC.F_TRANS_CODE('PF_EVAL_MODE', D.PF_EVAL_MODE),
-         PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02') LADDER_TYPE, --����λ����ȷ��
+         PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02') LADDER_TYPE, --各单位自行确定
          
          SUM(C.T_SETTLE_PQ) SPQ,
          SUM(C.T_AMT) SPA,
@@ -3452,7 +3452,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                AND AA.PARA_VN = C.PARA_VN
                                AND BB.PRC_TI_CODE = '03'),
                            FLAT_CATKWH_PRC)) * NVL(PEAK_PQ, 0),
-                   2)) PEAKADD_PA, --������
+                   2)) PEAKADD_PA, --峰增加
          SUM(ROUND((DECODE(NVL(FLAT_CATKWH_PRC, 0),
                            0,
                            (SELECT NVL(MAX(CAT_KWH_PRC), 0)
@@ -3474,10 +3474,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                AND BB.PRC_TI_CODE = '03'),
                            FLAT_CATKWH_PRC) - NVL(NADIR_CATKWH_PRC, 0)) *
                    NVL(NADIR_PQ, 0),
-                   2)) VALLEYSUB_PA, --�ȼ���
+                   2)) VALLEYSUB_PA, --谷减少
          SUM(PF_AMT_ADD),
          SUM(PF_AMT_SUB),
-         --��ѻ�ȡ������ʡ����Ϊ�ֵ������,�ڶ���,������������¼�������Ӧ��λ�ĵ������,����������ʡ��Ҫ�ٷ�������
+         --电费获取按照网省数据为分档法存放,第二档,第三档电价重新计算后与对应档位的电量相乘,递增法的网省需要再反馈测试
          DECODE(V_JTCFLX,
                 '1',
                 SUM(NVL(T_SETTLE_PQ, 0) *
@@ -3521,7 +3521,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
          SUM(PL_AMT12),
          SUM(PL_AMT13),
          SUM(PL_AMT10),
-         0 H_AND_L_PA, --��ݵ��
+         0 H_AND_L_PA, --丰枯电费
          SYSDATE TIME_STAMP
           FROM SY_SG_ARC_E_CONS_SNAP A,
                SY_SG_ARC_E_CONSPRC_SNAP B,
@@ -3571,7 +3571,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                 '01',
                                 NVL(B.CAT_KWH_AMT, 0) + NVL(B.FLAT_BAL, 0),
                                 0)),
-                     0) ACME_CATKWH_AMT, ---20110808���ϵ�β
+                     0) ACME_CATKWH_AMT, ---20110808加上调尾
                  NVL(SUM(DECODE(B.PRC_TS_CODE,
                                 '02',
                                 NVL(B.CAT_KWH_AMT, 0) + NVL(B.FLAT_BAL, 0),
@@ -3731,7 +3731,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                  GROUP BY PRC_AMT_ID) H
          WHERE A.CALC_ID = B.CALC_ID
            AND B.PRC_SNAP_ID = C.PRC_SNAP_ID
-           AND B.PRC_TACTIC_SNAP_ID = D.PRC_TACTIC_SNAP_ID(+) --ɽ�������е�ѵ��޵�۲��Կ��յ����
+           AND B.PRC_TACTIC_SNAP_ID = D.PRC_TACTIC_SNAP_ID(+) --山东存在有电费但无电价策略快照的情况
            AND B.CALC_ID = D.CALC_ID(+)
            AND C.PRC_AMT_ID = E.PRC_AMT_ID(+)
            AND C.PRC_AMT_ID = F.PRC_AMT_ID(+)
@@ -3775,19 +3775,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     END LOOP;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_E_LOW_PRC_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_E_LOW_PRC_AMT  成功';
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_E_LOW_PRC_AMT  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_INS_DW_E_LOW_PRC_AMT  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;*/
 
@@ -3795,13 +3795,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                    OUT_CODE OUT NUMBER,
                                    OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_E_LOW_PRC_AMT', I_DATA);
   
     DELETE FROM SY_OM_DW_E_LOW_PRC_AMT A WHERE A.AMT_YM = V_TIME;
@@ -3930,58 +3930,58 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_E_LOW_PRC_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_E_LOW_PRC_AMT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_E_LOW_PRC_AMT  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_E_LOW_PRC_AMT  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;*/
 
   PROCEDURE P_ENT_DW_E_PQPA_ERR_DET(I_DATA   VARCHAR2,
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_E_PQPA_ERR_DET', I_DATA);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_E_PQPA_ERR_DET(I_DATA, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+    --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_E_PQPA_ERR_DET(I_DATA, OUT_CODE, OUT_MSG);
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_E_PQPA_ERR_DET  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_E_PQPA_ERR_DET  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_E_PQPA_ERR_DET  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_E_PQPA_ERR_DET  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -3990,16 +3990,16 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
     V_YM VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_E_PQPA_ERR_DET', I_DATA);
   
     FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
@@ -4069,7 +4069,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                SY_SG_E_RS_SORT_RELA D,
                SY_SG_E_RS_LOG B
          WHERE A.CONS_ID = B.CONS_ID
-              --ͳ��ʱ���������õ��鹤�������ų�,�õ����෢����˲�һ���˲����඼�ǿյġ�
+              --统计时将正常的用电检查工作工单排除,用电检查类发起的退补一般退补分类都是空的。
            AND D.TYPE_CODE IS NOT NULL
            AND D.RS_TYPE = '1'
            AND B.RS_ID = C.RS_ID
@@ -4104,19 +4104,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     END LOOP;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_E_PQPA_ERR_DET  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_E_PQPA_ERR_DET  成功';
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_E_PQPA_ERR_DET  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_E_PQPA_ERR_DET  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
   */
@@ -4127,11 +4127,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                     
                                     OUT_MSG OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
   
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
   
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
@@ -4139,7 +4139,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
   
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
   
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_E_PQPA_ERR_DET', I_DATA);
   
@@ -4271,7 +4271,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
         
          WHERE A.CONS_ID = B.CONS_ID
               
-              --ͳ��ʱ���������õ��鹤�������ų�,�õ����෢����˲�һ���˲����඼�ǿյġ�
+              --统计时将正常的用电检查工作工单排除,用电检查类发起的退补一般退补分类都是空的。
               
            AND D.TYPE_CODE IS NOT NULL
               
@@ -4337,29 +4337,29 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
   
     OUT_CODE := 1;
   
-    OUT_MSG := 'ִ�� P_INS_DW_E_PQPA_ERR_DET  �ɹ�';
+    OUT_MSG := '执行 P_INS_DW_E_PQPA_ERR_DET  成功';
   
-    --��¼����������־
+    --记录正常结束日志
   
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   
   EXCEPTION
   
     WHEN OTHERS THEN
     
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
     
       OUT_CODE := 0;
     
-      OUT_MSG := 'ִ�� P_INS_DW_E_PQPA_ERR_DET  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG := '执行 P_INS_DW_E_PQPA_ERR_DET  出现异常' || ',异常信息为：' ||
                 
                  SQLCODE || ',' || SQLERRM;
     
       ROLLBACK;
     
-      --��¼�쳣������־
+      --记录异常结束日志
     
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
@@ -4369,13 +4369,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                     OUT_CODE OUT NUMBER,
                                     OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_E_PQPA_ERR_DET', I_DATA);
   
     DELETE FROM SY_OM_DW_E_PQPA_ERR_DET A WHERE A.AMT_YM = V_TIME;
@@ -4427,43 +4427,43 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
        WHERE A.AMT_YM = V_TIME;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_E_PQPA_ERR_DET  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_E_PQPA_ERR_DET  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_E_PQPA_ERR_DET  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_E_PQPA_ERR_DET  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_E_PAPQ_ERR(I_DATA   VARCHAR2,
                                 OUT_CODE OUT NUMBER,
                                 OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_TIME     VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_E_PAPQ_ERR', V_TIME);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_E_PAPQ_ERR(V_TIME, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+    --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_E_PAPQ_ERR(V_TIME, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_E_PAPQ_ERR A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -4475,22 +4475,22 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
        WHERE A.AMT_YM = V_TIME;
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_E_PAPQ_ERR  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_E_PAPQ_ERR  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_E_PAPQ_ERR  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ENT_DW_E_PAPQ_ERR  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -4499,16 +4499,16 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                 OUT_CODE OUT NUMBER,
                                 OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
     V_YM VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_E_PAPQ_ERR', I_DATA);
   
     DELETE FROM DW_E_PAPQ_ERR A WHERE A.AMT_YM = V_YM;
@@ -4567,7 +4567,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                SY_SG_E_RS_SORT_RELA F,
                SY_SG_E_RS_PRC_AMT G
          WHERE A.CONS_ID = D.CONS_ID
-              --ͳ��ʱ���������õ��鹤�������ų�,�õ����෢����˲�һ���˲����඼�ǿյġ�
+              --统计时将正常的用电检查工作工单排除,用电检查类发起的退补一般退补分类都是空的。
            AND F.TYPE_CODE IS NOT NULL
            AND F.RS_TYPE = '1'
            AND C.CALC_ID = D.CALC_ID
@@ -4597,20 +4597,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
       --END LOOP;
     
       OUT_CODE := 1;
-      OUT_MSG  := 'ִ�� P_INS_DW_E_PAPQ_ERR  �ɹ�';
+      OUT_MSG  := '执行 P_INS_DW_E_PAPQ_ERR  成功';
       COMMIT;
     
-      --��¼����������־
+      --记录正常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-      --�쳣����
+      --异常处理
     EXCEPTION
       WHEN OTHERS THEN
-        --OUT_CODEΪ0��������ʧ��,�ع�����
+        --OUT_CODE为0代表运行失败,回滚事务
         OUT_CODE := 0;
-        OUT_MSG  := 'ִ�� P_INS_DW_E_PAPQ_ERR  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+        OUT_MSG  := '执行 P_INS_DW_E_PAPQ_ERR  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                     SQLERRM;
         ROLLBACK;
-        --��¼�쳣������־
+        --记录异常结束日志
         PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     END;
   */
@@ -4621,11 +4621,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                 
                                 OUT_MSG OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
   
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
   
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
@@ -4633,7 +4633,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
   
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
   
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_E_PAPQ_ERR', I_DATA);
   
@@ -4727,7 +4727,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
       
        WHERE A.CONS_ID = B.CONS_ID
             
-            --ͳ��ʱ���������õ��鹤�������ų�,�õ����෢����˲�һ���˲����඼�ǿյġ�
+            --统计时将正常的用电检查工作工单排除,用电检查类发起的退补一般退补分类都是空的。
             
          AND D.TYPE_CODE IS NOT NULL
             
@@ -4769,31 +4769,31 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
   
     OUT_CODE := 1;
   
-    OUT_MSG := 'ִ�� P_INS_DW_E_PAPQ_ERR  �ɹ�';
+    OUT_MSG := '执行 P_INS_DW_E_PAPQ_ERR  成功';
   
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
   
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --�쳣����
+    --异常处理
   
   EXCEPTION
   
     WHEN OTHERS THEN
     
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
     
       OUT_CODE := 0;
     
-      OUT_MSG := 'ִ�� P_INS_DW_E_PAPQ_ERR  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG := '执行 P_INS_DW_E_PAPQ_ERR  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                 
                  SQLERRM;
     
       ROLLBACK;
     
-      --��¼�쳣������־
+      --记录异常结束日志
     
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
@@ -4803,13 +4803,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                 OUT_CODE OUT NUMBER,
                                 OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_E_PAPQ_ERR', I_DATA);
   
     DELETE FROM SY_OM_DW_E_PAPQ_ERR A WHERE A.AMT_YM = V_TIME;
@@ -4855,58 +4855,58 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_E_PAPQ_ERR  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_E_PAPQ_ERR  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_E_PAPQ_ERR  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_INS_DW_E_PAPQ_ERR  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_E_DIFF_PAPQ_DET(I_DATA   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_E_DIFF_PAPQ_DET', I_DATA);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_E_DIFF_PAPQ_DET(I_DATA, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+    --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_E_DIFF_PAPQ_DET(I_DATA, OUT_CODE, OUT_MSG);
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_E_DIFF_PAPQ_DET  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_E_DIFF_PAPQ_DET  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_E_DIFF_PAPQ_DET  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_E_DIFF_PAPQ_DET  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -4914,10 +4914,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
     V_YM VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
@@ -4925,30 +4925,30 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     V_NUM NUMBER;
   
     TYPE PL_ITEM_ARRAY IS TABLE OF VARCHAR2(32) INDEX BY PLS_INTEGER;
-    V_PL_CODE       PL_ITEM_ARRAY; --������
+    V_PL_CODE       PL_ITEM_ARRAY; --代征项
     V_SP_PL_CODE    VARCHAR2(64) := 'XXX';
-    V_TOPPK_YM_FLAG VARCHAR2(8); --���������±�־
+    V_TOPPK_YM_FLAG VARCHAR2(8); --尖峰电量年月标志
     V_DIFF_PRC_CODE VARCHAR2(4000);
     V_STEP_AMT_CODE VARCHAR2(2);
-    --���ݵ����������:�ֵ���(1),������(2).Ĭ��Ϊ�ֵ���1,�����ʡΪ����������dw_gk_code_trans������Ϊ2
+    --阶梯电量存放类型:分档法(1),递增法(2).默认为分档法1,如果网省为递增法请在dw_gk_code_trans内配置为2
     V_JTCFLX VARCHAR2(1) := PKG_GK_PUBLIC.F_TRANS_CODE('JTCFLX', '1');
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_E_DIFF_PAPQ_DET', I_DATA);
   
     FOR I IN 1 .. 13 LOOP
-      SELECT NVL(MAX(CONT1), 'NODATA'), NVL(MAX(CONT2), '0') --content2='1'��Ϊ�������
+      SELECT NVL(MAX(CONT1), 'NODATA'), NVL(MAX(CONT2), '0') --content2='1'的为特殊代征
         INTO V_PL_CODE(I), V_NUM
         FROM GK_DW_CODE_TRANS
        WHERE CODE_TYPE = 'PrtPlItem'
-         AND LPAD(TRANS_VALUE, 2, '0') = LPAD(I, 2, '0'); --TRANS_VALUE��ŵľ���SGPM_OUT.ARC_E_PL_AMT��PL_AMT__�ֶε����
+         AND LPAD(TRANS_VALUE, 2, '0') = LPAD(I, 2, '0'); --TRANS_VALUE存放的就是SGPM_OUT.ARC_E_PL_AMT的PL_AMT__字段的序号
       IF V_NUM = '1' THEN
         V_SP_PL_CODE := V_SP_PL_CODE || V_PL_CODE(I);
       END IF;
     END LOOP;
   
     SELECT SIGN(INSTR(CONT1, SUBSTR(V_YM, 5, 2)))
-      INTO V_TOPPK_YM_FLAG --���������¼����ʶ
+      INTO V_TOPPK_YM_FLAG --尖峰电量年月计算标识
       FROM GK_DW_CODE_TRANS
      WHERE CODE_TYPE = 'acmeYm';
   
@@ -5036,7 +5036,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
          PKG_GK_PUBLIC.F_TRANS_CODE('YES_NO_FLAG', B.TS_FLAG) EXEC_PV_FLAG,
          PKG_GK_PUBLIC.F_TRANS_CODE('PRC_TYPE_CODE', D.TYPE_CODE) TWO_PRC_FLAG,
          PKG_GK_PUBLIC.F_TRANS_CODE('PF_EVAL_MODE', D.PF_EVAL_MODE),
-         PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02') LADDER_TYPE, --����λ����ȷ��
+         PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02') LADDER_TYPE, --各单位自行确定
          SUM(C.T_SETTLE_PQ) SPQ,
          SUM(C.T_AMT) SPA,
          SUM(ACME_PQ),
@@ -5089,7 +5089,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                AND AA.PARA_VN = C.PARA_VN
                                AND BB.PRC_TI_CODE = '03'),
                            FLAT_CATKWH_PRC)) * NVL(PEAK_PQ, 0),
-                   2)) PEAKADD_PA, --������
+                   2)) PEAKADD_PA, --峰增加
          SUM(ROUND((DECODE(NVL(FLAT_CATKWH_PRC, 0),
                            0,
                            (SELECT NVL(MAX(CAT_KWH_PRC), 0)
@@ -5111,10 +5111,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                AND BB.PRC_TI_CODE = '03'),
                            FLAT_CATKWH_PRC) - NVL(NADIR_CATKWH_PRC, 0)) *
                    NVL(NADIR_PQ, 0),
-                   2)) VALLEYSUB_PA, --�ȼ���
+                   2)) VALLEYSUB_PA, --谷减少
          SUM(PF_AMT_ADD),
          SUM(PF_AMT_SUB),
-         --��ѻ�ȡ������ʡ����Ϊ�ֵ������,�ڶ���,������������¼�������Ӧ��λ�ĵ������,����������ʡ��Ҫ�ٷ�������
+         --电费获取按照网省数据为分档法存放,第二档,第三档电价重新计算后与对应档位的电量相乘,递增法的网省需要再反馈测试
          DECODE(V_JTCFLX,
                 '1',
                 SUM(NVL(T_SETTLE_PQ, 0) *
@@ -5145,7 +5145,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                         AND BB.PRC_CODE = C.PRC_CODE
                         AND AA.RANGE_TYPE_CODE IN ('31', '33'))),
                 SUM(DECODE(C.LEVEL_NUM, '3', NVL(T_AMT, 0), 0))) THIRD_LADDER_AMT, --33-32-31
-         0 H_AND_L_PA, --��ݵ��
+         0 H_AND_L_PA, --丰枯电费
          SYSDATE TIME_STAMP
           FROM SY_SG_ARC_E_CONS_SNAP A,
                SY_SG_ARC_E_CONSPRC_SNAP B,
@@ -5195,7 +5195,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                 '01',
                                 NVL(B.CAT_KWH_AMT, 0) + NVL(B.FLAT_BAL, 0),
                                 0)),
-                     0) ACME_CATKWH_AMT, ---20110808���ϵ�β
+                     0) ACME_CATKWH_AMT, ---20110808加上调尾
                  NVL(SUM(DECODE(B.PRC_TS_CODE,
                                 '02',
                                 NVL(B.CAT_KWH_AMT, 0) + NVL(B.FLAT_BAL, 0),
@@ -5259,7 +5259,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                  GROUP BY PRC_AMT_ID) G
          WHERE A.CALC_ID = B.CALC_ID
            AND B.PRC_SNAP_ID = C.PRC_SNAP_ID
-           AND B.PRC_TACTIC_SNAP_ID = D.PRC_TACTIC_SNAP_ID(+) --ɽ�������е�ѵ��޵�۲��Կ��յ����
+           AND B.PRC_TACTIC_SNAP_ID = D.PRC_TACTIC_SNAP_ID(+) --山东存在有电费但无电价策略快照的情况
            AND B.CALC_ID = D.CALC_ID(+)
            AND C.PRC_AMT_ID = E.PRC_AMT_ID(+)
            AND C.PRC_AMT_ID = F.PRC_AMT_ID(+)
@@ -5295,19 +5295,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     END LOOP;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_E_DIFF_PAPQ_DET  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_E_DIFF_PAPQ_DET  成功';
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_E_DIFF_PAPQ_DET  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_E_DIFF_PAPQ_DET  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -5315,13 +5315,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_E_DIFF_PAPQ_DET', I_DATA);
   
     DELETE FROM SY_OM_DW_E_DIFF_PAPQ_DET A WHERE A.AMT_YM = V_TIME;
@@ -5447,58 +5447,58 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
        WHERE A.AMT_YM = V_TIME;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_E_DIFF_PAPQ_DET  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_E_DIFF_PAPQ_DET  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_E_DIFF_PAPQ_DET  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_E_DIFF_PAPQ_DET  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_E_DMD_RE_CAP(I_DATA   VARCHAR2,
                                   OUT_CODE OUT NUMBER,
                                   OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_E_DMD_RE_CAP', I_DATA);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_E_DMD_RE_CAP(I_DATA, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+    --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_E_DMD_RE_CAP(I_DATA, OUT_CODE, OUT_MSG);
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_E_DMD_RE_CAP  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_E_DMD_RE_CAP  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_E_DMD_RE_CAP  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ENT_DW_E_DMD_RE_CAP  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -5506,10 +5506,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                   OUT_CODE OUT NUMBER,
                                   OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
     V_YM VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
@@ -5518,7 +5518,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     'DD')); */
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_E_DMD_RE_CAP', I_DATA);
   
     DELETE FROM DW_E_DMD_RE_CAP A WHERE A.AMT_YM = V_YM;
@@ -5546,9 +5546,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                A.ORG_NO,
                A.YM,
                V_YM,
-               SUM(BILL_CAP) CUR_BILL_CAP, --����
-               NVL(SUM(BA_VALUE), 0) CUR_BILL_DMD, --����
-               NVL(SUM(BA), 0) DMD_PA, --�������
+               SUM(BILL_CAP) CUR_BILL_CAP, --容量
+               NVL(SUM(BA_VALUE), 0) CUR_BILL_DMD, --需量
+               NVL(SUM(BA), 0) DMD_PA, --需量电费
                SUM(BILL_CAP * 28) RECKON_CAP_PA,
                SYSDATE
           FROM SY_SG_ARC_E_CONS_PRC_AMT A,
@@ -5576,20 +5576,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     END LOOP;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_E_DMD_RE_CAP  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_E_DMD_RE_CAP  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_E_DMD_RE_CAP  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_INS_DW_E_DMD_RE_CAP  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -5597,13 +5597,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                   OUT_CODE OUT NUMBER,
                                   OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_E_DMD_RE_CAP', I_DATA);
   
     DELETE FROM SY_OM_DW_E_DMD_RE_CAP A WHERE A.AMT_YM = V_TIME;
@@ -5633,58 +5633,58 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
        WHERE A.AMT_YM = V_TIME;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_E_DMD_RE_CAP  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_E_DMD_RE_CAP  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_E_DMD_RE_CAP  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_E_DMD_RE_CAP  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_C_CONT_INFO(I_DATA   VARCHAR2,
                                  OUT_CODE OUT NUMBER,
                                  OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_C_CONT_INFO', I_DATA);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_C_CONT_INFO(I_DATA, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+    --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_C_CONT_INFO(I_DATA, OUT_CODE, OUT_MSG);
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_C_CONT_INFO  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_C_CONT_INFO  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_C_CONT_INFO  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ENT_DW_C_CONT_INFO  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -5692,16 +5692,16 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                  OUT_CODE OUT NUMBER,
                                  OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
     V_YM VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_C_CONT_INFO', I_DATA);
   
     DELETE FROM DW_C_CONT_INFO A WHERE A.STAT_YM = V_YM;
@@ -5737,7 +5737,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
              B.ORG_NO,
              A.CONT_ID,
              A.CONS_NO,
-             D.APP_CODE, --app_no ������
+             D.APP_CODE, --app_no 申请编号
              A.MR_SECT_NO,
              V_YM,
              A.CONT_NAME,
@@ -5749,12 +5749,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
              A.CONTACT_TEL,
              A.CONTACT_ADDR,
              A.CENTRAL,
-             TO_CHAR(C.EFFECT_DATE, 'YYYYMMDD'), --efect_date  ��������Чʱ��
+             TO_CHAR(C.EFFECT_DATE, 'YYYYMMDD'), --efect_date  民政局生效时间
              A.REG_NO,
              A.BEG_YEAR,
              A.END_YEAR,
-             A.DOC_DATE, --chg_date ���ʱ��
-             C.EFFECT_FLAG, --effect_flag ��Ч��־
+             A.DOC_DATE, --chg_date 变更时间
+             C.EFFECT_FLAG, --effect_flag 生效标志
              REMARK,
              SYSDATE
         FROM SY_SG_C_CONS B,
@@ -5773,20 +5773,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
          AND C.YM = V_YM;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_C_CONT_INFO  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_C_CONT_INFO  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_C_CONT_INFO  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_INS_DW_C_CONT_INFO  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -5794,13 +5794,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                  OUT_CODE OUT NUMBER,
                                  OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_C_CONT_INFO', I_DATA);
   
     DELETE FROM SY_OM_DW_C_CONT_INFO A WHERE A.STAT_YM = V_TIME;
@@ -5860,58 +5860,58 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
        WHERE A.STAT_YM = V_TIME;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_C_CONT_INFO  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_C_CONT_INFO  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_C_CONT_INFO  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_C_CONT_INFO  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_E_CONT_FEE(I_DATA   VARCHAR2,
                                 OUT_CODE OUT NUMBER,
                                 OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_E_CONT_FEE', I_DATA);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_E_CONT_FEE(I_DATA, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+    --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_E_CONT_FEE(I_DATA, OUT_CODE, OUT_MSG);
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_E_CONT_FEE  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_E_CONT_FEE  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_E_CONT_FEE  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ENT_DW_E_CONT_FEE  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -5919,16 +5919,16 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                 OUT_CODE OUT NUMBER,
                                 OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
     V_YM VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_E_CONT_FEE', I_DATA);
   
     DELETE FROM DW_E_CONT_FEE A WHERE A.AMT_YM = V_YM;
@@ -5984,20 +5984,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                 C.REMARK;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_E_CONT_FEE  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_E_CONT_FEE  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_E_CONT_FEE  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_INS_DW_E_CONT_FEE  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -6005,13 +6005,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                 OUT_CODE OUT NUMBER,
                                 OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_E_CONT_FEE', I_DATA);
   
     DELETE FROM SY_OM_DW_E_CONT_FEE A WHERE A.AMT_YM = V_TIME;
@@ -6049,43 +6049,43 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
        WHERE A.AMT_YM = V_TIME;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_E_CONT_FEE  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_E_CONT_FEE  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_E_CONT_FEE  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 P_ETL_DW_E_CONT_FEE  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_O_BULK_USER_AMT(I_DATA   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_YM       VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_O_BULK_USER_AMT', V_YM);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_CONS_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_CONS_COMP表
     P_INS_DW_O_BULK_USER_AMT(V_YM, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_CONS_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_CONS_COMP��
+    --调用推送过程，从管理库OMAC用户下的DW_C_CONS_COMP表取数据插入到稽查库OMAC用户下的DW_C_CONS_COMP表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_O_BULK_USER_AMT(V_YM, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_O_BULK_USER_AMT A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -6097,22 +6097,22 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
        WHERE A.AMT_YM = V_YM;
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_O_BULK_USER_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_O_BULK_USER_AMT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_O_BULK_USER_AMT  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_O_BULK_USER_AMT  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -6120,19 +6120,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
     V_YM VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_O_BULK_USER_AMT', V_YM);
   
-    --ɾ���ϴ����н��
+    --删除上次运行结果
     DELETE FROM DW_O_BULK_USER_AMT T WHERE T.AMT_YM = V_YM;
   
     INSERT INTO DW_O_BULK_USER_AMT
@@ -6191,7 +6191,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
              PKG_GK_PUBLIC.F_TRANS_CODE('YES_NO_FLAG', B.TS_FLAG),
              PKG_GK_PUBLIC.F_TRANS_CODE('PRC_TYPE_CODE', D.TYPE_CODE) TWO_PRC_FLAG,
              PKG_GK_PUBLIC.F_TRANS_CODE('PF_EVAL_MODE', D.PF_EVAL_MODE) PF_EVAL_MODE,
-             PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02'), --����λ����ȷ������GK_DW_CODE_TANS��������,00��  01�����  02�½���,
+             PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02'), --各单位自行确定可在GK_DW_CODE_TANS表内配置,00无  01年阶梯  02月阶梯,
              E.LEVEL_NUM,
              C.SPECIAL_HANDL_TYPE,
              C.SPECIAL_PL_CODE,
@@ -6241,30 +6241,30 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                 PKG_GK_PUBLIC.F_TRANS_CODE('YES_NO_FLAG', B.TS_FLAG),
                 PKG_GK_PUBLIC.F_TRANS_CODE('PRC_TYPE_CODE', D.TYPE_CODE),
                 PKG_GK_PUBLIC.F_TRANS_CODE('PF_EVAL_MODE', D.PF_EVAL_MODE),
-                PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02'), --����λ����ȷ������GK_DW_CODE_TANS��������,00��  01�����  02�½���,
+                PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02'), --各单位自行确定可在GK_DW_CODE_TANS表内配置,00无  01年阶梯  02月阶梯,
                 E.LEVEL_NUM,
                 C.SPECIAL_HANDL_TYPE,
                 C.SPECIAL_PL_CODE;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_O_BULK_USER_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_O_BULK_USER_AMT  成功';
     COMMIT;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_O_BULK_USER_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_O_BULK_USER_AMT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_O_BULK_USER_AMT  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_O_BULK_USER_AMT  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -6272,16 +6272,16 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
     V_YM VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_O_BULK_USER_AMT', V_YM);
   
-    --ɾ���ϴ����н��
+    --删除上次运行结果
     DELETE FROM SY_OM_DW_O_BULK_USER_AMT T WHERE T.AMT_YM = V_YM;
   
     INSERT INTO SY_OM_DW_O_BULK_USER_AMT
@@ -6355,20 +6355,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_O_BULK_USER_AMT  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_O_BULK_USER_AMT  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_O_BULK_USER_AMT  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_O_BULK_USER_AMT  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -6376,17 +6376,17 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2) IS
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_E_SPECIAL_PRC_CC', I_DATA);
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_C_BUSI_COMP��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_C_BUSI_COMP表
     P_INS_DW_E_SPECIAL_PRC_CC(I_DATA, OUT_CODE, OUT_MSG);
     IF V_DATAMODE = '2' THEN
-      --�������͹��̣��ӹ�����OMAC�û��µ�DW_C_BUSI_COMP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_C_BUSI_COMP��
+      --调用推送过程，从管理库OMAC用户下的DW_C_BUSI_COMP表取数据插入到稽查库OMAC用户下的DW_C_BUSI_COMP表
       P_ETL_DW_E_SPECIAL_PRC_CC(I_DATA, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_E_SPECIAL_PRC_CC A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -6398,21 +6398,21 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                      NVL(B.END_YMD, '99991231'))
        WHERE A.AMT_YM = SUBSTR(I_DATA, 1, 6);
     END IF;
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_E_SPECIAL_PRC_CC  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_E_SPECIAL_PRC_CC  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_E_SPECIAL_PRC_CC  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_E_SPECIAL_PRC_CC  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -6420,16 +6420,16 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
     V_YM VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_C_CONT_INFO', I_DATA);
   
     DELETE FROM DW_E_SPECIAL_PRC_CC A WHERE A.AMT_YM = V_YM;
@@ -6441,7 +6441,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                  WHERE ORG_NO <> '00000'
                    AND LENGTH(ORG_NO) >= DECODE(V_PRO_ORG_NO, '12101', 5, 7)) LOOP
     
-      --ִ������ݵ�ۻ���
+      --执行年阶梯电价户数
       INSERT INTO DW_E_SPECIAL_PRC_CC
         (DATA_ID,
          PRO_ORG_NO,
@@ -6458,15 +6458,15 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                V_PRO_ORG_NO,
                A.ORG_NO,
                V_YM,
-               SUM(DECODE(D.PRC_ID, NULL, 0, DECODE(C.LEVEL_NUM, 1, 1, 0))) FIRST_CC, --������ݼ�¼����󵵴�1��
-               SUM(DECODE(D.PRC_ID, NULL, 0, DECODE(C.LEVEL_NUM, 2, 1, 0))) SECOND_CC, --������ݼ�¼����󵵴�2��
-               SUM(DECODE(D.PRC_ID, NULL, 0, DECODE(C.LEVEL_NUM, 3, 1, 0))) THIRD_CC, --������ݼ�¼����󵵴�3��
-               SUM(DECODE(LEV_TWO_PQ_SUM, 0, 1, 0)) FIRST_CC_YEAR, --����Ϊ0�����һ���û���
+               SUM(DECODE(D.PRC_ID, NULL, 0, DECODE(C.LEVEL_NUM, 1, 1, 0))) FIRST_CC, --无年阶梯记录且最大档次1级
+               SUM(DECODE(D.PRC_ID, NULL, 0, DECODE(C.LEVEL_NUM, 2, 1, 0))) SECOND_CC, --无年阶梯记录且最大档次2级
+               SUM(DECODE(D.PRC_ID, NULL, 0, DECODE(C.LEVEL_NUM, 3, 1, 0))) THIRD_CC, --无年阶梯记录且最大档次3级
+               SUM(DECODE(LEV_TWO_PQ_SUM, 0, 1, 0)) FIRST_CC_YEAR, --二挡为0则代表一档用户数
                SUM(DECODE(LEV_TWO_PQ_SUM,
                           0,
                           0,
-                          DECODE(LEV_THREE_PQ_SUM, 0, 1, 0))) SECOND_CC_YEAR, -- ������Ϊ0������Ϊ0
-               SUM(DECODE(LEV_THREE_PQ_SUM, NULL, 0, 0, 0, 1)) THIRD_CC_YEAR, --������Ϊ0
+                          DECODE(LEV_THREE_PQ_SUM, 0, 1, 0))) SECOND_CC_YEAR, -- 二档不为0且三档为0
+               SUM(DECODE(LEV_THREE_PQ_SUM, NULL, 0, 0, 0, 1)) THIRD_CC_YEAR, --三档不为0
                SYSDATE
           FROM SY_SG_ARC_E_CONS_SNAP A,
                SY_SG_ARC_E_CONSPRC_SNAP B,
@@ -6487,7 +6487,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
            AND B.PRC_ID = D.PRC_ID(+)
          GROUP BY A.ORG_NO;
     
-      /*--ִ������ݵ�ۻ���
+      /*--执行年阶梯电价户数
       INSERT INTO DW_E_SPECIAL_PRC_CC
         (DATA_ID,
          PRO_ORG_NO,
@@ -6549,7 +6549,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
       
       COMMIT;*/
     
-      --ִ�з�Ȼ���
+      --执行峰谷户数
       INSERT INTO DW_E_SPECIAL_PRC_CC
         (DATA_ID,
          PRO_ORG_NO,
@@ -6576,7 +6576,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
          GROUP BY A.ORG_NO, A.YM;
       COMMIT;
     
-      --ִ�кϱ���ۻ���
+      --执行合表电价户数
       INSERT INTO DW_E_SPECIAL_PRC_CC
         (DATA_ID, PRO_ORG_NO, ORG_NO, AMT_YM, MERGE_PRC_CC, TIME_STAMP)
         SELECT OMAC.PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO),
@@ -6589,7 +6589,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                SY_SG_ARC_E_CONS_SNAP    B,
                DW_E_PRC_MERGE           C
          WHERE A.ORG_NO = B.ORG_NO
-              --���ݸ��෴��:���ڸ����۱��У���λ��Ϊ62101-����ʡ������˾��DW_E_PRC_MERGE����org_no��Ϊ62101,��ȡ��
+              --根据甘肃反馈:由于甘肃电价表中，单位均为62101-甘肃省电力公司，DW_E_PRC_MERGE表中org_no均为62101,故取消
               --AND A.ORG_NO = C.ORG_NO
            AND A.PRC_CODE = C.MERGE_PRC_CODE
            AND A.YM = B.YM
@@ -6605,37 +6605,37 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     END LOOP;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� DW_E_SPECIAL_PRC_CC  �ɹ�';
+    OUT_MSG  := '执行 DW_E_SPECIAL_PRC_CC  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� DW_E_SPECIAL_PRC_CC  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
+      OUT_MSG  := '执行 DW_E_SPECIAL_PRC_CC  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ETL_DW_E_SPECIAL_PRC_CC(I_DATA   VARCHAR2,
                                       OUT_CODE OUT NUMBER,
                                       OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
     V_YM      VARCHAR2(6);
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_E_SPECIAL_PRC_CC', I_DATA);
-    --����
+    --当月
     V_YM := SUBSTR(I_DATA, 1, 6);
-    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
+    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为月
     DELETE FROM SY_OM_DW_E_SPECIAL_PRC_CC A WHERE A.AMT_YM = V_YM;
-    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
+    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
     INSERT INTO SY_OM_DW_E_SPECIAL_PRC_CC
       (DATA_ID,
        PRO_ORG_NO,
@@ -6671,60 +6671,60 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
          AND TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD') BETWEEN
              B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_E_SPECIAL_PRC_CC  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_E_SPECIAL_PRC_CC  成功';
     COMMIT;
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_E_SPECIAL_PRC_CC  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_E_SPECIAL_PRC_CC  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_E_DIFF_PAPQ_PL_DET(I_DATA   VARCHAR2,
                                         OUT_CODE OUT NUMBER,
                                         OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_E_DIFF_PAPQ_PL_DET',
                                         I_DATA);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_E_DIFF_PAPQ_PL_DET��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_E_DIFF_PAPQ_PL_DET表
     P_INS_DW_E_DIFF_PAPQ_PL_DET(I_DATA, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_E_DIFF_PAPQ_PL_DET��ȡ���ݲ��뵽�����OMAC�û��µ�DW_E_DIFF_PAPQ_PL_DET��
+    --调用推送过程，从管理库OMAC用户下的DW_E_DIFF_PAPQ_PL_DET表取数据插入到稽查库OMAC用户下的DW_E_DIFF_PAPQ_PL_DET表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_E_DIFF_PAPQ_PL_DET(I_DATA, OUT_CODE, OUT_MSG);
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_E_DIFF_PAPQ_PL_DET  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_E_DIFF_PAPQ_PL_DET  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_E_DIFF_PAPQ_PL_DET  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_E_DIFF_PAPQ_PL_DET  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -6732,10 +6732,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                         OUT_CODE OUT NUMBER,
                                         OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
     V_YM VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
@@ -6743,20 +6743,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     V_NUM NUMBER;
   
     TYPE PL_ITEM_ARRAY IS TABLE OF VARCHAR2(32) INDEX BY PLS_INTEGER;
-    V_PL_CODE       PL_ITEM_ARRAY; --������
+    V_PL_CODE       PL_ITEM_ARRAY; --代征项
     V_SP_PL_CODE    VARCHAR2(64) := 'XXX';
-    V_TOPPK_YM_FLAG VARCHAR2(8); --���������±�־
+    V_TOPPK_YM_FLAG VARCHAR2(8); --尖峰电量年月标志
     V_DIFF_PRC_CODE VARCHAR2(4000);
     V_STEP_AMT_CODE VARCHAR2(2);
-    --���ݵ����������:�ֵ���(1),������(2).Ĭ��Ϊ�ֵ���1,�����ʡΪ����������dw_gk_code_trans������Ϊ2
+    --阶梯电量存放类型:分档法(1),递增法(2).默认为分档法1,如果网省为递增法请在dw_gk_code_trans内配置为2
     V_JTCFLX VARCHAR2(1) := PKG_GK_PUBLIC.F_TRANS_CODE('JTCFLX', '1');
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_E_DIFF_PAPQ_PL_DET',
                                         I_DATA);
   
     SELECT SIGN(INSTR(CONT1, SUBSTR(V_YM, 5, 2)))
-      INTO V_TOPPK_YM_FLAG --���������¼����ʶ
+      INTO V_TOPPK_YM_FLAG --尖峰电量年月计算标识
       FROM GK_DW_CODE_TRANS
      WHERE CODE_TYPE = 'acmeYm';
   
@@ -6848,18 +6848,18 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                  PKG_GK_PUBLIC.F_TRANS_CODE('YES_NO_FLAG', B.TS_FLAG) EXEC_PV_FLAG,
                  PKG_GK_PUBLIC.F_TRANS_CODE('PRC_TYPE_CODE', D.TYPE_CODE) TWO_PRC_FLAG,
                  PKG_GK_PUBLIC.F_TRANS_CODE('PF_EVAL_MODE', D.PF_EVAL_MODE) PF_EVAL_MODE,
-                 PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02') LADDER_TYPE, --����λ����ȷ��
-                 --���������
+                 PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02') LADDER_TYPE, --各单位自行确定
+                 --代征项代码
                  E.PL_CODE PL_CODE,
-                 --��������
+                 --代征电量
                  SUM(E.PL_PQ) PL_PQ,
-                 --������ѽ��
+                 --代征电费金额
                  SUM(E.PL_AMT) PL_AMT,
-                 --���ڼ����־
+                 --价内价外标志
                  --B.PRC_IO_FLAG,
-                 --���ʱ�δ���
+                 --电价时段代码
                  E.PRC_TS_CODE PRC_TS_CODE,
-                 --��������
+                 --代征单价
                  SUM(E.PL_PRC) PL_PRC
                   FROM SY_SG_ARC_E_CONS_SNAP          A,
                        SY_SG_ARC_E_CONSPRC_SNAP       B,
@@ -6868,7 +6868,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                        SY_SG_ARC_E_PL_AMT             E
                  WHERE A.CALC_ID = B.CALC_ID
                    AND B.PRC_SNAP_ID = C.PRC_SNAP_ID
-                   AND B.PRC_TACTIC_SNAP_ID = D.PRC_TACTIC_SNAP_ID(+) --ɽ�������е�ѵ��޵�۲��Կ��յ����
+                   AND B.PRC_TACTIC_SNAP_ID = D.PRC_TACTIC_SNAP_ID(+) --山东存在有电费但无电价策略快照的情况
                    AND B.CALC_ID = D.CALC_ID(+)
                    AND C.PRC_AMT_ID = E.PRC_AMT_ID
                    AND A.YM = V_YM
@@ -6932,19 +6932,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     END LOOP;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_E_DIFF_PAPQ_PL_DET  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_E_DIFF_PAPQ_PL_DET  成功';
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_E_DIFF_PAPQ_PL_DET  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_E_DIFF_PAPQ_PL_DET  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -6952,13 +6952,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                         OUT_CODE OUT NUMBER,
                                         OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_E_DIFF_PAPQ_PL_DET',
                                         I_DATA);
   
@@ -7015,44 +7015,44 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
        WHERE A.AMT_YM = V_TIME;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_E_DIFF_PAPQ_PL_DET  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_E_DIFF_PAPQ_PL_DET  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_E_DIFF_PAPQ_PL_DET  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_E_DIFF_PAPQ_PL_DET  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
   PROCEDURE P_ENT_DW_E_AMT_COMP_PL_MON(I_DATA   VARCHAR2,
                                        OUT_CODE OUT NUMBER,
                                        OUT_MSG  OUT VARCHAR2) IS
-    --��־ID
+    --日志ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
     V_TIME     VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   BEGIN
   
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_E_AMT_COMP_PL_MON',
                                         V_TIME);
   
-    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_E_AMT_COMP_PL_MON��
+    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_E_AMT_COMP_PL_MON表
     P_INS_DW_E_AMT_COMP_PL_MON(V_TIME, OUT_CODE, OUT_MSG);
-    --�������͹��̣��ӹ�����OMAC�û��µ�DW_E_AMT_COMP_PL_MON��ȡ���ݲ��뵽�����OMAC�û��µ�DW_E_AMT_COMP_PL_MON��
+    --调用推送过程，从管理库OMAC用户下的DW_E_AMT_COMP_PL_MON表取数据插入到稽查库OMAC用户下的DW_E_AMT_COMP_PL_MON表
     IF V_DATAMODE = '2' THEN
-      --����ģʽִ��
+      --推送模式执行
       P_ETL_DW_E_AMT_COMP_PL_MON(V_TIME, OUT_CODE, OUT_MSG);
     ELSE
-      --����ģʽ���乩����������
+      --复制模式补充供电区域性质
       UPDATE DW_E_AMT_COMP_PL_MON A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -7064,22 +7064,22 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
        WHERE A.AMT_YM = V_TIME;
     END IF;
   
-    --OUT_CODEΪ1�������гɹ�,�ύ����
+    --OUT_CODE为1代表运行成功,提交事务
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ENT_DW_E_AMT_COMP_PL_MON  �ɹ�';
+    OUT_MSG  := '执行 P_ENT_DW_E_AMT_COMP_PL_MON  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ENT_DW_E_AMT_COMP_PL_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ENT_DW_E_AMT_COMP_PL_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -7087,10 +7087,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                        OUT_CODE OUT NUMBER,
                                        OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
-    --��ȡ��ʡ�ĵ�λ����
+    --获取网省的单位编码
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
   
     V_YM VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
@@ -7098,19 +7098,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     V_NUM NUMBER;
   
     TYPE PL_ITEM_ARRAY IS TABLE OF VARCHAR2(32) INDEX BY PLS_INTEGER;
-    V_PL_CODE       PL_ITEM_ARRAY; --������
+    V_PL_CODE       PL_ITEM_ARRAY; --代征项
     V_SP_PL_CODE    VARCHAR2(64) := 'XXX';
-    V_TOPPK_YM_FLAG VARCHAR2(8); --���������±�־
+    V_TOPPK_YM_FLAG VARCHAR2(8); --尖峰电量年月标志
     V_STEP_AMT_CODE VARCHAR2(2);
-    --���ݵ����������:�ֵ���(1),������(2).Ĭ��Ϊ�ֵ���1,�����ʡΪ����������dw_gk_code_trans������Ϊ2
+    --阶梯电量存放类型:分档法(1),递增法(2).默认为分档法1,如果网省为递增法请在dw_gk_code_trans内配置为2
     V_JTCFLX VARCHAR2(1) := PKG_GK_PUBLIC.F_TRANS_CODE('JTCFLX', '1');
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_E_AMT_COMP_PL_MON',
                                         I_DATA);
   
     SELECT SIGN(INSTR(CONT1, SUBSTR(V_YM, 5, 2)))
-      INTO V_TOPPK_YM_FLAG --���������¼����ʶ
+      INTO V_TOPPK_YM_FLAG --尖峰电量年月计算标识
       FROM GK_DW_CODE_TRANS
      WHERE CODE_TYPE = 'acmeYm';
   
@@ -7193,18 +7193,18 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                  PKG_GK_PUBLIC.F_TRANS_CODE('YES_NO_FLAG', B.TS_FLAG) EXEC_PV_FLAG,
                  PKG_GK_PUBLIC.F_TRANS_CODE('PRC_TYPE_CODE', D.TYPE_CODE) TWO_PRC_FLAG,
                  PKG_GK_PUBLIC.F_TRANS_CODE('PF_EVAL_MODE', D.PF_EVAL_MODE) PF_EVAL_MODE,
-                 PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02') LADDER_TYPE, --����λ����ȷ������GK_DW_CODE_TANS��������,00��  01�����  02�½���       
-                 --���������
+                 PKG_GK_PUBLIC.F_TRANS_CODE('LADDER_TYPE', '02') LADDER_TYPE, --各单位自行确定可在GK_DW_CODE_TANS表内配置,00无  01年阶梯  02月阶梯       
+                 --代征项代码
                  E.PL_CODE PL_CODE,
-                 --��������
+                 --代征电量
                  SUM(E.PL_PQ) PL_PQ,
-                 --������ѽ��
+                 --代征电费金额
                  SUM(E.PL_AMT) PL_AMT,
-                 --���ڼ����־
+                 --价内价外标志
                  --B.PRC_IO_FLAG,
-                 --���ʱ�δ���
+                 --电价时段代码
                  E.PRC_TS_CODE PRC_TS_CODE,
-                 --��������
+                 --代征单价
                  SUM(E.PL_PRC) PL_PRC
                   FROM SY_SG_ARC_E_CONS_SNAP          A,
                        SY_SG_ARC_E_CONSPRC_SNAP       B,
@@ -7213,7 +7213,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                        SY_SG_ARC_E_PL_AMT             E
                  WHERE A.CALC_ID = B.CALC_ID
                    AND B.PRC_SNAP_ID = C.PRC_SNAP_ID
-                   AND B.PRC_TACTIC_SNAP_ID = D.PRC_TACTIC_SNAP_ID(+) --ɽ�������е�ѵ��޵�۲��Կ��յ����
+                   AND B.PRC_TACTIC_SNAP_ID = D.PRC_TACTIC_SNAP_ID(+) --山东存在有电费但无电价策略快照的情况
                    AND B.CALC_ID = D.CALC_ID(+)
                    AND C.PRC_AMT_ID = E.PRC_AMT_ID
                    AND A.ORG_NO = B.ORG_NO
@@ -7275,20 +7275,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
     END LOOP;
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_INS_DW_E_AMT_COMP_PL_MON  �ɹ�';
+    OUT_MSG  := '执行 P_INS_DW_E_AMT_COMP_PL_MON  成功';
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_INS_DW_E_AMT_COMP_PL_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_INS_DW_E_AMT_COMP_PL_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
     
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -7296,13 +7296,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
                                        OUT_CODE OUT NUMBER,
                                        OUT_MSG  OUT VARCHAR2) IS
   
-    --��־ID
+    --日志ID
     V_DATA_ID VARCHAR2(24);
   
     V_TIME VARCHAR(6) := SUBSTR(I_DATA, 1, 6);
   
   BEGIN
-    --��¼��ʼ��־
+    --记录开始日志
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_E_AMT_COMP_PL_MON',
                                         I_DATA);
   
@@ -7361,20 +7361,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_YWGK_DW_AC IS
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
     OUT_CODE := 1;
-    OUT_MSG  := 'ִ�� P_ETL_DW_E_AMT_COMP_PL_MON  �ɹ�';
+    OUT_MSG  := '执行 P_ETL_DW_E_AMT_COMP_PL_MON  成功';
     COMMIT;
   
-    --��¼����������־
+    --记录正常结束日志
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --�쳣����
+    --异常处理
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODEΪ0��������ʧ��,�ع�����
+      --OUT_CODE为0代表运行失败,回滚事务
       OUT_CODE := 0;
-      OUT_MSG  := 'ִ�� P_ETL_DW_E_AMT_COMP_PL_MON  �����쳣' || ',�쳣��ϢΪ��' ||
+      OUT_MSG  := '执行 P_ETL_DW_E_AMT_COMP_PL_MON  出现异常' || ',异常信息为：' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --��¼�쳣������־
+      --记录异常结束日志
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
