@@ -2,46 +2,46 @@ CREATE OR REPLACE PACKAGE PKG_GK_PUBLIC IS
 
   FUNCTION F_GET_TABLE_SEQ(V_ORG_NO IN VARCHAR2) RETURN VARCHAR2;
   /********************************
-      �������� ��ȡ������
-      ���ߣ�   Jiangyoude
-      ʱ�䣺   2013-11-13 9:45:59
-      �޸���:
-      ����ֵ��V_ORG_NO ��ʡ����(5λ)
-      ���ֵ: �ַ���
+      中文名： 获取表主键
+      作者：   Jiangyoude
+      时间：   2013-11-13 9:45:59
+      修改日:
+      输入值：V_ORG_NO 网省代码(5位)
+      输出值: 字符串
   
   ************************************/
 
   FUNCTION F_PRO_ORG_NO RETURN VARCHAR2;
   /********************************
-      �������� ��ȡ��ʡ
-      ���ߣ�   Jiangyoude
-      ʱ�䣺   2013-11-13 9:45:59
-      �޸���:
-      ����ֵ��
-      ���ֵ: �ַ���
+      中文名： 获取网省
+      作者：   Jiangyoude
+      时间：   2013-11-13 9:45:59
+      修改日:
+      输入值：
+      输出值: 字符串
   
   ************************************/
 
   /*FUNCTION F_TRANS_ORG_NO(IN_ORG VARCHAR2) RETURN VARCHAR2;*/
   /********************************
-      �������� ��ȡ��λת�����루�ӱ�������ͻ��
-      ���ߣ�   Jiangyoude
-      ʱ�䣺   2013-11-13 9:45:59
-      �޸���:
-      ����ֵ��
-      ���ֵ: �ַ���
+      中文名： 获取单位转换代码（河北冀北冲突）
+      作者：   Jiangyoude
+      时间：   2013-11-13 9:45:59
+      修改日:
+      输入值：
+      输出值: 字符串
   
   ************************************/
 
   FUNCTION F_TRANS_CODE(IN_CODE_TYPE VARCHAR2, IN_VALUE VARCHAR2)
     RETURN VARCHAR2;
   /********************************
-      �������� ��ȡת������
-      ���ߣ�   �����
-      ʱ�䣺   2013-11-13 9:45:59
-      �޸���:
-      ����ֵ��
-      ���ֵ: �ַ���
+      中文名： 获取转换代码
+      作者：   殷光泽
+      时间：   2013-11-13 9:45:59
+      修改日:
+      输入值：
+      输出值: 字符串
   
   ************************************/
 
@@ -49,12 +49,12 @@ CREATE OR REPLACE PACKAGE PKG_GK_PUBLIC IS
                                IN_ELEC_TYPE_CODE VARCHAR2,
                                IN_TRADE_CODE     VARCHAR2) RETURN VARCHAR2;*/
   /********************************
-      �������� ��ȡ��ҵ�������
-      ���ߣ�   Quoqiang
-      ʱ�䣺   2013-11-13 9:45:59
-      �޸���:
-      ����ֵ��
-      ���ֵ: �ַ���
+      中文名： 获取产业分类代码
+      作者：   Quoqiang
+      时间：   2013-11-13 9:45:59
+      修改日:
+      输入值：
+      输出值: 字符串
   
   ************************************/
 
@@ -62,86 +62,86 @@ CREATE OR REPLACE PACKAGE PKG_GK_PUBLIC IS
   /*****************************
       -- Author  : Jiangyoude
   -- Created : 2013-10-11 18:00:22
-  -- Purpose : ��������������ݵĻ��մ�������
+  -- Purpose : 结果表中垃圾数据的回收处理过程
   /*
-  * v_tableNameΪ�����
-  * v_type,v_date ������ڲ�����ͬ
+  * v_tableName为结果表
+  * v_type,v_date 与过程内参数相同
   */
 
   -- Author  : Jiangyoude
   -- Created : 2013-10-12 15:57:27
-  -- Purpose : ��õ�ǰ��������������
-  --v_ymΪyyyyMM �������
-  --v_ymdΪyyyyMMdd ����ʱ��
+  -- Purpose : 获得当前日期所出的区间
+  --v_ym为yyyyMM 电费年月
+  --v_ymd为yyyyMMdd 发行时间
   FUNCTION F_GETTIMEINTERVAL(V_YM IN VARCHAR2, V_YMD IN VARCHAR2)
     RETURN VARCHAR2;
 
   /*FUNCTION F_GET_ORG_DIM_CODE RETURN VARCHAR2;*/
   /********************************
-      �������� ��ȡ��ʡ�ĵ�λ��DIM_CODE
-      ���ߣ�   Jiangyoude
-      ʱ�䣺   2008-3-12 9:45:59
-      �޸���:
-      ����ֵ��
-      ���ֵ: �ַ���
+      中文名： 获取网省的单位的DIM_CODE
+      作者：   Jiangyoude
+      时间：   2008-3-12 9:45:59
+      修改日:
+      输入值：
+      输出值: 字符串
   ****************************/
 
-  --PKG_GK_PUBLIC.F_TRANSORG2AA�������ڽ����к����ع�˾�ĵ�λ�����AA��
-  --��������ܹ��Զ��жϴ���ĵ�λ�Ƿ�Ϊ���л����أ�����ǵ��к����أ�
-  --�򷵻�ֵΪ��λ����+AA���������ĵ�λ���ǵ��к����ؽ�����ԭ����λ
+  --PKG_GK_PUBLIC.F_TRANSORG2AA函数用于将地市和区县公司的单位编码加AA，
+  --这个函数能够自动判断传入的单位是否为地市或区县，如果是地市和区县，
+  --则返回值为单位编码+AA。如果传入的单位不是地市和区县将返回原来单位
   /*FUNCTION F_TRANSORG2AA(V_ORG_NO VARCHAR2) RETURN VARCHAR2;*/
 
   /*************************************
-    �������ƣ�
-    ����������
-          �ɼ��Ȼ�ȡ��ֹ�·�
-    �޸���:Guoqiang
-    �޸�����:
+    过程名称：
+    过程描述：
+          由季度获取起止月份
+    修改人:Guoqiang
+    修改日期:
   ************************************/
   PROCEDURE P_SEASON2MON(V_SEASONSTR     IN VARCHAR2,
                          V_STAT_BGNMONTH OUT VARCHAR2,
                          V_STAT_ENDMONTH OUT VARCHAR2);
 
-  --F_TRANS_CODE2���ڽ�ȡ���ά��ά���ڶ��cont1�еĴ�����ʽ
+  --F_TRANS_CODE2用于截取多个维度维护在多个cont1中的处理方式
   /*FUNCTION F_TRANS_CODE2(V_CODE_TYPE IN VARCHAR2, V_CODE_VALUE IN VARCHAR2)
     RETURN VARCHAR2;*/
   /********************************
-      �������� ��ȡ��ʡ���ά�ȶ�Ӧ�ܲ�һ��ά��ά���ɶ�����¼��ת������
-      ���ߣ�   hyh
-      ʱ�䣺   2012-11-21 14:45:59
-      �޸���:
-      ����ֵ��
-      ���ֵ: �ַ���
+      中文名： 获取网省多个维度对应总部一个维度维护成多条记录的转换代码
+      作者：   hyh
+      时间：   2012-11-21 14:45:59
+      修改日:
+      输入值：
+      输出值: 字符串
   
   ************************************/
 
-  --��ȡ�յ�����
+  --获取日的上期
   FUNCTION F_GET_DAY_LC(IN_YMD VARCHAR2) RETURN VARCHAR2;
-  --��ȡ�յ�ͬ��
+  --获取日的同期
   FUNCTION F_GET_DAY_LY(IN_YMD VARCHAR2) RETURN VARCHAR2;
-  --��ȡ�µ�����
+  --获取月的上期
   FUNCTION F_GET_MONTH_LC(IN_YM VARCHAR2) RETURN VARCHAR2;
-  --��ȡ�µ�ͬ��
+  --获取月的同期
   FUNCTION F_GET_MONTH_LY(IN_YM VARCHAR2) RETURN VARCHAR2;
-  --��ȡ��������
+  --获取季的上期
   FUNCTION F_GET_SEASON_LC(IN_YQ VARCHAR2) RETURN VARCHAR2;
-  --��ȡ����ͬ��
+  --获取季的同期
   FUNCTION F_GET_SEASON_LY(IN_YQ VARCHAR2) RETURN VARCHAR2;
-  --��ȡ�������
+  --获取年的上期
   FUNCTION F_GET_YEAR_LC(IN_Y VARCHAR2) RETURN VARCHAR2;
-  --��ȡ���ͬ��
+  --获取年的同期
   FUNCTION F_GET_YEAR_LY(IN_Y VARCHAR2) RETURN VARCHAR2;
-  --���մ���������ַ������Ⱥ������жϵõ�����ֵ
+  --按照传入的日期字符串长度和内容判断得到上期值
   FUNCTION F_GET_LC(IN_DATE VARCHAR2) RETURN VARCHAR2;
-  --���մ���������ַ������Ⱥ������жϵõ�ͬ��ֵ
+  --按照传入的日期字符串长度和内容判断得到同期值
   FUNCTION F_GET_LY(IN_DATE VARCHAR2) RETURN VARCHAR2;
 
-  --���ջ�ȡ����K_dim_rela�е�dim_codeֵ��Ĭ��ΪgkOrg
+  --按照获取用于K_dim_rela中的dim_code值，默认为gkOrg
   /*FUNCTION F_GETGKORG RETURN VARCHAR2;*/
 
-  --��¼��ʼ��־
+  --记录开始日志
   FUNCTION PROC_BGN(V_OBJ_NAME VARCHAR2, IN_PARA VARCHAR2) RETURN VARCHAR2;
-  --��¼������־
+  --记录结束日志
   procedure PROC_END(V_DATA_ID     VARCHAR2,
                     V_LOG_TYPE    VARCHAR2,
                     V_RETURN_INFO VARCHAR2);
@@ -154,12 +154,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_GK_PUBLIC IS
 
   FUNCTION F_GET_TABLE_SEQ(V_ORG_NO IN VARCHAR2) RETURN VARCHAR2 IS
     /********************************
-        �������� ��ȡ������
-        ���ߣ�   Jiangyoude
-        ʱ�䣺   2013-9-12 9:45:59
-        �޸���:
-        ����ֵ��V_ORG_NO ��ʡ����(5λ)
-        ���ֵ: �ַ���
+        中文名： 获取表主键
+        作者：   Jiangyoude
+        时间：   2013-9-12 9:45:59
+        修改日:
+        输入值：V_ORG_NO 网省代码(5位)
+        输出值: 字符串
     
     ************************************/
   
@@ -175,12 +175,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_GK_PUBLIC IS
 
   FUNCTION F_PRO_ORG_NO RETURN VARCHAR2 IS
     /********************************
-        �������� ��ȡ��ʡ
-        ���ߣ�   Jiangyoude
-        ʱ�䣺   2013-11-13 9:45:59
-        �޸���:
-        ����ֵ��
-        ���ֵ: �ַ���
+        中文名： 获取网省
+        作者：   Jiangyoude
+        时间：   2013-11-13 9:45:59
+        修改日:
+        输入值：
+        输出值: 字符串
     
     ************************************/
     V_RESULT VARCHAR2(32);
@@ -198,12 +198,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_GK_PUBLIC IS
 
   /*FUNCTION F_TRANS_ORG_NO(IN_ORG VARCHAR2) RETURN VARCHAR2 IS
     \********************************
-        �������� ��ȡҵ��ܿر�׼����
-        ���ߣ�   Jiangyoude
-        ʱ�䣺   2013-11-13 9:45:59
-        �޸���:
-        ����ֵ��
-        ���ֵ: �ַ���
+        中文名： 获取业务管控标准编码
+        作者：   Jiangyoude
+        时间：   2013-11-13 9:45:59
+        修改日:
+        输入值：
+        输出值: 字符串
     
     ************************************\
     V_RESULT VARCHAR2(32);
@@ -223,12 +223,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_GK_PUBLIC IS
   FUNCTION F_TRANS_CODE(IN_CODE_TYPE VARCHAR2, IN_VALUE VARCHAR2)
     RETURN VARCHAR2 IS
     /********************************
-        �������� ��ȡת������
-        ���ߣ�   Jiangyoude
-        ʱ�䣺   2013-11-13 9:45:59
-        �޸���:
-        ����ֵ��
-        ���ֵ: �ַ���
+        中文名： 获取转换代码
+        作者：   Jiangyoude
+        时间：   2013-11-13 9:45:59
+        修改日:
+        输入值：
+        输出值: 字符串
     
     ************************************/
     V_RESULT VARCHAR2(32);
@@ -240,7 +240,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_GK_PUBLIC IS
      WHERE CODE_TYPE = IN_CODE_TYPE;
   
     IF V_RESULT IS NULL THEN
-      --û��ά�����룬Ĭ�Ϸ���IN_VALUE����
+      --没有维护代码，默认返回IN_VALUE本身
       RETURN IN_VALUE;
     ELSE
     
@@ -274,12 +274,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_GK_PUBLIC IS
                                IN_ELEC_TYPE_CODE VARCHAR2,
                                IN_TRADE_CODE     VARCHAR2) RETURN VARCHAR2
   \********************************
-        �������� ��ȡ��ҵ�������
-        ���ߣ�   Guoqiang
-        ʱ�䣺   2013-11-19 9:45:59
-        �޸���:
-        ����ֵ��
-        ���ֵ: �ַ���
+        中文名： 获取产业分类代码
+        作者：   Guoqiang
+        时间：   2013-11-19 9:45:59
+        修改日:
+        输入值：
+        输出值: 字符串
     ************************************\
    IS
     V_RESULT VARCHAR2(32);
@@ -306,41 +306,41 @@ CREATE OR REPLACE PACKAGE BODY PKG_GK_PUBLIC IS
 
   -- Author  : Jiangyoude
   -- Created : 2013-10-11 18:00:22
-  -- Purpose : ��������������ݵĻ��մ�������
+  -- Purpose : 结果表中垃圾数据的回收处理过程
   /*
-  * v_tableNameΪ�����
-  * v_type,in_date ������ڲ�����ͬ
+  * v_tableName为结果表
+  * v_type,in_date 与过程内参数相同
   */
   PROCEDURE P_GARBAGE_COLLECTION(V_TABLENAME IN VARCHAR2) IS
   BEGIN
-    --ɾ����ʡ�Ķ�����ܵĹ���������
+    --删除网省的多余汇总的国网的数据
     EXECUTE IMMEDIATE 'DELETE FROM ' || V_TABLENAME ||
                       ' WHERE ORG_NO=''0000''';
   END P_GARBAGE_COLLECTION;
 
   -- Author  : Jiangyoude
   -- Created : 2013-10-12 15:57:27
-  -- Purpose : ��õ�ǰ��������������
-  --v_ymΪyyyyMM �������
-  --v_ymdΪyyyyMMdd ����ʱ��
+  -- Purpose : 获得当前日期所出的区间
+  --v_ym为yyyyMM 电费年月
+  --v_ymd为yyyyMMdd 发行时间
   FUNCTION F_GETTIMEINTERVAL(V_YM IN VARCHAR2, V_YMD IN VARCHAR2)
     RETURN VARCHAR2 IS
     RESULT VARCHAR2(4);
     I_T    NUMBER := TO_NUMBER(SUBSTR(V_YMD, 7, 8));
     S_YM   VARCHAR2(6) := SUBSTR(V_YMD, 1, 6);
   BEGIN
-    --�����·����ϸ��µ��ʱ����Ϊ03
-    --�����·����¸��µ��ʱ����Ϊ01
+    --当本月发行上个月电费时区间为03
+    --当本月发生下个月电费时区间为01
     IF V_YM = S_YM THEN
-      --�³���15��Ϊ01
+      --月初到15号为01
       IF I_T >= 1 AND I_T <= 15 THEN
         RESULT := '01';
       ELSE
-        --16�ŵ�24��֮��Ϊ02
+        --16号到24号之间为02
         IF I_T >= 16 AND I_T <= 24 THEN
           RESULT := '02';
         ELSE
-          --25��֮��������һ��Ϊ03(ʵ��Ӧ�ð������һ��),�����ĩ���һ��Ϊ04.
+          --25号之后包括最后一天为03(实际应该包含最后一天),最后月末最后一天为04.
           --03=0301+04
           IF I_T >= 25 AND TO_DATE(V_YMD, 'yyyyMMdd') <>
              LAST_DAY(TO_DATE(S_YM, 'yyyyMM')) THEN
@@ -375,9 +375,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_GK_PUBLIC IS
     
   END F_GET_ORG_DIM_CODE;*/
 
-  --PKG_GK_PUBLIC.F_TRANSORG2AA�������ڽ����к����ع�˾�ĵ�λ�����AA��
-  --��������ܹ��Զ��жϴ���ĵ�λ�Ƿ�Ϊ���л����أ�����ǵ��к����أ�
-  --�򷵻�ֵΪ��λ����+AA���������ĵ�λ���ǵ��к����ؽ�����ԭ����λ
+  --PKG_GK_PUBLIC.F_TRANSORG2AA函数用于将地市和区县公司的单位编码加AA，
+  --这个函数能够自动判断传入的单位是否为地市或区县，如果是地市和区县，
+  --则返回值为单位编码+AA。如果传入的单位不是地市和区县将返回原来单位
   /*FUNCTION F_TRANSORG2AA(V_ORG_NO VARCHAR2) RETURN VARCHAR2 IS
     V_RESULT VARCHAR2(32);
   BEGIN
@@ -408,11 +408,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_GK_PUBLIC IS
                          V_STAT_BGNMONTH OUT VARCHAR2,
                          V_STAT_ENDMONTH OUT VARCHAR2) IS
     /*************************************
-      �������ƣ�
-      ����������
-            �ɼ��Ȼ�ȡ��ֹ�·�
-      �޸���:Guoqiang
-      �޸�����:
+      过程名称：
+      过程描述：
+            由季度获取起止月份
+      修改人:Guoqiang
+      修改日期:
     ************************************/
     V_SEASON        VARCHAR2(1);
     V_STAT_CYCLE_LC VARCHAR2(255);
@@ -450,13 +450,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_GK_PUBLIC IS
   /*FUNCTION F_TRANS_CODE2(V_CODE_TYPE IN VARCHAR2, V_CODE_VALUE IN VARCHAR2)
     RETURN VARCHAR2 IS
     \********************************
-        �������� ��ȡ��ʡ���ά�ȶ�Ӧ�ܲ�һ��ά��ά���ɶ�����¼��ת������
-        ���ߣ�   hyh
-        ��ע:������ʡ���ô˺���
-        ʱ�䣺   2012-11-21 14:45:59
-        �޸���:
-        ����ֵ��
-        ���ֵ: �ַ���
+        中文名： 获取网省多个维度对应总部一个维度维护成多条记录的转换代码
+        作者：   hyh
+        备注:朗新网省勿用此函数
+        时间：   2012-11-21 14:45:59
+        修改日:
+        输入值：
+        输出值: 字符串
     
     ************************************\
     V_RESULT VARCHAR2(256);
@@ -474,32 +474,32 @@ CREATE OR REPLACE PACKAGE BODY PKG_GK_PUBLIC IS
       RETURN V_RESULT;
   END F_TRANS_CODE2;*/
 
-  --��ȡ�յ�����,Ϊ����
+  --获取日的上期,为昨天
   FUNCTION F_GET_DAY_LC(IN_YMD VARCHAR2) RETURN VARCHAR2 IS
   BEGIN
     RETURN TO_CHAR(TO_DATE(IN_YMD, 'yyyymmdd') - 1, 'yyyymmdd');
   END;
 
-  --��ȡ�յ�ͬ�ڣ�Ϊȥ��Ľ���
+  --获取日的同期，为去年的今天
   FUNCTION F_GET_DAY_LY(IN_YMD VARCHAR2) RETURN VARCHAR2 IS
   BEGIN
     RETURN TO_CHAR(ADD_MONTHS(TO_DATE(IN_YMD, 'yyyymmdd'), -12),
                    'yyyymmdd');
   END;
 
-  --��ȡ�µ����ڣ�Ϊ����
+  --获取月的上期，为上月
   FUNCTION F_GET_MONTH_LC(IN_YM VARCHAR2) RETURN VARCHAR2 IS
   BEGIN
     RETURN TO_CHAR(ADD_MONTHS(TO_DATE(IN_YM, 'yyyymm'), -1), 'yyyymm');
   END;
 
-  --��ȡ�µ�ͬ�ڣ�Ϊȥ��ĵ���
+  --获取月的同期，为去年的当月
   FUNCTION F_GET_MONTH_LY(IN_YM VARCHAR2) RETURN VARCHAR2 IS
   BEGIN
     RETURN TO_CHAR(ADD_MONTHS(TO_DATE(IN_YM, 'yyyymm'), -12), 'yyyymm');
   END;
 
-  --��ȡ��������
+  --获取季的上期
   FUNCTION F_GET_SEASON_LC(IN_YQ VARCHAR2) RETURN VARCHAR2 IS
     V_RESULT VARCHAR2(6);
   BEGIN
@@ -512,43 +512,43 @@ CREATE OR REPLACE PACKAGE BODY PKG_GK_PUBLIC IS
     RETURN V_RESULT;
   END;
 
-  --��ȡ����ͬ��
+  --获取季的同期
   FUNCTION F_GET_SEASON_LY(IN_YQ VARCHAR2) RETURN VARCHAR2 IS
   BEGIN
     RETURN SUBSTR(IN_YQ, 1, 4) - 1 || SUBSTR(IN_YQ, 5, 2);
   END;
 
-  --��ȡ�������
+  --获取年的上期
   FUNCTION F_GET_YEAR_LC(IN_Y VARCHAR2) RETURN VARCHAR2 IS
   BEGIN
     RETURN IN_Y - 1;
   END;
 
-  --��ȡ���ͬ��
+  --获取年的同期
   FUNCTION F_GET_YEAR_LY(IN_Y VARCHAR2) RETURN VARCHAR2 IS
   BEGIN
     RETURN IN_Y - 1;
   END;
 
-  --���մ���������ַ������Ⱥ������жϵõ�����ֵ
+  --按照传入的日期字符串长度和内容判断得到上期值
   FUNCTION F_GET_LC(IN_DATE VARCHAR2) RETURN VARCHAR2 IS
     V_LENGTH NUMBER;
   BEGIN
     V_LENGTH := LENGTH(TRIM(IN_DATE));
   
     IF 8 = V_LENGTH THEN
-      --��
+      --日
       RETURN F_GET_DAY_LC(IN_DATE);
     ELSE
       IF (6 = V_LENGTH) AND (INSTR(UPPER(IN_DATE), 'Q') <= 0) THEN
-        --��
+        --月
         RETURN F_GET_MONTH_LC(IN_DATE);
       ELSE
         IF (6 = V_LENGTH) AND (INSTR(UPPER(IN_DATE), 'Q') > 0) THEN
-          --����
+          --季度
           RETURN F_GET_SEASON_LC(IN_DATE);
         ELSE
-          --��
+          --年
           IF 4 = V_LENGTH THEN
             RETURN F_GET_YEAR_LC(IN_DATE);
           END IF;
@@ -559,25 +559,25 @@ CREATE OR REPLACE PACKAGE BODY PKG_GK_PUBLIC IS
   
   END;
 
-  --���մ���������ַ������Ⱥ������жϵõ�ͬ��ֵ
+  --按照传入的日期字符串长度和内容判断得到同期值
   FUNCTION F_GET_LY(IN_DATE VARCHAR2) RETURN VARCHAR2 IS
     V_LENGTH NUMBER;
   BEGIN
     V_LENGTH := LENGTH(TRIM(IN_DATE));
   
     IF 8 = V_LENGTH THEN
-      --��
+      --日
       RETURN F_GET_DAY_LY(IN_DATE);
     ELSE
       IF (6 = V_LENGTH) AND (INSTR(UPPER(IN_DATE), 'Q') <= 0) THEN
-        --��
+        --月
         RETURN F_GET_MONTH_LY(IN_DATE);
       ELSE
         IF (6 = V_LENGTH) AND (INSTR(UPPER(IN_DATE), 'Q') > 0) THEN
-          --����
+          --季度
           RETURN F_GET_SEASON_LY(IN_DATE);
         ELSE
-          --��
+          --年
           IF 4 = V_LENGTH THEN
             RETURN F_GET_YEAR_LY(IN_DATE);
           END IF;
@@ -587,7 +587,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_GK_PUBLIC IS
     END IF;
   END;
 
-  --���ջ�ȡ����K_dim_rela�е�dim_codeֵ��Ĭ��ΪgkOrg
+  --按照获取用于K_dim_rela中的dim_code值，默认为gkOrg
   /*FUNCTION F_GETGKORG RETURN VARCHAR2 IS
     V_RESULT VARCHAR2(32);
   BEGIN
@@ -603,7 +603,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_GK_PUBLIC IS
       RETURN V_RESULT;
   END;*/
 
---��¼��ʼ��־
+--记录开始日志
   FUNCTION PROC_BGN(V_OBJ_NAME  VARCHAR2,
                     IN_PARA     VARCHAR2) RETURN VARCHAR2 IS
     V_DATA_ID       VARCHAR2(24) := F_GET_TABLE_SEQ(F_PRO_ORG_NO);
@@ -626,7 +626,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_GK_PUBLIC IS
   END;
 
 
---��¼������־
+--记录结束日志
   procedure PROC_END(V_DATA_ID     VARCHAR2,
                     V_LOG_TYPE    VARCHAR2,
                     V_RETURN_INFO VARCHAR2) IS
@@ -645,13 +645,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_GK_PUBLIC IS
  FUNCTION F_GET_DATAMODE RETURN VARCHAR2 IS
   
     /********************************************************************
-    #function:ȡ����ʡ����ϵͳ���ݿⲿ��ģʽ��1����ؿ�͹�����Ϊͬһ���� ��2����ؿ�͹�����Ϊ��ͬ��,Ĭ��Ϊ2
+    #function:取得网省稽查系统数据库部署模式，1：监控库和管理库为同一个库 ，2：监控库和管理库为不同库,默认为2
     #version:1.01
-    #author:�����
+    #author:殷光泽
     #createdate:2010-11-24
-    #input��
-    #input��
-    #output�� VARCHAR2
+    #input：
+    #input：
+    #output： VARCHAR2
     #modifyexplain:
     ************************************************/
     V_DATAMODE VARCHAR2(8);
