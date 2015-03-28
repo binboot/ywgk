@@ -1,17 +1,17 @@
 create or replace package PKG_YWGK_DW_CA_RECOVER is
 
   /**
-   过程名称：P_ENT_DW_A_CASHCHK/日度在途解款明细表入口过程
-  作者：姜友德
-  编写日期：2015-01-29 23:37
-  过程描述：日度在途解款明细表入口过程,被数据库JOB调用,每天凌晨1点开始运行
+   �������ƣ�P_ENT_DW_A_CASHCHK/�ն���;�����ϸ����ڹ���
+  ���ߣ����ѵ�
+  ��д���ڣ�2015-01-29 23:37
+  �����������ն���;�����ϸ����ڹ���,�����ݿ�JOB����,ÿ���賿1�㿪ʼ����
   
-  统计频度：每月1日凌晨1点、7日凌晨1点、16日凌晨1点、26日凌晨1点 抽取，统计日期存放昨日TO_CHAR(SYSDATE-1,'YYYYMMDD')。
-  1、从营销表A_CASHCHK_FLOW中到账状态（ACCT_STATUS_CODE）为01的解款记录
-   统计日期存放昨日日期。
-  2、对应营销表A_CASHCHK_FLOW
-  修改人:
-  修改日期:
+  ͳ��Ƶ�ȣ�ÿ��1���賿1�㡢7���賿1�㡢16���賿1�㡢26���賿1�� ��ȡ��ͳ�����ڴ������TO_CHAR(SYSDATE-1,'YYYYMMDD')��
+  1����Ӫ����A_CASHCHK_FLOW�е���״̬��ACCT_STATUS_CODE��Ϊ01�Ľ���¼
+   ͳ�����ڴ���������ڡ�
+  2����ӦӪ����A_CASHCHK_FLOW
+  �޸���:
+  �޸�����:
   **/
   PROCEDURE P_ENT_DW_A_CASHCHK(I_DATA   VARCHAR2,
                                OUT_CODE OUT NUMBER,
@@ -24,17 +24,17 @@ create or replace package PKG_YWGK_DW_CA_RECOVER is
                                OUT_MSG  OUT VARCHAR2);
 
   /**
-   过程名称：P_ENT_DW_A_PAY/日度在途收费记录表入口过程
-  作者：姜友德
-  编写日期：2015-01-29 23:37
-  过程描述：日度在途收费记录表入口过程,当P_ENT_DW_A_CASHCHK执行完毕后再执行此过程
+   �������ƣ�P_ENT_DW_A_PAY/�ն���;�շѼ�¼����ڹ���
+  ���ߣ����ѵ�
+  ��д���ڣ�2015-01-29 23:37
+  �����������ն���;�շѼ�¼����ڹ���,��P_ENT_DW_A_CASHCHKִ����Ϻ���ִ�д˹���
   
-  统计频度：每月1日凌晨1点、7日凌晨1点、16日凌晨1点、26日凌晨1点 抽取，统计日期存放昨日TO_CHAR(SYSDATE-1,'YYYYMMDD')。
-  1、根据DW_A_CASHCHK中的CASHCHK_ID从营销A_PAY_FLOW获取的收费记录，
-    统计日期与DW_A_CASHCHK中的统计日期相同
-  2、营销表A_PAY_FLOW
-  修改人:
-  修改日期:
+  ͳ��Ƶ�ȣ�ÿ��1���賿1�㡢7���賿1�㡢16���賿1�㡢26���賿1�� ��ȡ��ͳ�����ڴ������TO_CHAR(SYSDATE-1,'YYYYMMDD')��
+  1������DW_A_CASHCHK�е�CASHCHK_ID��Ӫ��A_PAY_FLOW��ȡ���շѼ�¼��
+    ͳ��������DW_A_CASHCHK�е�ͳ��������ͬ
+  2��Ӫ����A_PAY_FLOW
+  �޸���:
+  �޸�����:
   **/
   PROCEDURE P_ENT_DW_A_PAY(I_DATA   VARCHAR2,
                            OUT_CODE OUT NUMBER,
@@ -47,17 +47,17 @@ create or replace package PKG_YWGK_DW_CA_RECOVER is
                            OUT_MSG  OUT VARCHAR2);
 
   /**
-   过程名称：P_ENT_DW_A_RCVED/日度在途实收电费信息表入口过程
-  作者：姜友德
-  编写日期：2015-01-29 23:37
-  过程描述：日度在途实收电费信息表入口过程,当P_ENT_DW_A_PAY执行完毕后再执行此过程
+   �������ƣ�P_ENT_DW_A_RCVED/�ն���;ʵ�յ����Ϣ����ڹ���
+  ���ߣ����ѵ�
+  ��д���ڣ�2015-01-29 23:37
+  �����������ն���;ʵ�յ����Ϣ����ڹ���,��P_ENT_DW_A_PAYִ����Ϻ���ִ�д˹���
   
-  统计频度：每月1日凌晨1点、7日凌晨1点、16日凌晨1点、26日凌晨1点 抽取，统计日期存放昨日TO_CHAR(SYSDATE-1,'YYYYMMDD')。
-  1、根据DW_A_PAY中的CHARGE_ID从营销A_RCVED_FLOW获取的实收记录，
-    统计日期与DW_A_PAY中的统计日期相同
-  2、营销表A_RCVED_FLOW
-  修改人:
-  修改日期:
+  ͳ��Ƶ�ȣ�ÿ��1���賿1�㡢7���賿1�㡢16���賿1�㡢26���賿1�� ��ȡ��ͳ�����ڴ������TO_CHAR(SYSDATE-1,'YYYYMMDD')��
+  1������DW_A_PAY�е�CHARGE_ID��Ӫ��A_RCVED_FLOW��ȡ��ʵ�ռ�¼��
+    ͳ��������DW_A_PAY�е�ͳ��������ͬ
+  2��Ӫ����A_RCVED_FLOW
+  �޸���:
+  �޸�����:
   **/
   PROCEDURE P_ENT_DW_A_RCVED(I_DATA   VARCHAR2,
                              OUT_CODE OUT NUMBER,
@@ -70,17 +70,17 @@ create or replace package PKG_YWGK_DW_CA_RECOVER is
                              OUT_MSG  OUT VARCHAR2);
 
   /**
-   过程名称：P_ENT_DW_A_RCVBL/日度在途应收电费信息表入口过程
-  作者：姜友德
-  编写日期：2015-01-29 23:37
-  过程描述：日度在途应收电费信息表入口过程,当P_ENT_DW_A_RCVED执行完毕后再执行此过程
+   �������ƣ�P_ENT_DW_A_RCVBL/�ն���;Ӧ�յ����Ϣ����ڹ���
+  ���ߣ����ѵ�
+  ��д���ڣ�2015-01-29 23:37
+  �����������ն���;Ӧ�յ����Ϣ����ڹ���,��P_ENT_DW_A_RCVEDִ����Ϻ���ִ�д˹���
   
-  统计频度：每月1日凌晨1点、7日凌晨1点、16日凌晨1点、26日凌晨1点 抽取，统计日期存放昨日TO_CHAR(SYSDATE-1,'YYYYMMDD')。
-  1、根据DW_A_RCVED中的RCVBL_AMT_ID，从营销A_RCVBL_FLOW获取的应收记录，
-     统计日期与DW_A_RCVED中的统计日期相同
-  2、营销表A_RCVBL_FLOW
-  修改人:
-  修改日期:
+  ͳ��Ƶ�ȣ�ÿ��1���賿1�㡢7���賿1�㡢16���賿1�㡢26���賿1�� ��ȡ��ͳ�����ڴ������TO_CHAR(SYSDATE-1,'YYYYMMDD')��
+  1������DW_A_RCVED�е�RCVBL_AMT_ID����Ӫ��A_RCVBL_FLOW��ȡ��Ӧ�ռ�¼��
+     ͳ��������DW_A_RCVED�е�ͳ��������ͬ
+  2��Ӫ����A_RCVBL_FLOW
+  �޸���:
+  �޸�����:
   **/
   PROCEDURE P_ENT_DW_A_RCVBL(I_DATA   VARCHAR2,
                              OUT_CODE OUT NUMBER,
@@ -93,17 +93,17 @@ create or replace package PKG_YWGK_DW_CA_RECOVER is
                              OUT_MSG  OUT VARCHAR2);
 
   /**
-   过程名称：P_ENT_DW_E_CONS_SNAP_TRANSIT/月度在途资金用户电费快照表入口过程
-  作者：姜友德
-  编写日期：2015-01-29 23:37
-  过程描述：月度在途资金用户电费快照表入口过程,当P_ENT_DW_A_RCVED执行完毕后再执行此过程
+   �������ƣ�P_ENT_DW_E_CONS_SNAP_TRANSIT/�¶���;�ʽ��û���ѿ��ձ���ڹ���
+  ���ߣ����ѵ�
+  ��д���ڣ�2015-01-29 23:37
+  �����������¶���;�ʽ��û���ѿ��ձ���ڹ���,��P_ENT_DW_A_RCVEDִ����Ϻ���ִ�д˹���
   
-  统计频度：每月1日凌晨1点、7日凌晨1点、16日凌晨1点、26日凌晨1点 抽取，统计日期存放昨日TO_CHAR(SYSDATE-1,'YYYYMMDD')。
-  1、根据DW_A_RCVED中的RCVBL_AMT_ID，从营销A_RCVBL_FLOW获取的应收记录，
-     统计日期与DW_A_RCVED中的统计日期相同
-  2、营销表A_RCVBL_FLOW
-  修改人:
-  修改日期:
+  ͳ��Ƶ�ȣ�ÿ��1���賿1�㡢7���賿1�㡢16���賿1�㡢26���賿1�� ��ȡ��ͳ�����ڴ������TO_CHAR(SYSDATE-1,'YYYYMMDD')��
+  1������DW_A_RCVED�е�RCVBL_AMT_ID����Ӫ��A_RCVBL_FLOW��ȡ��Ӧ�ռ�¼��
+     ͳ��������DW_A_RCVED�е�ͳ��������ͬ
+  2��Ӫ����A_RCVBL_FLOW
+  �޸���:
+  �޸�����:
   **/
   PROCEDURE P_ENT_DW_E_CONS_SNAP_TRANSIT(I_DATA   VARCHAR2,
                                          OUT_CODE OUT NUMBER,
@@ -116,14 +116,14 @@ create or replace package PKG_YWGK_DW_CA_RECOVER is
                                          OUT_MSG  OUT VARCHAR2);
 
   /**
-   过程名称：P_ENT_DW_ARC_E_CONS_SNAP/用户快照表入口过程
-  作者：姜友德
-  编写日期：2015-01-29 23:37
-  过程描述：用户快照表入口过程,当P_ENT_DW_A_RCVED执行完毕后再执行此过程
+   �������ƣ�P_ENT_DW_ARC_E_CONS_SNAP/�û����ձ���ڹ���
+  ���ߣ����ѵ�
+  ��д���ڣ�2015-01-29 23:37
+  �����������û����ձ���ڹ���,��P_ENT_DW_A_RCVEDִ����Ϻ���ִ�д˹���
   
-  统计频度：每天抽取, I_DATA 为要进行数据的统计的日期.每天运行
-  修改人:
-  修改日期:
+  ͳ��Ƶ�ȣ�ÿ���ȡ, I_DATA ΪҪ�������ݵ�ͳ�Ƶ�����.ÿ������
+  �޸���:
+  �޸�����:
   **/
   PROCEDURE P_ENT_DW_ARC_E_CONS_SNAP(I_DATA   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
@@ -141,38 +141,38 @@ end PKG_YWGK_DW_CA_RECOVER;
 create or replace package body PKG_YWGK_DW_CA_RECOVER is
 
   /**
-   过程名称：P_ENT_DW_A_CASHCHK/日度在途解款明细表入口过程
-  作者：姜友德
-  编写日期：2015-01-29 23:37
-  过程描述：日度在途解款明细表入口过程,被数据库JOB调用,每天凌晨1点开始运行
+   �������ƣ�P_ENT_DW_A_CASHCHK/�ն���;�����ϸ����ڹ���
+  ���ߣ����ѵ�
+  ��д���ڣ�2015-01-29 23:37
+  �����������ն���;�����ϸ����ڹ���,�����ݿ�JOB����,ÿ���賿1�㿪ʼ����
   
-  统计频度：每月1日凌晨1点、7日凌晨1点、16日凌晨1点、26日凌晨1点 抽取，统计日期存放昨日TO_CHAR(SYSDATE-1,'YYYYMMDD')。
-  1、从营销表A_CASHCHK_FLOW中到账状态（ACCT_STATUS_CODE）为01的解款记录
-   统计日期存放昨日日期。
-  2、对应营销表A_CASHCHK_FLOW
-  修改人:
-  修改日期:
+  ͳ��Ƶ�ȣ�ÿ��1���賿1�㡢7���賿1�㡢16���賿1�㡢26���賿1�� ��ȡ��ͳ�����ڴ������TO_CHAR(SYSDATE-1,'YYYYMMDD')��
+  1����Ӫ����A_CASHCHK_FLOW�е���״̬��ACCT_STATUS_CODE��Ϊ01�Ľ���¼
+   ͳ�����ڴ���������ڡ�
+  2����ӦӪ����A_CASHCHK_FLOW
+  �޸���:
+  �޸�����:
   **/
   PROCEDURE P_ENT_DW_A_CASHCHK(I_DATA   VARCHAR2,
                                OUT_CODE OUT NUMBER,
                                OUT_MSG  OUT VARCHAR2) IS
-    --日志ID
+    --��־ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
     V_YMD      VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
   
-    --记录开始日志
+    --��¼��ʼ��־
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_A_CASHCHK', V_YMD);
   
-    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_A_CASHCHK表
+    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_A_CASHCHK��
     P_INS_DW_A_CASHCHK(V_YMD, OUT_CODE, OUT_MSG);
-    --调用推送过程，从管理库OMAC用户下的DW_A_CASHCHK表取数据插入到稽查库OMAC用户下的DW_A_CASHCHK表
+    --�������͹��̣��ӹ�����OMAC�û��µ�DW_A_CASHCHK��ȡ���ݲ��뵽�����OMAC�û��µ�DW_A_CASHCHK��
     IF V_DATAMODE = '2' THEN
-      --推送模式执行
+      --����ģʽִ��
       P_ETL_DW_A_CASHCHK(V_YMD, OUT_CODE, OUT_MSG);
     ELSE
-      --复制模式补充供电区域性质
+      --����ģʽ���乩����������
       UPDATE DW_A_CASHCHK A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -183,22 +183,22 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
        WHERE A.STAT_YMD = V_YMD;
     END IF;
   
-    --OUT_CODE为1代表运行成功,提交事务
+    --OUT_CODEΪ1�������гɹ�,�ύ����
     OUT_CODE := 1;
-    OUT_MSG  := '执行 P_ENT_DW_A_CASHCHK  成功';
+    OUT_MSG  := 'ִ�� P_ENT_DW_A_CASHCHK  �ɹ�';
     COMMIT;
   
-    --记录正常结束日志
+    --��¼����������־
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --异常处理
+    --�쳣����
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODE为0代表运行失败,回滚事务
+      --OUT_CODEΪ0��������ʧ��,�ع�����
       OUT_CODE := 0;
-      OUT_MSG  := '执行 P_ENT_DW_A_CASHCHK  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
+      OUT_MSG  := 'ִ�� P_ENT_DW_A_CASHCHK  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --记录异常结束日志
+      --��¼�쳣������־
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -206,28 +206,28 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
                                OUT_CODE OUT NUMBER,
                                OUT_MSG  OUT VARCHAR2) IS
   
-    --日志ID
+    --��־ID
     V_DATA_ID VARCHAR2(24);
   
-    --获取网省的单位编码
+    --��ȡ��ʡ�ĵ�λ����
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
     V_YMD        VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
-    --当月
+    --����
     V_YM VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
-    --统计期截止日（统计月末）
+    --ͳ���ڽ�ֹ�գ�ͳ����ĩ��
     V_LT_DAY VARCHAR2(8);
-    --本月月初
+    --�����³�
     V_BEGIN_MONTH DATE := TO_DATE(V_YM || '01', 'YYYYMMDD');
-    --下月月初
+    --�����³�
     V_BEGIN_NEXT_MONTH DATE := ADD_MONTHS(V_BEGIN_MONTH, 1);
     V_DATE             DATE := TO_DATE(V_YMD || '010000',
                                        'YYYYMMDDhh24miss') + 1;
   
   BEGIN
-    --记录开始日志
+    --��¼��ʼ��־
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_A_CASHCHK', I_DATA);
     V_LT_DAY  := TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD');
-    --删除原有的抽取的记录，维度为日
+    --ɾ��ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
     DELETE FROM DW_A_CASHCHK X WHERE X.STAT_YMD = V_YMD;
   
     INSERT INTO DW_A_CASHCHK
@@ -259,12 +259,12 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
       SELECT /*+PARALLEL(A 4)*/
        PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO) DATA_ID,
        V_PRO_ORG_NO PRO_ORG_NO,
-       '',
+       '01',
        V_YMD,
        A.CASHCHK_ID,
        A.CASHCHK_EMP_NO,
        A.CAPITAL_NO,
-       --结算标识
+       --�����ʶ
        PKG_GK_PUBLIC.F_TRANS_CODE('C_SETTLE_MODE', A.SETTLE_MODE),
        A.CASHCHK_AMT,
        A.CASHCHK_DATE,
@@ -274,7 +274,7 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
        A.CASHCHK_BANK_ACCT,
        A.ACCOUNTANT_NO,
        A.DISPOSE_DATE,
-       --入账,退票代码转换
+       --����,��Ʊ����ת��
        PKG_GK_PUBLIC.F_TRANS_CODE('ACCT_STATUS_CODE', A.ACCT_STATUS_CODE),
        A.ARRIVE_DATE,
        A.BANK_NOTE_NO,
@@ -286,27 +286,27 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
        SYSDATE
         FROM SY_SG_A_CASHCHK_FLOW A
        WHERE
-      --已收费未解款的数据,不在历史数据中体现，而在当天的数据内体现 
+      --���շ�δ��������,������ʷ���������֣����ڵ�������������� 
        NVL(A.CASHCHK_DATE, (SYSDATE - 1)) <= V_DATE
-      --到帐状态为01
+      --����״̬Ϊ01
        AND PKG_GK_PUBLIC.F_TRANS_CODE('ACCT_STATUS_CODE', A.ACCT_STATUS_CODE) = '01';
-    --OUT_CODE为1代表运行成功,提交事务
+    --OUT_CODEΪ1�������гɹ�,�ύ����
     OUT_CODE := 1;
-    OUT_MSG  := '执行 P_INS_DW_A_CASHCHK  成功';
+    OUT_MSG  := 'ִ�� P_INS_DW_A_CASHCHK  �ɹ�';
     COMMIT;
   
-    --记录正常结束日志
+    --��¼����������־
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --异常处理
+    --�쳣����
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODE为0代表运行失败,回滚事务
+      --OUT_CODEΪ0��������ʧ��,�ع�����
       OUT_CODE := 0;
-      OUT_MSG  := '执行 P_INS_DW_A_CASHCHK  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
+      OUT_MSG  := 'ִ�� P_INS_DW_A_CASHCHK  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --记录异常结束日志
+      --��¼�쳣������־
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -315,18 +315,18 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
                                OUT_CODE OUT NUMBER,
                                OUT_MSG  OUT VARCHAR2) IS
   
-    --日志ID
+    --��־ID
     V_DATA_ID VARCHAR2(24);
-    --当月
+    --����
     V_YMD VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
-    --记录开始日志
+    --��¼��ʼ��־
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_A_CASHCHK', I_DATA);
   
-    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为日
+    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
     DELETE FROM SY_OM_DW_A_CASHCHK X WHERE X.STAT_YMD = V_YMD;
   
-    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
+    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
     INSERT INTO SY_OM_DW_A_CASHCHK X
       (DATA_ID,
        PRO_ORG_NO,
@@ -380,65 +380,65 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
        A.TERMINAL_NO,
        A.TIME_STAMP
         FROM DW_A_CASHCHK A, SY_OM_DW_O_ORG_CONTRAST B
-      --加入时间筛选条件
+      --����ʱ��ɸѡ����
        WHERE A.STAT_YMD = V_YMD
          AND V_YMD BETWEEN B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
-    --OUT_CODE为1代表运行成功,提交事务
+    --OUT_CODEΪ1�������гɹ�,�ύ����
     OUT_CODE := 1;
-    OUT_MSG  := '执行 P_ETL_DW_A_CASHCHK  成功';
+    OUT_MSG  := 'ִ�� P_ETL_DW_A_CASHCHK  �ɹ�';
     COMMIT;
   
-    --记录正常结束日志
+    --��¼����������־
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --异常处理
+    --�쳣����
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODE为0代表运行失败,回滚事务
+      --OUT_CODEΪ0��������ʧ��,�ع�����
       OUT_CODE := 0;
-      OUT_MSG  := '执行 P_ETL_DW_A_CASHCHK  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
+      OUT_MSG  := 'ִ�� P_ETL_DW_A_CASHCHK  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --记录异常结束日志
+      --��¼�쳣������־
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
 
   /**
-   过程名称：P_ENT_DW_A_PAY/日度在途收费记录表入口过程
-  作者：姜友德
-  编写日期：2015-01-29 23:37
-  过程描述：日度在途收费记录表入口过程,当P_ENT_DW_A_CASHCHK执行完毕后再执行此过程
+   �������ƣ�P_ENT_DW_A_PAY/�ն���;�շѼ�¼����ڹ���
+  ���ߣ����ѵ�
+  ��д���ڣ�2015-01-29 23:37
+  �����������ն���;�շѼ�¼����ڹ���,��P_ENT_DW_A_CASHCHKִ����Ϻ���ִ�д˹���
   
-  统计频度：每月1日凌晨1点、7日凌晨1点、16日凌晨1点、26日凌晨1点 抽取，统计日期存放昨日TO_CHAR(SYSDATE-1,'YYYYMMDD')。
-  1、根据DW_A_CASHCHK中的CASHCHK_ID从营销A_PAY_FLOW获取的收费记录，
-    统计日期与DW_A_CASHCHK中的统计日期相同
-  2、营销表A_PAY_FLOW
-  修改人:
-  修改日期:
+  ͳ��Ƶ�ȣ�ÿ��1���賿1�㡢7���賿1�㡢16���賿1�㡢26���賿1�� ��ȡ��ͳ�����ڴ������TO_CHAR(SYSDATE-1,'YYYYMMDD')��
+  1������DW_A_CASHCHK�е�CASHCHK_ID��Ӫ��A_PAY_FLOW��ȡ���շѼ�¼��
+    ͳ��������DW_A_CASHCHK�е�ͳ��������ͬ
+  2��Ӫ����A_PAY_FLOW
+  �޸���:
+  �޸�����:
   **/
   PROCEDURE P_ENT_DW_A_PAY(I_DATA   VARCHAR2,
                            OUT_CODE OUT NUMBER,
                            OUT_MSG  OUT VARCHAR2) IS
-    --日志ID
+    --��־ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
     V_YMD      VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
   
-    --记录开始日志
+    --��¼��ʼ��־
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_A_PAY', V_YMD);
   
-    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_A_PAY表
+    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_A_PAY��
     P_INS_DW_A_PAY(V_YMD, OUT_CODE, OUT_MSG);
-    --调用推送过程，从管理库OMAC用户下的DW_A_PAY表取数据插入到稽查库OMAC用户下的DW_A_PAY表
+    --�������͹��̣��ӹ�����OMAC�û��µ�DW_A_PAY��ȡ���ݲ��뵽�����OMAC�û��µ�DW_A_PAY��
     IF V_DATAMODE = '2' THEN
-      --推送模式执行
+      --����ģʽִ��
       P_ETL_DW_A_PAY(V_YMD, OUT_CODE, OUT_MSG);
     ELSE
-      --复制模式补充供电区域性质
+      --����ģʽ���乩����������
       UPDATE DW_A_PAY A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -449,22 +449,22 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
        WHERE A.STAT_YMD = V_YMD;
     END IF;
   
-    --OUT_CODE为1代表运行成功,提交事务
+    --OUT_CODEΪ1�������гɹ�,�ύ����
     OUT_CODE := 1;
-    OUT_MSG  := '执行 P_ENT_DW_A_PAY  成功';
+    OUT_MSG  := 'ִ�� P_ENT_DW_A_PAY  �ɹ�';
     COMMIT;
   
-    --记录正常结束日志
+    --��¼����������־
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --异常处理
+    --�쳣����
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODE为0代表运行失败,回滚事务
+      --OUT_CODEΪ0��������ʧ��,�ع�����
       OUT_CODE := 0;
-      OUT_MSG  := '执行 P_ENT_DW_A_PAY  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
+      OUT_MSG  := 'ִ�� P_ENT_DW_A_PAY  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --记录异常结束日志
+      --��¼�쳣������־
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -472,31 +472,31 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
                            OUT_CODE OUT NUMBER,
                            OUT_MSG  OUT VARCHAR2) IS
   
-    --日志ID
+    --��־ID
     V_DATA_ID VARCHAR2(24);
   
-    --获取网省的单位编码
+    --��ȡ��ʡ�ĵ�λ����
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
     V_YMD        VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
-    --当月
+    --����
     V_YM VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
-    --统计期截止日（统计月末）
+    --ͳ���ڽ�ֹ�գ�ͳ����ĩ��
     V_LT_DAY VARCHAR2(8);
-    --本月月初
+    --�����³�
     V_BEGIN_MONTH DATE := TO_DATE(V_YM || '01', 'YYYYMMDD');
-    --下月月初
+    --�����³�
     V_BEGIN_NEXT_MONTH DATE := ADD_MONTHS(V_BEGIN_MONTH, 1);
     V_DATE             DATE := TO_DATE(V_YMD || '010000',
                                        'YYYYMMDDhh24miss') + 1;
     V_MONTH            DATE := TO_DATE('200801', 'YYYYMM');
   BEGIN
-    --记录开始日志
+    --��¼��ʼ��־
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_A_PAY', I_DATA);
     V_LT_DAY  := TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD');
-    --删除原有的抽取的记录，维度为日
+    --ɾ��ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
     DELETE FROM DW_A_PAY X WHERE X.STAT_YMD = V_YMD;
   
-    --按照上次统计的CHARGE_YM最小值开始循环
+    --�����ϴ�ͳ�Ƶ�CHARGE_YM��Сֵ��ʼѭ��
     BEGIN
       SELECT /*+PARALLEL(A 4)*/
        MIN(CHARGE_YM)
@@ -513,7 +513,7 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
       V_MONTH := TO_DATE('200801', 'YYYYMM');
     END IF;
   
-    --利用A_PAY_FLOW中的CHARGE_YM分区
+    --����A_PAY_FLOW�е�CHARGE_YM����
     WHILE NOT (TO_DATE(TO_CHAR(ADD_MONTHS(SYSDATE, 3), 'YYYYMM'), 'YYYYMM') =
            V_MONTH) LOOP
     
@@ -548,7 +548,7 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
          PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO) DATA_ID,
          V_PRO_ORG_NO PRO_ORG_NO,
          A.ORG_NO,
-         '',
+         '01',
          V_YMD,
          A.CHARGE_ID,
          A.CASHCHK_ID,
@@ -573,36 +573,36 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
          SYSDATE
           FROM SY_SG_A_PAY_FLOW A
          WHERE
-        --采用A_PAY_FLOW内的CHARGE_YM分区 
+        --����A_PAY_FLOW�ڵ�CHARGE_YM���� 
          A.CHARGE_YM = TO_CHAR(V_MONTH, 'YYYYMM')
-        --利用已经统计好的DW_A_CASHCHK表中的STAT_YMD分区
+        --�����Ѿ�ͳ�ƺõ�DW_A_CASHCHK���е�STAT_YMD����
          AND EXISTS (SELECT /*+PARALLEL(B 4)*/
            1
             FROM DW_A_CASHCHK B
            WHERE B.STAT_YMD = V_YMD
              AND B.CASHCHK_ID = A.CASHCHK_ID);
       COMMIT;
-      --V_MONTH自增
+      --V_MONTH����
       V_MONTH := ADD_MONTHS(V_MONTH, 1);
     END LOOP;
   
-    --OUT_CODE为1代表运行成功,提交事务
+    --OUT_CODEΪ1�������гɹ�,�ύ����
     OUT_CODE := 1;
-    OUT_MSG  := '执行 P_INS_DW_A_PAY  成功';
+    OUT_MSG  := 'ִ�� P_INS_DW_A_PAY  �ɹ�';
     COMMIT;
   
-    --记录正常结束日志
+    --��¼����������־
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --异常处理
+    --�쳣����
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODE为0代表运行失败,回滚事务
+      --OUT_CODEΪ0��������ʧ��,�ع�����
       OUT_CODE := 0;
-      OUT_MSG  := '执行 P_INS_DW_A_PAY  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
+      OUT_MSG  := 'ִ�� P_INS_DW_A_PAY  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --记录异常结束日志
+      --��¼�쳣������־
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -611,18 +611,18 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
                            OUT_CODE OUT NUMBER,
                            OUT_MSG  OUT VARCHAR2) IS
   
-    --日志ID
+    --��־ID
     V_DATA_ID VARCHAR2(24);
-    --当月
+    --����
     V_YMD VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
-    --记录开始日志
+    --��¼��ʼ��־
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_A_PAY', I_DATA);
   
-    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为日
+    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
     DELETE FROM SY_OM_DW_A_PAY X WHERE X.STAT_YMD = V_YMD;
   
-    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
+    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
     INSERT INTO SY_OM_DW_A_PAY X
       (DATA_ID,
        PRO_ORG_NO,
@@ -678,65 +678,65 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
        A.RCV_ORG_NO,
        A.TIME_STAMP
         FROM DW_A_PAY A, SY_OM_DW_O_ORG_CONTRAST B
-      --加入时间筛选条件
+      --����ʱ��ɸѡ����
        WHERE A.STAT_YMD = V_YMD
          AND V_YMD BETWEEN B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
-    --OUT_CODE为1代表运行成功,提交事务
+    --OUT_CODEΪ1�������гɹ�,�ύ����
     OUT_CODE := 1;
-    OUT_MSG  := '执行 P_ETL_DW_A_PAY  成功';
+    OUT_MSG  := 'ִ�� P_ETL_DW_A_PAY  �ɹ�';
     COMMIT;
   
-    --记录正常结束日志
+    --��¼����������־
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --异常处理
+    --�쳣����
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODE为0代表运行失败,回滚事务
+      --OUT_CODEΪ0��������ʧ��,�ع�����
       OUT_CODE := 0;
-      OUT_MSG  := '执行 P_ETL_DW_A_PAY  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
+      OUT_MSG  := 'ִ�� P_ETL_DW_A_PAY  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --记录异常结束日志
+      --��¼�쳣������־
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
 
   /**
-   过程名称：P_ENT_DW_A_RCVED/日度在途实收电费信息表入口过程
-  作者：姜友德
-  编写日期：2015-01-29 23:37
-  过程描述：日度在途实收电费信息表入口过程,当P_ENT_DW_A_PAY执行完毕后再执行此过程
+   �������ƣ�P_ENT_DW_A_RCVED/�ն���;ʵ�յ����Ϣ����ڹ���
+  ���ߣ����ѵ�
+  ��д���ڣ�2015-01-29 23:37
+  �����������ն���;ʵ�յ����Ϣ����ڹ���,��P_ENT_DW_A_PAYִ����Ϻ���ִ�д˹���
   
-  统计频度：每月1日凌晨1点、7日凌晨1点、16日凌晨1点、26日凌晨1点 抽取，统计日期存放昨日TO_CHAR(SYSDATE-1,'YYYYMMDD')。
-  1、根据DW_A_PAY中的CHARGE_ID从营销A_RCVED_FLOW获取的实收记录，
-    统计日期与DW_A_PAY中的统计日期相同
-  2、营销表A_RCVED_FLOW
-  修改人:
-  修改日期:
+  ͳ��Ƶ�ȣ�ÿ��1���賿1�㡢7���賿1�㡢16���賿1�㡢26���賿1�� ��ȡ��ͳ�����ڴ������TO_CHAR(SYSDATE-1,'YYYYMMDD')��
+  1������DW_A_PAY�е�CHARGE_ID��Ӫ��A_RCVED_FLOW��ȡ��ʵ�ռ�¼��
+    ͳ��������DW_A_PAY�е�ͳ��������ͬ
+  2��Ӫ����A_RCVED_FLOW
+  �޸���:
+  �޸�����:
   **/
   PROCEDURE P_ENT_DW_A_RCVED(I_DATA   VARCHAR2,
                              OUT_CODE OUT NUMBER,
                              OUT_MSG  OUT VARCHAR2) IS
-    --日志ID
+    --��־ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
     V_YMD      VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
   
-    --记录开始日志
+    --��¼��ʼ��־
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_A_RCVED', V_YMD);
   
-    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_A_RCVED表
+    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_A_RCVED��
     P_INS_DW_A_RCVED(V_YMD, OUT_CODE, OUT_MSG);
-    --调用推送过程，从管理库OMAC用户下的DW_A_RCVED表取数据插入到稽查库OMAC用户下的DW_A_RCVED表
+    --�������͹��̣��ӹ�����OMAC�û��µ�DW_A_RCVED��ȡ���ݲ��뵽�����OMAC�û��µ�DW_A_RCVED��
     IF V_DATAMODE = '2' THEN
-      --推送模式执行
+      --����ģʽִ��
       P_ETL_DW_A_RCVED(V_YMD, OUT_CODE, OUT_MSG);
     ELSE
-      --复制模式补充供电区域性质
+      --����ģʽ���乩����������
       UPDATE DW_A_RCVED A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -747,22 +747,22 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
        WHERE A.STAT_YMD = V_YMD;
     END IF;
   
-    --OUT_CODE为1代表运行成功,提交事务
+    --OUT_CODEΪ1�������гɹ�,�ύ����
     OUT_CODE := 1;
-    OUT_MSG  := '执行 P_ENT_DW_A_RCVED  成功';
+    OUT_MSG  := 'ִ�� P_ENT_DW_A_RCVED  �ɹ�';
     COMMIT;
   
-    --记录正常结束日志
+    --��¼����������־
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --异常处理
+    --�쳣����
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODE为0代表运行失败,回滚事务
+      --OUT_CODEΪ0��������ʧ��,�ع�����
       OUT_CODE := 0;
-      OUT_MSG  := '执行 P_ENT_DW_A_RCVED  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
+      OUT_MSG  := 'ִ�� P_ENT_DW_A_RCVED  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --记录异常结束日志
+      --��¼�쳣������־
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -770,19 +770,19 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
                              OUT_CODE OUT NUMBER,
                              OUT_MSG  OUT VARCHAR2) IS
   
-    --日志ID
+    --��־ID
     V_DATA_ID VARCHAR2(24);
   
-    --获取网省的单位编码
+    --��ȡ��ʡ�ĵ�λ����
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
     V_YMD        VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
-    --当月
+    --����
     V_YM VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
-    --统计期截止日（统计月末）
+    --ͳ���ڽ�ֹ�գ�ͳ����ĩ��
     V_LT_DAY VARCHAR2(8);
-    --本月月初
+    --�����³�
     V_BEGIN_MONTH DATE := TO_DATE(V_YM || '01', 'YYYYMMDD');
-    --下月月初
+    --�����³�
     V_BEGIN_NEXT_MONTH DATE := ADD_MONTHS(V_BEGIN_MONTH, 1);
     V_DATE             DATE := TO_DATE(V_YMD || '010000',
                                        'YYYYMMDDhh24miss') + 1;
@@ -791,13 +791,13 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
     V_MONTH_MIN DATE := TO_DATE('200801', 'YYYYMM');
   
   BEGIN
-    --记录开始日志
+    --��¼��ʼ��־
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_A_RCVED', I_DATA);
     V_LT_DAY  := TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD');
-    --删除原有的抽取的记录，维度为日
+    --ɾ��ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
     DELETE FROM DW_A_RCVED X WHERE X.STAT_YMD = V_YMD;
   
-    --按照上次统计的CHARGE_YM最小值开始循环
+    --�����ϴ�ͳ�Ƶ�CHARGE_YM��Сֵ��ʼѭ��
     BEGIN
       SELECT /*+PARALLEL(A 4)*/
        MIN(CHARGE_YM)
@@ -814,7 +814,7 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
       V_MONTH_MIN := TO_DATE('200801', 'YYYYMM');
     END IF;
   
-    --A_RCVED_FLOW中的单位为主分区
+    --A_RCVED_FLOW�еĵ�λΪ������
     FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
                                        1,
                                        DECODE(V_PRO_ORG_NO, '12101', 5, 7)) ORG_NO
@@ -824,7 +824,7 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
     
       V_MONTH := V_MONTH_MIN;
     
-      --利用A_RCVED_FLOW中的CHARGE_YM分区
+      --����A_RCVED_FLOW�е�CHARGE_YM����
       WHILE NOT (TO_DATE(TO_CHAR(ADD_MONTHS(SYSDATE, 3), 'YYYYMM'), 'YYYYMM') =
              V_MONTH) LOOP
       
@@ -852,7 +852,7 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
           SELECT /*+PARALLEL(A 4)*/
            PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO) DATA_ID,
            V_PRO_ORG_NO PRO_ORG_NO,
-           '',
+           '01',
            V_YMD,
            A.RCVED_AMT_ID,
            A.RCVBL_AMT_ID,
@@ -867,31 +867,31 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
            A.THIS_PENALTY,
            A.ACCT_NO,
            A.OWE_AMT,
-           --  由于网省反馈a_rcved_flow表中的note_id不符合标设，现场为varchar2(32) 标设为number(16).按照设计人员确定：此字段置为0即可。
+           --  ������ʡ����a_rcved_flow���е�note_id�����ϱ��裬�ֳ�Ϊvarchar2(32) ����Ϊnumber(16).���������Աȷ�������ֶ���Ϊ0���ɡ�
            '0',
            A.RCVBL_YM,
            SYSDATE
             FROM SY_SG_A_RCVED_FLOW A
            WHERE
-          --利用A_RCVED_FLOW中的单位主分区
+          --����A_RCVED_FLOW�еĵ�λ������
            A.ORG_NO LIKE TSS.ORG_NO || '%'
-          --利用A_RCVED_FLOW中的实收年月从分区
+          --����A_RCVED_FLOW�е�ʵ�����´ӷ���
            AND A.RCVED_YM = TO_CHAR(V_MONTH, 'YYYYMM')
            AND EXISTS (SELECT /*+PARALLEL(B 4)*/
              1
               FROM DW_A_PAY B
-            --利用DW_A_PAY表中先统计出来的数据，采用STAT_YMD中的分区
+            --����DW_A_PAY������ͳ�Ƴ��������ݣ�����STAT_YMD�еķ���
              WHERE B.STAT_YMD = V_YMD
-                  --限制B表的数据规模
+                  --����B�������ݹ�ģ
                AND B.CHARGE_YM = TO_CHAR(V_MONTH, 'YYYYMM')
-                  --要求收费记录表a_pay_flow中的收费年月CHARGE_YM等于实收表中a_reved_flow中的实收年月RCVED_YM
+                  --Ҫ���շѼ�¼��a_pay_flow�е��շ�����CHARGE_YM����ʵ�ձ���a_reved_flow�е�ʵ������RCVED_YM
                AND B.CHARGE_YM = A.RCVED_YM
                AND B.CHARGE_ID = A.CHARGE_ID)
           UNION ALL
           SELECT /*+PARALLEL(A 4)*/
            PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO) DATA_ID,
            V_PRO_ORG_NO PRO_ORG_NO,
-           '',
+           '01',
            V_YMD,
            A.RCVED_AMT_ID,
            A.RCVBL_AMT_ID,
@@ -906,49 +906,49 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
            A.THIS_PENALTY,
            A.ACCT_NO,
            A.OWE_AMT,
-           --  由于网省反馈a_rcved_flow表中的note_id不符合标设，现场为varchar2(32) 标设为number(16).按照设计人员确定：此字段置为0即可。
+           --  ������ʡ����a_rcved_flow���е�note_id�����ϱ��裬�ֳ�Ϊvarchar2(32) ����Ϊnumber(16).���������Աȷ�������ֶ���Ϊ0���ɡ�
            '0',
            A.RCVBL_YM,
            SYSDATE
             FROM SY_SG_ARC_A_RCVED_FLOW A, DW_A_PAY B
            WHERE
-          --利用A_RCVED_FLOW中的单位主分区
+          --����A_RCVED_FLOW�еĵ�λ������
            A.ORG_NO LIKE TSS.ORG_NO || '%'
-          --利用A_RCVED_FLOW中的实收年月从分区
+          --����A_RCVED_FLOW�е�ʵ�����´ӷ���
            AND A.RCVED_YM = TO_CHAR(V_MONTH, 'YYYYMM')
            AND EXISTS (SELECT /*+PARALLEL(B 4)*/
              1
               FROM DW_A_PAY B
-            --利用DW_A_PAY表中先统计出来的数据，采用STAT_YMD中的分区
+            --����DW_A_PAY������ͳ�Ƴ��������ݣ�����STAT_YMD�еķ���
              WHERE B.STAT_YMD = V_YMD
-                  --限制B表的数据规模
+                  --����B�������ݹ�ģ
                AND B.CHARGE_YM = TO_CHAR(V_MONTH, 'YYYYMM')
-                  --要求收费记录表a_pay_flow中的收费年月CHARGE_YM等于实收表中a_reved_flow中的实收年月RCVED_YM
+                  --Ҫ���շѼ�¼��a_pay_flow�е��շ�����CHARGE_YM����ʵ�ձ���a_reved_flow�е�ʵ������RCVED_YM
                AND B.CHARGE_YM = A.RCVED_YM
                AND B.CHARGE_ID = A.CHARGE_ID);
         COMMIT;
-        --V_MONTH自增
+        --V_MONTH����
         V_MONTH := ADD_MONTHS(V_MONTH, 1);
       END LOOP;
     END LOOP;
   
-    --OUT_CODE为1代表运行成功,提交事务
+    --OUT_CODEΪ1�������гɹ�,�ύ����
     OUT_CODE := 1;
-    OUT_MSG  := '执行 P_INS_DW_A_RCVED  成功';
+    OUT_MSG  := 'ִ�� P_INS_DW_A_RCVED  �ɹ�';
     COMMIT;
   
-    --记录正常结束日志
+    --��¼����������־
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --异常处理
+    --�쳣����
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODE为0代表运行失败,回滚事务
+      --OUT_CODEΪ0��������ʧ��,�ع�����
       OUT_CODE := 0;
-      OUT_MSG  := '执行 P_INS_DW_A_RCVED  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
+      OUT_MSG  := 'ִ�� P_INS_DW_A_RCVED  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --记录异常结束日志
+      --��¼�쳣������־
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -957,18 +957,18 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
                              OUT_CODE OUT NUMBER,
                              OUT_MSG  OUT VARCHAR2) IS
   
-    --日志ID
+    --��־ID
     V_DATA_ID VARCHAR2(24);
-    --当月
+    --����
     V_YMD VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
-    --记录开始日志
+    --��¼��ʼ��־
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_A_RCVED', I_DATA);
   
-    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为日
+    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
     DELETE FROM SY_OM_DW_A_RCVED X WHERE X.STAT_YMD = V_YMD;
   
-    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
+    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
     INSERT INTO SY_OM_DW_A_RCVED X
       (DATA_ID,
        PRO_ORG_NO,
@@ -1012,65 +1012,65 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
        A.RCVBL_YM,
        A.TIME_STAMP
         FROM DW_A_RCVED A, SY_OM_DW_O_ORG_CONTRAST B
-      --加入时间筛选条件
+      --����ʱ��ɸѡ����
        WHERE A.STAT_YMD = V_YMD
          AND V_YMD BETWEEN B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
-    --OUT_CODE为1代表运行成功,提交事务
+    --OUT_CODEΪ1�������гɹ�,�ύ����
     OUT_CODE := 1;
-    OUT_MSG  := '执行 P_ETL_DW_A_RCVED  成功';
+    OUT_MSG  := 'ִ�� P_ETL_DW_A_RCVED  �ɹ�';
     COMMIT;
   
-    --记录正常结束日志
+    --��¼����������־
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --异常处理
+    --�쳣����
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODE为0代表运行失败,回滚事务
+      --OUT_CODEΪ0��������ʧ��,�ع�����
       OUT_CODE := 0;
-      OUT_MSG  := '执行 P_ETL_DW_A_RCVED  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
+      OUT_MSG  := 'ִ�� P_ETL_DW_A_RCVED  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --记录异常结束日志
+      --��¼�쳣������־
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
 
   /**
-   过程名称：P_ENT_DW_A_RCVBL/日度在途应收电费信息表入口过程
-  作者：姜友德
-  编写日期：2015-01-29 23:37
-  过程描述：日度在途应收电费信息表入口过程,当P_ENT_DW_A_RCVED执行完毕后再执行此过程
+   �������ƣ�P_ENT_DW_A_RCVBL/�ն���;Ӧ�յ����Ϣ����ڹ���
+  ���ߣ����ѵ�
+  ��д���ڣ�2015-01-29 23:37
+  �����������ն���;Ӧ�յ����Ϣ����ڹ���,��P_ENT_DW_A_RCVEDִ����Ϻ���ִ�д˹���
   
-  统计频度：每月1日凌晨1点、7日凌晨1点、16日凌晨1点、26日凌晨1点 抽取，统计日期存放昨日TO_CHAR(SYSDATE-1,'YYYYMMDD')。
-  1、根据DW_A_RCVED中的RCVBL_AMT_ID，从营销A_RCVBL_FLOW获取的应收记录，
-     统计日期与DW_A_RCVED中的统计日期相同
-  2、营销表A_RCVBL_FLOW
-  修改人:
-  修改日期:
+  ͳ��Ƶ�ȣ�ÿ��1���賿1�㡢7���賿1�㡢16���賿1�㡢26���賿1�� ��ȡ��ͳ�����ڴ������TO_CHAR(SYSDATE-1,'YYYYMMDD')��
+  1������DW_A_RCVED�е�RCVBL_AMT_ID����Ӫ��A_RCVBL_FLOW��ȡ��Ӧ�ռ�¼��
+     ͳ��������DW_A_RCVED�е�ͳ��������ͬ
+  2��Ӫ����A_RCVBL_FLOW
+  �޸���:
+  �޸�����:
   **/
   PROCEDURE P_ENT_DW_A_RCVBL(I_DATA   VARCHAR2,
                              OUT_CODE OUT NUMBER,
                              OUT_MSG  OUT VARCHAR2) IS
-    --日志ID
+    --��־ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
     V_YMD      VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
   
-    --记录开始日志
+    --��¼��ʼ��־
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_A_RCVBL', V_YMD);
   
-    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_A_RCVBL表
+    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_A_RCVBL��
     P_INS_DW_A_RCVBL(V_YMD, OUT_CODE, OUT_MSG);
-    --调用推送过程，从管理库OMAC用户下的DW_A_RCVBL表取数据插入到稽查库OMAC用户下的DW_A_RCVBL表
+    --�������͹��̣��ӹ�����OMAC�û��µ�DW_A_RCVBL��ȡ���ݲ��뵽�����OMAC�û��µ�DW_A_RCVBL��
     IF V_DATAMODE = '2' THEN
-      --推送模式执行
+      --����ģʽִ��
       P_ETL_DW_A_RCVBL(V_YMD, OUT_CODE, OUT_MSG);
     ELSE
-      --复制模式补充供电区域性质
+      --����ģʽ���乩����������
       UPDATE DW_A_RCVBL A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT /*+driving_site(SY_OM_DW_O_ORG_CONTRAST)*/
@@ -1081,22 +1081,22 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
        WHERE A.STAT_YMD = V_YMD;
     END IF;
   
-    --OUT_CODE为1代表运行成功,提交事务
+    --OUT_CODEΪ1�������гɹ�,�ύ����
     OUT_CODE := 1;
-    OUT_MSG  := '执行 P_ENT_DW_A_RCVBL  成功';
+    OUT_MSG  := 'ִ�� P_ENT_DW_A_RCVBL  �ɹ�';
     COMMIT;
   
-    --记录正常结束日志
+    --��¼����������־
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --异常处理
+    --�쳣����
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODE为0代表运行失败,回滚事务
+      --OUT_CODEΪ0��������ʧ��,�ع�����
       OUT_CODE := 0;
-      OUT_MSG  := '执行 P_ENT_DW_A_RCVBL  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
+      OUT_MSG  := 'ִ�� P_ENT_DW_A_RCVBL  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --记录异常结束日志
+      --��¼�쳣������־
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -1104,19 +1104,19 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
                              OUT_CODE OUT NUMBER,
                              OUT_MSG  OUT VARCHAR2) IS
   
-    --日志ID
+    --��־ID
     V_DATA_ID VARCHAR2(24);
   
-    --获取网省的单位编码
+    --��ȡ��ʡ�ĵ�λ����
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
     V_YMD        VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
-    --当月
+    --����
     V_YM VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
-    --统计期截止日（统计月末）
+    --ͳ���ڽ�ֹ�գ�ͳ����ĩ��
     V_LT_DAY VARCHAR2(8);
-    --本月月初
+    --�����³�
     V_BEGIN_MONTH DATE := TO_DATE(V_YM || '01', 'YYYYMMDD');
-    --下月月初
+    --�����³�
     V_BEGIN_NEXT_MONTH DATE := ADD_MONTHS(V_BEGIN_MONTH, 1);
     V_DATE             DATE := TO_DATE(V_YMD || '010000',
                                        'YYYYMMDDhh24miss') + 1;
@@ -1125,13 +1125,13 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
     V_MONTH_MIN DATE := TO_DATE('200801', 'YYYYMM');
   
   BEGIN
-    --记录开始日志
+    --��¼��ʼ��־
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_A_RCVBL', I_DATA);
     V_LT_DAY  := TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD');
-    --删除原有的抽取的记录，维度为日
+    --ɾ��ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
     DELETE FROM DW_A_RCVBL X WHERE X.STAT_YMD = V_YMD;
   
-    --按照上次统计的CHARGE_YM最小值开始循环
+    --�����ϴ�ͳ�Ƶ�CHARGE_YM��Сֵ��ʼѭ��
     BEGIN
       SELECT /*+PARALLEL(A 4)*/
        MIN(CHARGE_YM)
@@ -1148,8 +1148,8 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
       V_MONTH_MIN := TO_DATE('200801', 'YYYYMM');
     END IF;
   
-    --开始数据统计,插入到稽查管理库OMAC的DW_A_RCVBL
-    --根据实际情况选择是否需要单位循环（一般是分区表才需要）
+    --��ʼ����ͳ��,���뵽���������OMAC��DW_A_RCVBL
+    --����ʵ�����ѡ���Ƿ���Ҫ��λѭ����һ���Ƿ���������Ҫ��
     FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
                                        1,
                                        DECODE(V_PRO_ORG_NO, '12101', 5, 7)) ORG_NO
@@ -1159,7 +1159,7 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
     
       V_MONTH := V_MONTH_MIN;
     
-      --利用A_RCVED_FLOW中的CHARGE_YM分区
+      --����A_RCVED_FLOW�е�CHARGE_YM����
       WHILE NOT (TO_DATE(TO_CHAR(ADD_MONTHS(SYSDATE, 3), 'YYYYMM'), 'YYYYMM') =
              V_MONTH) LOOP
       
@@ -1195,7 +1195,7 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
           SELECT /*+PARALLEL(A 4)*/
            PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO) DATA_ID,
            V_PRO_ORG_NO PRO_ORG_NO,
-           '',
+           '01',
            V_YMD,
            A.RCVBL_AMT_ID,
            A.CALC_ID,
@@ -1224,16 +1224,16 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
            SYSDATE
             FROM SY_SG_A_RCVBL_FLOW A
            WHERE
-          --利用应收表中的单位分区
+          --����Ӧ�ձ��еĵ�λ����
            A.ORG_NO LIKE TSS.ORG_NO || '%'
            AND A.RCVBL_YM = TO_CHAR(V_MONTH, 'YYYYMM')
            AND EXISTS (SELECT /*+PARALLEL(B 4)*/
              1
               FROM DW_A_RCVED B
-            --利用DW_A_RCVED表已经统计出来的数据，STAT_YMD为分区
+            --����DW_A_RCVED���Ѿ�ͳ�Ƴ��������ݣ�STAT_YMDΪ����
              WHERE B.STAT_YMD = V_YMD
                AND B.RCVBL_YM = TO_CHAR(V_MONTH, 'YYYYMM')
-                  --要求实收表中的应收年月等于应收表中的电费年月
+                  --Ҫ��ʵ�ձ��е�Ӧ�����µ���Ӧ�ձ��еĵ������
                AND A.RCVBL_YM = B.RCVBL_YM
                AND B.RCVBL_AMT_ID = A.RCVBL_AMT_ID);
       
@@ -1269,7 +1269,7 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
           SELECT /*+PARALLEL(A 4)*/
            PKG_GK_PUBLIC.F_GET_TABLE_SEQ(V_PRO_ORG_NO) DATA_ID,
            V_PRO_ORG_NO PRO_ORG_NO,
-           '',
+           '01',
            V_YMD,
            A.RCVBL_AMT_ID,
            A.CALC_ID,
@@ -1298,41 +1298,41 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
            SYSDATE
             FROM SY_SG_ARC_A_RCVBL_FLOW A
            WHERE
-          --利用应收表中的单位分区
+          --����Ӧ�ձ��еĵ�λ����
            A.ORG_NO LIKE TSS.ORG_NO || '%'
            AND A.RCVBL_YM = TO_CHAR(V_MONTH, 'YYYYMM')
            AND EXISTS (SELECT /*+PARALLEL(B 4)*/
              1
               FROM DW_A_RCVED B
-            --利用DW_A_RCVED表已经统计出来的数据，STAT_YMD为分区
+            --����DW_A_RCVED���Ѿ�ͳ�Ƴ��������ݣ�STAT_YMDΪ����
              WHERE B.STAT_YMD = V_YMD
                AND B.RCVBL_YM = TO_CHAR(V_MONTH, 'YYYYMM')
-                  --要求实收表中的应收年月等于应收表中的电费年月
+                  --Ҫ��ʵ�ձ��е�Ӧ�����µ���Ӧ�ձ��еĵ������
                AND A.RCVBL_YM = B.RCVBL_YM
                AND B.RCVBL_AMT_ID = A.RCVBL_AMT_ID);
       
         COMMIT;
-        --V_MONTH自增
+        --V_MONTH����
         V_MONTH := ADD_MONTHS(V_MONTH, 1);
       END LOOP;
     END LOOP;
-    --OUT_CODE为1代表运行成功,提交事务
+    --OUT_CODEΪ1�������гɹ�,�ύ����
     OUT_CODE := 1;
-    OUT_MSG  := '执行 P_INS_DW_A_RCVBL  成功';
+    OUT_MSG  := 'ִ�� P_INS_DW_A_RCVBL  �ɹ�';
     COMMIT;
   
-    --记录正常结束日志
+    --��¼����������־
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --异常处理
+    --�쳣����
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODE为0代表运行失败,回滚事务
+      --OUT_CODEΪ0��������ʧ��,�ع�����
       OUT_CODE := 0;
-      OUT_MSG  := '执行 P_INS_DW_A_RCVBL  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
+      OUT_MSG  := 'ִ�� P_INS_DW_A_RCVBL  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --记录异常结束日志
+      --��¼�쳣������־
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -1341,18 +1341,18 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
                              OUT_CODE OUT NUMBER,
                              OUT_MSG  OUT VARCHAR2) IS
   
-    --日志ID
+    --��־ID
     V_DATA_ID VARCHAR2(24);
-    --当月
+    --����
     V_YMD VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
-    --记录开始日志
+    --��¼��ʼ��־
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_A_RCVBL', I_DATA);
   
-    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为日
+    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
     DELETE FROM SY_OM_DW_A_RCVBL X WHERE X.STAT_YMD = V_YMD;
   
-    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
+    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
     INSERT INTO SY_OM_DW_A_RCVBL X
       (DATA_ID,
        PRO_ORG_NO,
@@ -1412,66 +1412,66 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
        A.OWE_AMT,
        A.TIME_STAMP
         FROM DW_A_RCVBL A, SY_OM_DW_O_ORG_CONTRAST B
-      --加入时间筛选条件
+      --����ʱ��ɸѡ����
        WHERE A.STAT_YMD = V_YMD
          AND V_YMD BETWEEN B.BGN_YMD AND NVL(B.END_YMD, '99991231')
          AND A.ORG_NO = B.SG_ORG_NO(+);
   
-    --OUT_CODE为1代表运行成功,提交事务
+    --OUT_CODEΪ1�������гɹ�,�ύ����
     OUT_CODE := 1;
-    OUT_MSG  := '执行 P_ETL_DW_A_RCVBL  成功';
+    OUT_MSG  := 'ִ�� P_ETL_DW_A_RCVBL  �ɹ�';
     COMMIT;
   
-    --记录正常结束日志
+    --��¼����������־
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --异常处理
+    --�쳣����
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODE为0代表运行失败,回滚事务
+      --OUT_CODEΪ0��������ʧ��,�ع�����
       OUT_CODE := 0;
-      OUT_MSG  := '执行 P_ETL_DW_A_RCVBL  出现异常' || ',异常信息为：' || SQLCODE || ',' ||
+      OUT_MSG  := 'ִ�� P_ETL_DW_A_RCVBL  �����쳣' || ',�쳣��ϢΪ��' || SQLCODE || ',' ||
                   SQLERRM;
       ROLLBACK;
-      --记录异常结束日志
+      --��¼�쳣������־
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
 
   /**
-   过程名称：P_ENT_DW_E_CONS_SNAP_TRANSIT/月度在途资金用户电费快照表入口过程
-  作者：姜友德
-  编写日期：2015-01-29 23:37
-  过程描述：月度在途资金用户电费快照表入口过程,当P_ENT_DW_A_RCVED执行完毕后再执行此过程
+   �������ƣ�P_ENT_DW_E_CONS_SNAP_TRANSIT/�¶���;�ʽ��û���ѿ��ձ���ڹ���
+  ���ߣ����ѵ�
+  ��д���ڣ�2015-01-29 23:37
+  �����������¶���;�ʽ��û���ѿ��ձ���ڹ���,��P_ENT_DW_A_RCVEDִ����Ϻ���ִ�д˹���
   
-  统计频度：每月1日凌晨1点、7日凌晨1点、16日凌晨1点、26日凌晨1点 抽取，统计日期存放昨日TO_CHAR(SYSDATE-1,'YYYYMMDD')。
-  1、根据DW_A_RCVED中的RCVBL_AMT_ID，从营销A_RCVBL_FLOW获取的应收记录，
-     统计日期与DW_A_RCVED中的统计日期相同
-  2、营销表A_RCVBL_FLOW
-  修改人:
-  修改日期:
+  ͳ��Ƶ�ȣ�ÿ��1���賿1�㡢7���賿1�㡢16���賿1�㡢26���賿1�� ��ȡ��ͳ�����ڴ������TO_CHAR(SYSDATE-1,'YYYYMMDD')��
+  1������DW_A_RCVED�е�RCVBL_AMT_ID����Ӫ��A_RCVBL_FLOW��ȡ��Ӧ�ռ�¼��
+     ͳ��������DW_A_RCVED�е�ͳ��������ͬ
+  2��Ӫ����A_RCVBL_FLOW
+  �޸���:
+  �޸�����:
   **/
   PROCEDURE P_ENT_DW_E_CONS_SNAP_TRANSIT(I_DATA   VARCHAR2,
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2) IS
-    --日志ID
+    --��־ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
     V_YMD      VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
   
-    --记录开始日志
+    --��¼��ʼ��־
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_E_CONS_SNAP_TRANSIT',
                                         V_YMD);
   
-    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_E_CONS_SNAP_TRANSIT表
+    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_E_CONS_SNAP_TRANSIT��
     P_INS_DW_E_CONS_SNAP_TRANSIT(V_YMD, OUT_CODE, OUT_MSG);
-    --调用推送过程，从管理库OMAC用户下的DW_E_CONS_SNAP_TRANSIT表取数据插入到稽查库OMAC用户下的DW_E_CONS_SNAP_TRANSIT表
+    --�������͹��̣��ӹ�����OMAC�û��µ�DW_E_CONS_SNAP_TRANSIT��ȡ���ݲ��뵽�����OMAC�û��µ�DW_E_CONS_SNAP_TRANSIT��
     IF V_DATAMODE = '2' THEN
-      --推送模式执行
+      --����ģʽִ��
       P_ETL_DW_E_CONS_SNAP_TRANSIT(V_YMD, OUT_CODE, OUT_MSG);
       /*ELSE
-      --复制模式补充供电区域性质
+      --����ģʽ���乩����������
       UPDATE DW_E_CONS_SNAP_TRANSIT A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT 
@@ -1482,22 +1482,22 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
        WHERE A.STAT_YMD = V_YMD;*/
     END IF;
   
-    --OUT_CODE为1代表运行成功,提交事务
+    --OUT_CODEΪ1�������гɹ�,�ύ����
     OUT_CODE := 1;
-    OUT_MSG  := '执行 P_ENT_DW_E_CONS_SNAP_TRANSIT  成功';
+    OUT_MSG  := 'ִ�� P_ENT_DW_E_CONS_SNAP_TRANSIT  �ɹ�';
     COMMIT;
   
-    --记录正常结束日志
+    --��¼����������־
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --异常处理
+    --�쳣����
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODE为0代表运行失败,回滚事务
+      --OUT_CODEΪ0��������ʧ��,�ع�����
       OUT_CODE := 0;
-      OUT_MSG  := '执行 P_ENT_DW_E_CONS_SNAP_TRANSIT  出现异常' || ',异常信息为：' ||
+      OUT_MSG  := 'ִ�� P_ENT_DW_E_CONS_SNAP_TRANSIT  �����쳣' || ',�쳣��ϢΪ��' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --记录异常结束日志
+      --��¼�쳣������־
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -1505,19 +1505,19 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2) IS
   
-    --日志ID
+    --��־ID
     V_DATA_ID VARCHAR2(24);
   
-    --获取网省的单位编码
+    --��ȡ��ʡ�ĵ�λ����
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
     V_YMD        VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
-    --当月
+    --����
     V_YM VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
-    --统计期截止日（统计月末）
+    --ͳ���ڽ�ֹ�գ�ͳ����ĩ��
     V_LT_DAY VARCHAR2(8);
-    --本月月初
+    --�����³�
     V_BEGIN_MONTH DATE := TO_DATE(V_YM || '01', 'YYYYMMDD');
-    --下月月初
+    --�����³�
     V_BEGIN_NEXT_MONTH DATE := ADD_MONTHS(V_BEGIN_MONTH, 1);
     V_DATE             DATE := TO_DATE(V_YMD || '010000',
                                        'YYYYMMDDhh24miss') + 1;
@@ -1526,15 +1526,15 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
     V_MONTH_MIN DATE := TO_DATE('200801', 'YYYYMM');
   
   BEGIN
-    --记录开始日志
+    --��¼��ʼ��־
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_E_CONS_SNAP_TRANSIT',
                                         I_DATA);
     V_LT_DAY  := TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD');
-    --删除原有的抽取的记录，维度为日
+    --ɾ��ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
     DELETE FROM DW_E_CONS_SNAP_TRANSIT X WHERE X.STAT_YMD = V_YMD;
   
-    --开始数据统计,插入到稽查管理库OMAC的DW_E_CONS_SNAP_TRANSIT
-    --根据实际情况选择是否需要单位循环（一般是分区表才需要）
+    --��ʼ����ͳ��,���뵽���������OMAC��DW_E_CONS_SNAP_TRANSIT
+    --����ʵ�����ѡ���Ƿ���Ҫ��λѭ����һ���Ƿ���������Ҫ��
     FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
                                        1,
                                        DECODE(V_PRO_ORG_NO, '12101', 5, 7)) ORG_NO
@@ -1604,35 +1604,35 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
          SYSDATE
           FROM SY_SG_ARC_E_CONS_SNAP A
          WHERE
-        --利用应收表中的单位分区
+        --����Ӧ�ձ��еĵ�λ����
          A.ORG_NO LIKE TSS.ORG_NO || '%'
          AND EXISTS (SELECT /*+PARALLEL(B 4)*/
            1
             FROM DW_A_RCVBL B
-          --利用DW_A_RCVED表已经统计出来的数据，STAT_YMD为分区
+          --����DW_A_RCVED���Ѿ�ͳ�Ƴ��������ݣ�STAT_YMDΪ����
            WHERE B.STAT_YMD = V_YMD
-                --要求实收表中的应收年月等于应收表中的电费年月
+                --Ҫ��ʵ�ձ��е�Ӧ�����µ���Ӧ�ձ��еĵ������
              AND A.YM = B.RCVBL_YM
              AND B.CALC_ID = A.CALC_ID);
       COMMIT;
     END LOOP;
-    --OUT_CODE为1代表运行成功,提交事务
+    --OUT_CODEΪ1�������гɹ�,�ύ����
     OUT_CODE := 1;
-    OUT_MSG  := '执行 P_INS_DW_E_CONS_SNAP_TRANSIT  成功';
+    OUT_MSG  := 'ִ�� P_INS_DW_E_CONS_SNAP_TRANSIT  �ɹ�';
     COMMIT;
   
-    --记录正常结束日志
+    --��¼����������־
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --异常处理
+    --�쳣����
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODE为0代表运行失败,回滚事务
+      --OUT_CODEΪ0��������ʧ��,�ع�����
       OUT_CODE := 0;
-      OUT_MSG  := '执行 P_INS_DW_E_CONS_SNAP_TRANSIT  出现异常' || ',异常信息为：' ||
+      OUT_MSG  := 'ִ�� P_INS_DW_E_CONS_SNAP_TRANSIT  �����쳣' || ',�쳣��ϢΪ��' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --记录异常结束日志
+      --��¼�쳣������־
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -1641,19 +1641,19 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
                                          OUT_CODE OUT NUMBER,
                                          OUT_MSG  OUT VARCHAR2) IS
   
-    --日志ID
+    --��־ID
     V_DATA_ID VARCHAR2(24);
-    --当月
+    --����
     V_YMD VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
-    --记录开始日志
+    --��¼��ʼ��־
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_E_CONS_SNAP_TRANSIT',
                                         I_DATA);
   
-    --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为日
+    --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
     DELETE FROM SY_OM_DW_E_CONS_SNAP_TRANSIT X WHERE X.STAT_YMD = V_YMD;
   
-    --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
+    --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
     INSERT INTO SY_OM_DW_E_CONS_SNAP_TRANSIT X
       (DATA_ID,
        PRO_ORG_NO,
@@ -1714,60 +1714,60 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
              GP_CODE,
              TIME_STAMP
         FROM DW_E_CONS_SNAP_TRANSIT A
-      --加入时间筛选条件
+      --����ʱ��ɸѡ����
        WHERE A.STAT_YMD = V_YMD;
   
-    --OUT_CODE为1代表运行成功,提交事务
+    --OUT_CODEΪ1�������гɹ�,�ύ����
     OUT_CODE := 1;
-    OUT_MSG  := '执行 P_ETL_DW_E_CONS_SNAP_TRANSIT  成功';
+    OUT_MSG  := 'ִ�� P_ETL_DW_E_CONS_SNAP_TRANSIT  �ɹ�';
     COMMIT;
   
-    --记录正常结束日志
+    --��¼����������־
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --异常处理
+    --�쳣����
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODE为0代表运行失败,回滚事务
+      --OUT_CODEΪ0��������ʧ��,�ع�����
       OUT_CODE := 0;
-      OUT_MSG  := '执行 P_ETL_DW_E_CONS_SNAP_TRANSIT  出现异常' || ',异常信息为：' ||
+      OUT_MSG  := 'ִ�� P_ETL_DW_E_CONS_SNAP_TRANSIT  �����쳣' || ',�쳣��ϢΪ��' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --记录异常结束日志
+      --��¼�쳣������־
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
 
   /**
-   过程名称：P_ENT_DW_ARC_E_CONS_SNAP/用户快照表入口过程
-  作者：姜友德
-  编写日期：2015-01-29 23:37
-  过程描述：用户快照表入口过程,当P_ENT_DW_A_RCVED执行完毕后再执行此过程
+   �������ƣ�P_ENT_DW_ARC_E_CONS_SNAP/�û����ձ���ڹ���
+  ���ߣ����ѵ�
+  ��д���ڣ�2015-01-29 23:37
+  �����������û����ձ���ڹ���,��P_ENT_DW_A_RCVEDִ����Ϻ���ִ�д˹���
   
-  统计频度：按日抽取, I_DATA 为要进行数据的统计的日期.每天运行
-  修改人:
-  修改日期:
+  ͳ��Ƶ�ȣ����ճ�ȡ, I_DATA ΪҪ�������ݵ�ͳ�Ƶ�����.ÿ������
+  �޸���:
+  �޸�����:
   **/
   PROCEDURE P_ENT_DW_ARC_E_CONS_SNAP(I_DATA   VARCHAR2,
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
-    --日志ID
+    --��־ID
     V_DATA_ID  VARCHAR2(24);
-    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --数据模式：1:复制; 2:推送
+    V_DATAMODE VARCHAR2(2) := PKG_GK_PUBLIC.F_GET_DATAMODE; --����ģʽ��1:����; 2:����
     V_YMD      VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
   
-    --记录开始日志
+    --��¼��ʼ��־
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ENT_DW_ARC_E_CONS_SNAP', V_YMD);
   
-    --调用抽取过程，进行数据抽取，抽取到管理库OMAC用户下的DW_ARC_E_CONS_SNAP表
+    --���ó�ȡ���̣��������ݳ�ȡ����ȡ��������OMAC�û��µ�DW_ARC_E_CONS_SNAP��
     P_INS_DW_ARC_E_CONS_SNAP(V_YMD, OUT_CODE, OUT_MSG);
-    --调用推送过程，从管理库OMAC用户下的DW_ARC_E_CONS_SNAP表取数据插入到稽查库OMAC用户下的DW_ARC_E_CONS_SNAP表
+    --�������͹��̣��ӹ�����OMAC�û��µ�DW_ARC_E_CONS_SNAP��ȡ���ݲ��뵽�����OMAC�û��µ�DW_ARC_E_CONS_SNAP��
     IF V_DATAMODE = '2' THEN
-      --推送模式执行
+      --����ģʽִ��
       P_ETL_DW_ARC_E_CONS_SNAP(V_YMD, OUT_CODE, OUT_MSG);
       /*ELSE
-      --复制模式补充供电区域性质
+      --����ģʽ���乩����������
       UPDATE DW_ARC_E_CONS_SNAP A
          SET A.PS_BUSI_AREA_CODE =
              (SELECT 
@@ -1778,22 +1778,22 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
        WHERE A.STAT_YMD = V_YMD;*/
     END IF;
   
-    --OUT_CODE为1代表运行成功,提交事务
+    --OUT_CODEΪ1�������гɹ�,�ύ����
     OUT_CODE := 1;
-    OUT_MSG  := '执行 P_ENT_DW_ARC_E_CONS_SNAP  成功';
+    OUT_MSG  := 'ִ�� P_ENT_DW_ARC_E_CONS_SNAP  �ɹ�';
     COMMIT;
   
-    --记录正常结束日志
+    --��¼����������־
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
-    --异常处理
+    --�쳣����
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODE为0代表运行失败,回滚事务
+      --OUT_CODEΪ0��������ʧ��,�ع�����
       OUT_CODE := 0;
-      OUT_MSG  := '执行 P_ENT_DW_ARC_E_CONS_SNAP  出现异常' || ',异常信息为：' ||
+      OUT_MSG  := 'ִ�� P_ENT_DW_ARC_E_CONS_SNAP  �����쳣' || ',�쳣��ϢΪ��' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --记录异常结束日志
+      --��¼�쳣������־
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   END;
 
@@ -1801,19 +1801,19 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
   
-    --日志ID
+    --��־ID
     V_DATA_ID VARCHAR2(24);
   
-    --获取网省的单位编码
+    --��ȡ��ʡ�ĵ�λ����
     V_PRO_ORG_NO VARCHAR2(8) := PKG_GK_PUBLIC.F_PRO_ORG_NO;
     V_YMD        VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
-    --当月
+    --����
     V_YM VARCHAR2(6) := SUBSTR(I_DATA, 1, 6);
-    --统计期截止日（统计月末）
+    --ͳ���ڽ�ֹ�գ�ͳ����ĩ��
     V_LT_DAY VARCHAR2(8);
-    --本月月初
+    --�����³�
     V_BEGIN_MONTH DATE := TO_DATE(V_YM || '01', 'YYYYMMDD');
-    --下月月初
+    --�����³�
     V_BEGIN_NEXT_MONTH DATE := ADD_MONTHS(V_BEGIN_MONTH, 1);
     V_DATE             DATE := TO_DATE(V_YMD || '010000',
                                        'YYYYMMDDhh24miss') + 1;
@@ -1821,19 +1821,19 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
     V_MONTH     DATE := TO_DATE('200801', 'YYYYMM');
     V_MONTH_MIN DATE := TO_DATE('200801', 'YYYYMM');
   
-    V_DATE_START_D DATE := TO_DATE(V_YMD, 'YYYYMMDD'); --开始时间
-    V_DATE_END_D   DATE := V_DATE_START_D + 1; --结束时间
+    V_DATE_START_D DATE := TO_DATE(V_YMD, 'YYYYMMDD'); --��ʼʱ��
+    V_DATE_END_D   DATE := V_DATE_START_D + 1; --����ʱ��
   BEGIN
-    --记录开始日志
+    --��¼��ʼ��־
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_INS_DW_ARC_E_CONS_SNAP', I_DATA);
     V_LT_DAY  := TO_CHAR(LAST_DAY(TO_DATE(V_YM, 'YYYYMM')), 'YYYYMMDD');
   
-    --删除原有的抽取的记录，维度为日
+    --ɾ��ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
     DELETE FROM SY_OM_DW_ARC_E_CONS_SNAP X
      WHERE X.SEND_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D;
   
-    --开始数据统计,插入到稽查管理库OMAC的DW_ARC_E_CONS_SNAP
-    --根据实际情况选择是否需要单位循环（一般是分区表才需要）
+    --��ʼ����ͳ��,���뵽���������OMAC��DW_ARC_E_CONS_SNAP
+    --����ʵ�����ѡ���Ƿ���Ҫ��λѭ����һ���Ƿ���������Ҫ��
     FOR TSS IN (SELECT DISTINCT SUBSTR(ORG_NO,
                                        1,
                                        DECODE(V_PRO_ORG_NO, '12101', 5, 7)) ORG_NO
@@ -1897,28 +1897,28 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
          GP_CODE
           FROM SY_SG_ARC_E_CONS_SNAP A
          WHERE
-        --利用应收表中的单位分区
+        --����Ӧ�ձ��еĵ�λ����
          A.ORG_NO LIKE TSS.ORG_NO || '%'
          AND A.SEND_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D;
       COMMIT;
     END LOOP;
-    --OUT_CODE为1代表运行成功,提交事务
+    --OUT_CODEΪ1�������гɹ�,�ύ����
     OUT_CODE := 1;
-    OUT_MSG  := '执行 P_INS_DW_ARC_E_CONS_SNAP  成功';
+    OUT_MSG  := 'ִ�� P_INS_DW_ARC_E_CONS_SNAP  �ɹ�';
     COMMIT;
   
-    --记录正常结束日志
+    --��¼����������־
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --异常处理
+    --�쳣����
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODE为0代表运行失败,回滚事务
+      --OUT_CODEΪ0��������ʧ��,�ع�����
       OUT_CODE := 0;
-      OUT_MSG  := '执行 P_INS_DW_ARC_E_CONS_SNAP  出现异常' || ',异常信息为：' ||
+      OUT_MSG  := 'ִ�� P_INS_DW_ARC_E_CONS_SNAP  �����쳣' || ',�쳣��ϢΪ��' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --记录异常结束日志
+      --��¼�쳣������־
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
@@ -1927,19 +1927,19 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
                                      OUT_CODE OUT NUMBER,
                                      OUT_MSG  OUT VARCHAR2) IS
   
-    --日志ID
+    --��־ID
     V_DATA_ID VARCHAR2(24);
-    --当月
+    --����
     V_YMD VARCHAR2(8) := SUBSTR(I_DATA, 1, 8);
   BEGIN
-    --记录开始日志
+    --��¼��ʼ��־
     V_DATA_ID := PKG_GK_PUBLIC.PROC_BGN('P_ETL_DW_ARC_E_CONS_SNAP', I_DATA);
   
     /*
-      --删除同义词（链接到稽查库OMAC下数据仓库表的同义词）中原有的抽取的记录，维度为日
+      --ɾ��ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ���ԭ�еĳ�ȡ�ļ�¼��ά��Ϊ��
       DELETE FROM SY_OM_DW_ARC_E_CONS_SNAP X WHERE X.STAT_YMD = V_YMD;
     
-      --开始推送数据到同义词（链接到稽查库OMAC下数据仓库表的同义词）
+      --��ʼ�������ݵ�ͬ��ʣ����ӵ������OMAC�����ݲֿ����ͬ��ʣ�
       INSERT INTO SY_OM_DW_ARC_E_CONS_SNAP X
         (PRO_ORG_NO,
          CALC_ID,
@@ -1994,26 +1994,26 @@ create or replace package body PKG_YWGK_DW_CA_RECOVER is
                MR_SECT_NO,
                GP_CODE
           FROM DW_ARC_E_CONS_SNAP A
-        --加入时间筛选条件
+        --����ʱ��ɸѡ����
          WHERE A.SEND_DATE BETWEEN V_DATE_START_D AND V_DATE_END_D;
     */
-    --OUT_CODE为1代表运行成功,提交事务
+    --OUT_CODEΪ1�������гɹ�,�ύ����
     OUT_CODE := 1;
-    OUT_MSG  := '执行 P_ETL_DW_ARC_E_CONS_SNAP  成功';
+    OUT_MSG  := 'ִ�� P_ETL_DW_ARC_E_CONS_SNAP  �ɹ�';
     COMMIT;
   
-    --记录正常结束日志
+    --��¼����������־
     PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
   
-    --异常处理
+    --�쳣����
   EXCEPTION
     WHEN OTHERS THEN
-      --OUT_CODE为0代表运行失败,回滚事务
+      --OUT_CODEΪ0��������ʧ��,�ع�����
       OUT_CODE := 0;
-      OUT_MSG  := '执行 P_ETL_DW_ARC_E_CONS_SNAP  出现异常' || ',异常信息为：' ||
+      OUT_MSG  := 'ִ�� P_ETL_DW_ARC_E_CONS_SNAP  �����쳣' || ',�쳣��ϢΪ��' ||
                   SQLCODE || ',' || SQLERRM;
       ROLLBACK;
-      --记录异常结束日志
+      --��¼�쳣������־
       PKG_GK_PUBLIC.PROC_END(V_DATA_ID, OUT_CODE, OUT_MSG);
     
   END;
