@@ -1,0 +1,20 @@
+qhsgpm =
+
+  (DESCRIPTION =
+
+    (ADDRESS_LIST =
+
+      (ADDRESS = (PROTOCOL = TCP)(HOST = 172.19.188.188)(PORT = 1521))
+
+    )
+
+    (CONNECT_DATA =
+
+      (SERVICE_NAME = qhsgpm)
+
+    )
+
+  )
+
+用户名test
+密码test
